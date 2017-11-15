@@ -1,0 +1,29 @@
+baseURL = "https://docs.ginuerzh.xyz/gost/"
+theme = "hugo-alabaster-theme"
+languageCode = "en-us"
+title = "GOST"
+hasCJKLanguage = true
+disqusShortname = "docs-ginuerzh-xyz"
+googleAnalytics = "UA-98791308-2"
+
+[params]
+  name = "GOST"
+  description = "A simple tunnel written in Golang"
+
+  github_user   = "ginuerzh"
+	github_repo   = "gost"
+	github_banner = true
+
+[params.sidebar]
+	logo = "favicon.ico"
+
+	github_button  = true
+	travis_button  = false
+	codecov_button = false
+	gratipay = ""
+
+	show_relations = false
+
+[params.footer]
+	copyright = "[ginuerzh](https://github.com/ginuerzh)"
+	show_powered_by = true

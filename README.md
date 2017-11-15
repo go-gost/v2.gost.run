@@ -1,2 +1,5 @@
-# gost.ginuerzh.xyz
-GOST Doc
+# GOST Documentation
+
+Website: [https://docs.ginuerzh.xyz/gost/](https://docs.ginuerzh.xyz/gost/)
+
+
