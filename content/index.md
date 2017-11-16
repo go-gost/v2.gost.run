@@ -1,9 +1,8 @@
 +++
 date = "2017-11-15T16:50:24+08:00"
 menu = "main"
-title = "GOST"
 type = "homepage"
-weight = 0
+title = "GOST"
 +++
 
 # GO Simple Tunnel
@@ -25,6 +24,7 @@ weight = 0
 * 支持多种隧道类型
 * Tunnel UDP over TCP
 * 本地/远程TCP/UDP端口转发
+* TCP透明代理
 * 支持Shadowsocks(TCP/UDP)协议
 * 支持SNI代理
 * 权限控制
