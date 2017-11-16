@@ -3,7 +3,7 @@ theme = "hugo-alabaster-theme"
 languageCode = "en-us"
 title = "GOST"
 hasCJKLanguage = true
-disqusShortname = "docs-ginuerzh-xyz"
+disqusShortname = "gost-ginuerzh-xyz"
 googleAnalytics = "UA-98791308-2"
 
 [params]
