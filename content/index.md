@@ -3,6 +3,7 @@ date = "2017-11-15T16:50:24+08:00"
 menu = "main"
 type = "homepage"
 title = "GOST"
+weight = 1
 +++
 
 # GO Simple Tunnel

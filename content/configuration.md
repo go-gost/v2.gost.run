@@ -1,10 +1,9 @@
 +++
-date = "2017-11-15T16:50:24+08:00"
+date = "2017-11-16T16:50:24+08:00"
 menu = "main"
-title = "服务配置"
+title = "节点配置"
+weight = 10
 +++
-
-一个代理服务就是一个代理节点，一个代理节点有两种功能：作为代理供客户端使用，或者被其他代理节点作为上级代理用于数据转发。
 
 在GOST中一个代理服务逻辑上被分成两层：协议层(Protocol)和传输层(Transport)，两层之间相互独立，并可以任意组合使用。当GOST去连接一个代理节点时，会先进行传输层的交互，当传输层建立以后，再进行协议层的交互。
 
@@ -34,7 +33,7 @@ title = "服务配置"
 
 * `ws` - Websocket
 
-* `mtls` - Multiplex Websocket，在Websocket上增加多路复用功能 (2.5+)
+* `mws` - Multiplex Websocket，在Websocket上增加多路复用功能 (2.5+)
 
 * `wss` - Websocket Secure，基于TLS加密的Websocket
 
@@ -61,7 +60,7 @@ title = "服务配置"
 
 ## 配置格式
 
-在GOST中服务的配置为类URL格式(适用于`-L`和`-F`参数)：
+在GOST中节点的配置为类URL格式(适用于`-L`和`-F`参数)：
 
 ```bash
 [scheme://][user:pass@host]:port[?param1=value1&param2=value2]
@@ -141,7 +140,7 @@ gost -L udp://:5353/192.168.1.1:53
 gost -L rudp://:5353/192.168.1.1:53
 ```
 
-### **认证**
+### **节点认证**
 
 `user:pass`用于指定服务的认证信息。对于shadowsocks，`user`为加密类型。
 
@@ -160,6 +159,7 @@ secrets.txt文件格式为按行分割的认证信息，每一行认证信息为
 ```text
 # username password
 
-test001 123456
-test002 12345678
+admin   123456
+test\user001 123456
+test.user@002 12345678
 ```

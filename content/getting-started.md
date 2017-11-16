@@ -2,9 +2,14 @@
 date = "2017-11-15T16:50:24+08:00"
 menu = "main"
 title = "快速开始"
+weight = 5
 +++
 
 ## 启动运行
+
+{{< admonition title="代理节点" type="note" >}}
+在GOST中，GOST与其他代理服务都被看作是代理节点，GOST可以自己处理请求，或者将请求转发给任意一个或多个代理节点。
+{{< /admonition >}}
 
 ### 开启代理服务
 
@@ -42,10 +47,6 @@ gost -L=:8080 -F=quic://192.168.1.1:8081 -F=socks5+wss://192.168.1.2:8082 -F=htt
 ```
 
 GOST按照`-F`设置的顺序通过代理链将请求最终转发给a.b.c.d:NNNN处理。
-
-{{< admonition title="代理节点" type="note" >}}
-在GOST中，GOST与其他代理服务都被看作是代理节点，GOST可以自己处理请求，或者将请求转发给任意一个或多个代理节点。
-{{< /admonition >}}
 
 ## 启动参数
 
