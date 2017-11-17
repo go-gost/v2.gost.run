@@ -1,6 +1,6 @@
 baseURL = "https://docs.ginuerzh.xyz/gost/"
 theme = "hugo-alabaster-theme"
-languageCode = "en-us"
+DefaultContentLanguage = "en"
 title = "GOST"
 hasCJKLanguage = true
 disqusShortname = "gost-ginuerzh-xyz"
@@ -27,3 +27,11 @@ googleAnalytics = "UA-98791308-2"
 [params.footer]
 	copyright = "[ginuerzh](https://github.com/ginuerzh)"
 	show_powered_by = true
+
+[Languages]
+
+[Languages.en]
+
+[Languages.zh]
+[Languages.zh.params]
+description = "GO语言实现的安全隧道"
