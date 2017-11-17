@@ -13,7 +13,7 @@ googleAnalytics = "UA-98791308-2"
   github_user   = "ginuerzh"
   github_repo   = "gost"
   github_banner = false
-
+  
 [params.sidebar]
 	logo = "favicon.ico"
 

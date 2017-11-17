@@ -5,17 +5,24 @@ title = "节点配置"
 weight = 10
 +++
 
-在GOST中一个代理服务逻辑上被分成两层：协议层(Protocol)和传输层(Transport)，两层之间相互独立，并可以任意组合使用。当GOST去连接一个代理节点时，会先进行传输层的交互，当传输层建立以后，再进行协议层的交互。
+{{< admonition title="逻辑分层" type="note" >}}
+在GOST中一个代理服务逻辑上被分成两层：协议层(Protocol)和传输层(Transport)，每层有若干可选的类型，两层之间相互独立，并可以任意组合使用。
+{{< /admonition >}}
+
+
+当GOST去连接一个代理节点时，会先按照传输层设置的传输类型进行交互，当传输层建立以后，再按照协议层设置的协议类型进行交互。
 
 ## 协议类型(Protocols)
 
-目前支持的协议类型有：
+支持的协议类型有：
 
 * `http` - HTTP
 
-* `socks4` - SOCKS4
+* `http2` - HTTP2
 
-* `socks4a` - SOCKS4A
+* `socks4` - SOCKS4 (2.4+)
+
+* `socks4a` - SOCKS4A (2.4+)
 
 * `socks5` - SOCKS5
 
@@ -27,9 +34,11 @@ weight = 10
 
 ## 传输类型(Transports)
 
-目前支持的传输类型有：
+支持的传输类型有：
 
 * `tcp` - 原始TCP
+
+* `tls` - TLS
 
 * `ws` - Websocket
 
@@ -38,8 +47,6 @@ weight = 10
 * `wss` - Websocket Secure，基于TLS加密的Websocket
 
 * `mwss` - Multiplex Websocket Secure，在基于TLS加密的Websocket上增加多路复用功能 (2.5+)
-
-* `tls` - TLS
 
 * `mtls` - Multiplex TLS，在TLS上增加多路复用功能 (2.5+)
 
@@ -59,6 +66,8 @@ weight = 10
 
 
 ## 配置格式
+
+端口转发相关的节点配置格式请参考[端口转发](../port-forwarding/)。
 
 在GOST中节点的配置为类URL格式(适用于`-L`和`-F`参数)：
 
@@ -104,6 +113,8 @@ gost -L http+tls://:443 -F socks5+wss://:1443
 
 除了上述的类型外，有几个比较特殊的sheme：
 
+* `https` - 简写形式，等同于`http+tls`
+
 * `redirect` - TCP透明代理 (2.3+)
 
  ```bash
@@ -114,30 +125,6 @@ gost -L http+tls://:443 -F socks5+wss://:1443
 
 ```bash
 gost -L ssu://chacha20:123456@:8338
-```
-
-* `tcp` - TCP本地端口转发 (2.1+)
-
-```bash
-gost -L tcp://:2222/:22
-```
-
-* `rtcp` - TCP远程端口转发 (2.1+)
-
-```bash
-gost -L rtcp://:2222/:22
-```
-
-* `udp` - UDP本地端口转发 (2.1+)
-
-```bash
-gost -L udp://:5353/192.168.1.1:53
-```
-
-* `rudp` - UDP远程端口转发 (2.1+)
-
-```bash
-gost -L rudp://:5353/192.168.1.1:53
 ```
 
 ### **节点认证**
@@ -163,3 +150,7 @@ admin   123456
 test\user001 123456
 test.user@002 12345678
 ```
+
+{{< admonition title="注意" type="warning" >}}
+所有的认证信息都是用于协议层(Protocol)。
+{{< /admonition >}}

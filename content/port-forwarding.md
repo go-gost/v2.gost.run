@@ -2,10 +2,24 @@
 date = "2017-11-16T20:26:24+08:00"
 menu = "main"
 title = "端口转发"
-weight = 20
+weight = 50
 +++
 
-GOST从2.1版本开始增加了对端口转发的支持，端口转发有四种类型
+GOST从2.1版本开始增加了对端口转发的支持。
+
+## 节点配置
+
+端口转发服务节点的配置与普通的代理节点有所不同:
+
+```bash
+scheme://[bind_address]:port/[host]:hostport
+```
+
+> scheme - 端口转发模式, 本地端口转发: `tcp`, `udp`; 远程端口转发: `rtcp`, `rudp`
+
+> bind_address:port - 本地/远程绑定地址
+
+> host:hostport - 目标访问地址
 
 ## TCP本地端口转发
 
@@ -23,6 +37,14 @@ gost -L=tcp://:2222/192.168.1.1:22 [-F=..]
 gost -L=tcp://:2222/192.168.1.1:22 -F forward+ssh://:2222
 ```
 
+服务端可以是标准的SSH程序，也可以是GOST的SSH转发模式：
+
+```bash
+gost -L forward+ssh://:2222
+```
+
+scheme必须是`forward+ssh`。
+
 ## TCP远程端口转发
 
 将目标TCP端口B映射到本地TCP端口A，所有到端口B上的数据会被转发到端口A。此功能类似于SSH的远程端口转发功能。
@@ -38,6 +60,14 @@ gost -L=rtcp://:2222/192.168.1.1:22 [-F=... -F=socks5://172.24.10.1:1080]
 ```bash
 gost -L=rtcp://:2222/192.168.1.1:22 -F forward+ssh://:2222
 ```
+
+服务端可以是标准的SSH程序，也可以是GOST的SSH转发模式：
+
+```bash
+gost -L forward+ssh://:2222
+```
+
+scheme必须是`forward+ssh`。
 
 ## UDP本地端口转发
 
@@ -70,3 +100,40 @@ gost -L=rudp://:5353/192.168.1.1:53?ttl=60 [-F=... -F=socks5://172.24.10.1:1080]
 转发UDP数据时，如果有代理链，则代理链的末端(最后一个-F参数)必须是GOST SOCKS5类型代理，GOST会使用UDP-over-TCP方式进行转发。
 {{< /admonition >}}
 
+## 转发隧道
+
+在2.5版本中TCP本地端口转发可以配合传输类型一起使用：
+
+服务端:
+
+```bash
+gost -L tls://:443/:1443 -L sni://:1443
+```
+
+对应的`scheme`为传输类型，协议类型必须为空。
+
+客户端:
+
+```bash
+gost -L :8080 -F forward+tls://server_ip:443
+```
+
+对应的`scheme`为`forward+transport`格式，其中协议类型必须为`forward`。
+
+### 使用场景
+
+#### 加密
+
+```bash
+gost -L tls://:443/:8080 -L http://:8080
+```
+
+将8080端口的HTTP代理服务转成443端口的HTTPS代理服务
+
+#### 加速
+
+```bash
+gost -L kcp://:8388/:8338 -L ss://chacha20:123456@:8338
+```
+
+将8338端口的shadowsocks代理服务转成使用KCP传输。

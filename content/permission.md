@@ -2,7 +2,7 @@
 date = "2017-11-16T20:26:24+08:00"
 menu = "main"
 title = "权限控制"
-weight = 30
+weight = 60
 +++
 
 服务端可以通过白名单`whitelist`参数和黑名单`blacklist`参数来控制客户端的请求是否允许被处理。
