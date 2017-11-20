@@ -63,4 +63,6 @@ gost -L=:8080 -F="tls://server_domain_name:443?secure=true"
 gost -L=:8080 -F="tls://:443?ca=ca.pem"
 ```
 
+{{< admonition title="注意" type="note" >}}
 以上参数可以用于所有支持TLS的服务，例如HTTP2, QUIC, WSS, SSH, SOCKS5。
+{{< /admonition >}}

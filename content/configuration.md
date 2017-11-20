@@ -9,7 +9,6 @@ weight = 10
 在GOST中一个代理服务逻辑上被分成两层：协议层(Protocol)和传输层(Transport)，每层有若干可选的类型，两层之间相互独立，并可以任意组合使用。
 {{< /admonition >}}
 
-
 当GOST去连接一个代理节点时，会先按照传输层设置的传输类型进行交互，当传输层建立以后，再按照协议层设置的协议类型进行交互。
 
 ## 协议类型(Protocols)
@@ -40,6 +39,8 @@ weight = 10
 
 * `tls` - TLS
 
+* `mtls` - Multiplex TLS，在TLS上增加多路复用功能 (2.5+)
+
 * `ws` - Websocket
 
 * `mws` - Multiplex Websocket，在Websocket上增加多路复用功能 (2.5+)
@@ -47,8 +48,6 @@ weight = 10
 * `wss` - Websocket Secure，基于TLS加密的Websocket
 
 * `mwss` - Multiplex Websocket Secure，在基于TLS加密的Websocket上增加多路复用功能 (2.5+)
-
-* `mtls` - Multiplex TLS，在TLS上增加多路复用功能 (2.5+)
 
 * `kcp` - KCP (2.3+)
 
@@ -81,7 +80,9 @@ weight = 10
 
 #### 不指定任何类型
 
-不指定任何类型时，对于`-L`参数，协议层默认为是HTTP+SOCKS5，传输层默认为是原始TCP类型。对于`-F`参数，协议层默认为是HTTP类型，传输层默认为原始TCP类型。
+传输层默认为是原始TCP类型。
+
+对于`-L`参数，协议层默认为是HTTP & SOCKS5，对于`-F`参数，协议层默认为是HTTP类型。
 
 ```bash
 gost -L :8080 -F :8888
@@ -109,9 +110,9 @@ gost -L tls://:443 -F ws://:1443
 gost -L http+tls://:443 -F socks5+wss://:1443
 ```
 
-#### 特殊的scheme
+#### 特殊的schemes
 
-除了上述的类型外，有几个比较特殊的sheme：
+除了上述的类型外，有几个比较特殊的shemes：
 
 * `https` - 简写形式，等同于`http+tls`
 
@@ -121,7 +122,7 @@ gost -L http+tls://:443 -F socks5+wss://:1443
  gost -L redirect://:12345
  ```
 
-* `ssu` - Shadowsocks UDP relay，目前仅服务端支持 (2.4+)。
+* `ssu` - Shadowsocks UDP relay
 
 ```bash
 gost -L ssu://chacha20:123456@:8338
@@ -135,13 +136,13 @@ gost -L ssu://chacha20:123456@:8338
 gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
 ```
 
-对于HTTP/SOCKS5服务，也可以通过secrets参数来设定多组认证信息：
+对于HTTP/SOCKS5服务，也可以通过`secrets`参数来设定多组认证信息：
 
 ```bash
 gost -L=:8080?secrets=secrets.txt
 ```
 
-secrets.txt文件格式为按行分割的认证信息，每一行认证信息为用空格分割的user/pass对，以 `#` 开始的行为注释行。
+secrets.txt文件格式为按行分割的认证信息，每一行认证信息为用空格分割的user-pass对，以 `#` 开始的行为注释行。
 
 ```text
 # username password

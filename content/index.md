@@ -16,6 +16,8 @@ weight = 1
 [![GitHub release](https://img.shields.io/github/release/ginuerzh/gost.svg)](https://github.com/ginuerzh/gost/releases/latest)
 [![Snap Status](https://build.snapcraft.io/badge/ginuerzh/gost.svg)](https://build.snapcraft.io/user/ginuerzh/gost)
 
+[English Version](en/)
+
 ## 功能特性
 
 * 多端口监听

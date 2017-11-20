@@ -25,4 +25,4 @@ ss+obfs4://:18080/?cert=06ss%2FlcDWVkTZLXLcRkH8tozyP0aUXmOm%2BuT5KtbkEP%2BTnCqNu
 gost -L :8080 -F ss+obfs4://server_ip:18080/?cert=06ss%2FlcDWVkTZLXLcRkH8tozyP0aUXmOm%2BuT5KtbkEP%2BTnCqNumFx9p218Vy0WityAM0Kg&iat-mode=0
 ```
 
-这里生成的地址不包含IP，所以如果客户端与服务端不在一起，就要指定服务端的IP。
+这里生成的URL不包含IP，所以如果客户端与服务端不是同一台主机，就要指定服务端的IP。

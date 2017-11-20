@@ -23,7 +23,7 @@ gost -L socks4a://:1080
 
 标准的SOCKS4A代理服务。
 
-{{< admonition title="注意" type="note" >}}
+{{< admonition title="注意" type="warning" >}}
 SOCKS4(A)当前仅支持CONNECT方法，不支持BIND方法。
 {{< /admonition >}}
 

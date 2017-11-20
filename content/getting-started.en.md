@@ -5,11 +5,11 @@ title = "Getting Started"
 weight = 5
 +++
 
-## Run
-
 {{< admonition title="Proxy Node" type="note" >}}
 In GOST，GOST and other proxy services are considered as proxy nodes, GOST can handle the requests itself, or forward the requests to any one or more proxy nodes.
 {{< /admonition >}}
+
+## Run
 
 ### Start a service
 
@@ -107,7 +107,7 @@ The configuration file is standard `json` format:
 
 Format description:
 
-> `Debug` - Equivalent to command line parameter `-D`.
+> `Debug` - Equivalent to command line parameter `-D`. (2.4+)
 
 > `Retries` - The number of retries after a failed connection through the proxy chain.
 
