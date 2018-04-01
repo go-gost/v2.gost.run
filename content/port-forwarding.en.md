@@ -55,6 +55,18 @@ gost -L=rtcp://:2222/192.168.1.1:22 [-F=... -F=socks5://172.24.10.1:1080]
 
 The data of 172.24.10.1:2222 is forwarded to 192.168.1.1:22 (through the proxy chain if exists).
 
+### SOCKS5 BIND method with multiplexing enabled
+
+SOCKS5 BIND method has added support for multiplexing since version 2.5, remote port forwarding can use this feature to improve transport efficiency.
+
+```bash
+gost -L rtcp://:8080/192.168.1.1:80 -F socks5://:1080?mbind=true
+```
+
+The client enables the SOCKS5 BIND multiplexing mode with the `mbind=true` parameter.
+
+### SSH port forwarding mode
+
 When the end of the chain (the last -F parameter) is of type `forward+ssh`, GOST will directly use SSH's remote port forwarding feature:
 
 ```bash

@@ -14,6 +14,7 @@ weight = 1
 [![Build Status](https://travis-ci.org/ginuerzh/gost.svg?branch=master)](https://travis-ci.org/ginuerzh/gost)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ginuerzh/gost)](https://goreportcard.com/report/github.com/ginuerzh/gost)
 [![GitHub release](https://img.shields.io/github/release/ginuerzh/gost.svg)](https://github.com/ginuerzh/gost/releases/latest)
+[![Docker Build Status](https://img.shields.io/docker/build/ginuerzh/gost.svg)](https://hub.docker.com/r/ginuerzh/gost/)
 [![Snap Status](https://build.snapcraft.io/badge/ginuerzh/gost.svg)](https://build.snapcraft.io/user/ginuerzh/gost)
 
 ## Features
@@ -35,7 +36,13 @@ weight = 1
 
 Binary file download: [https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
 
-#### Ubuntu Store
+### Docker
+
+```bash
+docker pull ginuerzh/gost
+```
+
+### Ubuntu Store
 
 GOST has been released in ubuntu store, and can be installed directly through the snap in ubuntu 16.04:
 
