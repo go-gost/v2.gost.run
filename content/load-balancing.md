@@ -102,3 +102,41 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
 组合使用时，代理链会将每一层级上(通过`ip`和`peer`参数)指定的所有节点放在同一个节点组中，再对每一个节点组执行节点选择(随机或轮询)，最终确定一条路径：
 
 ![figure 05](../img/lb05.png)
+
+#### 完整的示例配置
+*gost.json*:
+```json
+{
+    "Debug": false,
+    "Retries": 3,
+    "Routes": [
+        {
+            "Retries": 3,
+            "ServeNodes": [
+                ":8888/127.0.0.1:80"
+            ],
+            "ChainNodes": [
+                "?peer=peer.json"
+            ]
+        }
+    ]
+}
+```
+*peer.json*:
+```json
+{
+    "strategy": "fifo",
+    "max_fails": 1,
+    "fail_timeout": 86400,
+    "nodes": [
+        "ss+kcp://aes-128-cfb:pass@[host][:port]?ip=ips.txt"
+    ]
+}
+```
+*ips.txt*:
+```txt
+host1[:port]
+host2[:port]
+host3[:port]
+```
+
