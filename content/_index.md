@@ -33,10 +33,18 @@ weight = 1
 * 支持SNI代理
 * 权限控制
 * 负载均衡
+* 路由控制
+* DNS控制
 
 ## 下载安装
 
 二进制文件下载: [https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
+
+### 源码编译
+
+```bash
+go get -u github.com/ginuerzh/gost/cmd/gost
+```
 
 ### Docker
 

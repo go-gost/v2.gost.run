@@ -31,10 +31,18 @@ weight = 1
 * SNI Proxy
 * Permission control
 * Load balancing
+* Route control
+* DNS control
 
 ## Download
 
 Binary file download: [https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
+
+### From Source
+
+```bash
+go get -u github.com/ginuerzh/gost/cmd/gost
+```
 
 ### Docker
 

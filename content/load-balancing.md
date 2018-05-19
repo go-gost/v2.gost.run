@@ -85,7 +85,7 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
 
 格式说明:
 
-`strategy` - 指定节点选择策略，`round` - 轮询，`random` - 随机。默认值为`round`。
+`strategy` - 指定节点选择策略，`round` - 轮询，`random` - 随机, `fifo` - 自上而下。默认值为`round`。
 
 `max_fails` - 指定节点连接的最大失败次数，当与一个节点建立连接失败次数超过此设定值时，此节点会被标记为死亡节点(Dead)，死亡节点不会被选择使用。默认值为1。
 
@@ -113,10 +113,10 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
         {
             "Retries": 3,
             "ServeNodes": [
-                ":8888/127.0.0.1:80"
+                ":8888"
             ],
             "ChainNodes": [
-                "?peer=peer.json"
+                ":1080?peer=peer.json"
             ]
         }
     ]
@@ -129,7 +129,7 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
     "max_fails": 1,
     "fail_timeout": 86400,
     "nodes": [
-        "ss+kcp://aes-128-cfb:pass@[host][:port]?ip=ips.txt"
+        "ss+kcp://aes-128-cfb:pass@[host]:port?ip=ips.txt"
     ]
 }
 ```
@@ -139,4 +139,3 @@ host1[:port]
 host2[:port]
 host3[:port]
 ```
-

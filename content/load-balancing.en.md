@@ -114,10 +114,10 @@ When used in combination, the proxy chain places all nodes specified at each lev
         {
             "Retries": 3,
             "ServeNodes": [
-                ":8888/127.0.0.1:80"
+                ":8888"
             ],
             "ChainNodes": [
-                "?peer=peer.json"
+                ":1080?peer=peer.json"
             ]
         }
     ]
@@ -130,7 +130,7 @@ When used in combination, the proxy chain places all nodes specified at each lev
     "max_fails": 1,
     "fail_timeout": 86400,
     "nodes": [
-        "ss+kcp://aes-128-cfb:pass@[host][:port]?ip=ips.txt"
+        "ss+kcp://aes-128-cfb:pass@[host]:port?ip=ips.txt"
     ]
 }
 ```
