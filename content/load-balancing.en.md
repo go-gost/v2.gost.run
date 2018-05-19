@@ -33,7 +33,7 @@ When the `ip` parameter is set, the address specified in the URL will be ignored
 
 When more than one node is assigned to a level, GOST places the nodes in the same node group in the specified order.
 
-Each time a client sends a request, the proxy chain first determines a path to perform node selection (random or round-robin) for each node group.
+Each time a client sends a request, the proxy chain first determines a path to perform node selection (random, round-robin or fifo) for each node group.
 
 ![figure 02](/gost/img/lb02.png)
 
@@ -86,7 +86,7 @@ The client specifies additional node configuration file via the `peer` parameter
 
 Format description:
 
-`strategy` - Specify node selection strategy, `round` for round-robin, `random` for random selection, the default is `round`.
+`strategy` - Specify node selection strategy, `round` for round-robin, `random` for random selection, `fifo` for top-down selection, the default is `round`.
 
 `max_fails` - The maximum number of failed connections for a specified node, When the number of failed connections with a node exceeds this set value, the node will be marked as a **Dead node**, Dead node will not be selected to use. default value is 1.
 
@@ -103,3 +103,41 @@ Each time a client sends a request, the proxy chain first determines a path to p
 When used in combination, the proxy chain places all nodes specified at each level (via the `ip` and `peer` parameters) in the same node group and performs node selection (random or round-robin) on each node group, Finally determine a path:
 
 ![figure 05](/gost/img/lb05.png)
+
+#### Full example configuration
+*gost.json*:
+```json
+{
+    "Debug": false,
+    "Retries": 3,
+    "Routes": [
+        {
+            "Retries": 3,
+            "ServeNodes": [
+                ":8888/127.0.0.1:80"
+            ],
+            "ChainNodes": [
+                "?peer=peer.json"
+            ]
+        }
+    ]
+}
+```
+*peer.json*:
+```json
+{
+    "strategy": "fifo",
+    "max_fails": 1,
+    "fail_timeout": 86400,
+    "nodes": [
+        "ss+kcp://aes-128-cfb:pass@[host][:port]?ip=ips.txt"
+    ]
+}
+```
+*ips.txt*:
+```txt
+host1[:port]
+host2[:port]
+host3[:port]
+```
+
