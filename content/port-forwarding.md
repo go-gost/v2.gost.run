@@ -12,14 +12,15 @@ GOST从2.1版本开始增加了对端口转发的支持。
 端口转发服务节点的配置与普通的代理节点有所不同:
 
 ```bash
-scheme://[bind_address]:port/[host]:hostport
+scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]
 ```
 
-> scheme - 端口转发模式, 本地端口转发: `tcp`, `udp`; 远程端口转发: `rtcp`, `rudp`
+> scheme - 端口转发模式, 本地端口转发: `tcp`, `udp`; 远程端口转发: `rtcp`, `rudp`; 转发隧道: `tls`, `kcp`等传输类型。
 
-> bind_address:port - 本地/远程绑定地址
+> [bind_address]:port - 本地/远程绑定地址。
 
-> host:hostport - 目标访问地址
+> [host]:hostport[,[host]:hostport] - 目标访问地址，支持以逗号分割的多地址形式。**注意：多地址支持需要2.6+版本。**
+
 
 ## TCP本地端口转发
 

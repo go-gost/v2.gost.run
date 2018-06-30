@@ -12,14 +12,14 @@ GOST has added support for port forwarding since version 2.1.
 Port forwarding service node configuration and ordinary proxy nodes are different:
 
 ```bash
-scheme://[bind_address]:port/[host]:hostport
+scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]
 ```
 
-> scheme - Forward mode, local: `tcp`, `udp`; remote: `rtcp`, `rudp`
+> scheme - Forward mode, local: `tcp`, `udp`; remote: `rtcp`, `rudp`; tunnel: `tls`, `kcp`, etc.
 
-> bind_address:port - Local/remote binding address
+> [bind_address]:port - Local/remote binding address.
 
-> host:hostport - Target address
+> [host]:hostport[,[host]:hostport] - Target address. Support comma-separated multiple addresses. **NOTE: multi-address support requires 2.6+ version.**
 
 ## Local TCP port forwarding
 

@@ -29,6 +29,8 @@ The client specifies the actual proxy address via the `ip` parameter (a comma-se
 When the `ip` parameter is set, the address specified in the URL will be ignored.
 {{< /admonition >}}
 
+The node selection strategy can be specified with the `strategy` parameter. Default value is `round` (**NOTE: `strategy` parameter requires 2.6+ version**).
+
 ![figure 01](/gost/img/lb01.png)
 
 When more than one node is assigned to a level, GOST places the nodes in the same node group in the specified order.
