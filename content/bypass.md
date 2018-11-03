@@ -21,15 +21,24 @@ gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.1
 gost -L :8080?bypass=bypass.txt -F :1080?bypass=bypass2.txt
 ```
 
-配置文件的格式为(按行分割的地址列表)：
+配置文件的格式为(地址列表和可选的配置项)：
 
 ```text
+# options
+reload   10s
+reverse  true
+
+# bypass addresses
 127.0.0.1
 172.10.0.0/16
 localhost
 *.example.com
 .example.org
 ```
+
+`reload` - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
+
+`reverse` - 指定是否切换为白名单。
 
 若要转换为白名单，则通过在`bypass`参数值前添加`~`前缀：
 
