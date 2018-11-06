@@ -111,8 +111,8 @@ Format description:
 
 > `Retries` - The number of retries after a failed connection through the proxy chain.
 
-> `ServeNodes` - Equivalent to command line parameter `-L`.
+> `ServeNodes` - Mandatory, Equivalent to command line parameter `-L`.
 
 > `ChainNodes` - Equivalent to command line parameter `-F`.
 
-> `Routes` - Service lists, each with an independent proxy chain.
+> `Routes` - Optional. Service lists, each with an independent proxy chain.

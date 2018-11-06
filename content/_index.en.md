@@ -63,3 +63,5 @@ sudo snap install gost
 Github Issue: [https://github.com/ginuerzh/gost/issues](https://github.com/ginuerzh/gost/issues)
 
 Google Group: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)
+
+Telegram Group: [https://t.me/gogost](https://t.me/gogost)

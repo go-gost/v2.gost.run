@@ -65,3 +65,5 @@ sudo snap install gost
 提交Issue: [https://github.com/ginuerzh/gost/issues](https://github.com/ginuerzh/gost/issues)
 
 Google讨论组: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)
+
+Telegram讨论群: [https://t.me/gogost](https://t.me/gogost)
