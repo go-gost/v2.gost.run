@@ -73,16 +73,21 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
 
 客户端通过`peer`参数指定额外的节点配置文件，配置文件格式为：
 
-```json
-{
-    "strategy": "round",
-    "max_fails": 1,
-    "fail_timeout": 30,
-    "nodes": [
-        "wss://192.168.2.1:443",
-        "quic://192.168.3.1:443"
-    ]
-}
+```text
+# strategy for node selecting
+strategy        random
+
+max_fails       1
+
+fail_timeout    30s
+
+# period for live reloading
+reload          10s
+
+# peers
+peer    http://:18080
+peer    socks://:11080
+peer    ss://chacha20:123456@:18338
 ```
 
 格式说明:
@@ -93,7 +98,9 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
 
 `fail_timeout` - 指定死亡节点的超时时间，当一个节点被标记为死亡节点后，在此设定的时间间隔内不会被选择使用，超过此设定时间间隔后，会再次参与节点选择。默认为30秒。
 
-`nodes` - 指定节点列表。
+`reload` - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
+
+`peer` - 指定节点列表。
 
 每次客户端发送请求，代理链会确定一条路径，对每一个节点组执行节点选择(随机或轮询)。
 

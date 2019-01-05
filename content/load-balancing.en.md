@@ -74,16 +74,21 @@ gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:44
 
 The client specifies additional node configuration file via the `peer` parameter. The configuration file format is:
 
-```json
-{
-    "strategy": "round",
-    "max_fails": 1,
-    "fail_timeout": 30,
-    "nodes": [
-        "wss://192.168.2.1:443",
-        "quic://192.168.3.1:443"
-    ]
-}
+```text
+# strategy for node selecting
+strategy        random
+
+max_fails       1
+
+fail_timeout    30s
+
+# period for live reloading
+reload          10s
+
+# peers
+peer    http://:18080
+peer    socks://:11080
+peer    ss://chacha20:123456@:18338
 ```
 
 Format description:
@@ -94,7 +99,9 @@ Format description:
 
 `fail_timeout` - Specify the dead node's timeout period. When a node is marked as a dead node, it will not be selected within this set time interval. After this set time interval, it will participate in node selection again.
 
-`nodes` - Specify the node list.
+`reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
+
+`peer` - Specify the peer node list.
 
 Each time a client sends a request, the proxy chain first determines a path to perform node selection (random or round-robin) for each node group.
 

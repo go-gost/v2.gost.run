@@ -5,13 +5,13 @@ title = "DNS Control"
 weight = 90
 +++
 
-GOST added support for custom DNS services in version 2.6, and DNS control can be applied to service nodes.
+GOST added support for custom DNS services in version 2.6, and DNS control can be applied to service nodes. When the node receives a request, it resolves the target address of this request using the DNS service specified on this node.
 
 ```bash
-gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls
+gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-query
 ```
 
-The server uses the `dns` parameter to specify a list of DNS services (separated by commas). The format of each DNS service is: `ip[:port][/protocol]`, The port defaults to 53 and the protocol optional values are: `udp`, `tcp`, `tls`. The default is `udp`.
+The server uses the `dns` parameter to specify a list of DNS services (separated by commas). The format of each DNS service is: `ip[:port][/protocol]`, The port defaults to 53 and the protocol optional values are: `udp`, `tcp`, `tls`, `https`. The default is `udp`.
 
 You can also use an external file to specify a list of DNS services:
 
@@ -24,7 +24,7 @@ The format of the configuration file is:
 ```text
 # options
 timeout     30s
-ttl         60s
+# ttl         60s
 reload      10s
 
 # ip[:port] [protocol] [hostname]
@@ -33,11 +33,12 @@ reload      10s
 1.1.1.1     udp
 1.1.1.1:53  tcp
 1.1.1.1:853 tls     cloudflare-dns.com
+https://1.0.0.1/dns-query
 ```
 
 `timeout` - DNS request timeout, default 30 seconds.
 
-`ttl` - DNS cache expiration, the default is 60 seconds. When set to a negative value, no cache is used.
+`ttl` - DNS cache expiration, default to the TTL in DNS server response. When set to a negative value, no cache is used.
 
 `reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
 
@@ -45,7 +46,7 @@ The DNS service list is divided into three columns:
 
 The first column is the DNS server address, the format is ip[:port], and the port default is 53.
 
-The second column is the protocol type. The optional values are: `udp`, `tcp`, `tls`, and the default is `udp`.
+The second column is the protocol type. The optional values are: `udp`, `tcp`, `tls`, `https`, and the default is `udp`.
 
 The third column is the DNS server domain name. It is valid when the protocol type is `tls` and is used for TLS certificate verification.
 
