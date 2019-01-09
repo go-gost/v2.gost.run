@@ -2,7 +2,7 @@
 date = "2019-01-05T14:36:00+08:00"
 menu = "main"
 title = "Probing Resistance"
-weight = 100
+weight = 22
 +++
 
 GOST added probing resistance to the HTTP/HTTPS/HTTP2 proxy in version 2.7. When the proxy server receives an invalid request, it will return the corresponding response according to the probing resistance policy.

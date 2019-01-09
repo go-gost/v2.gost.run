@@ -2,7 +2,7 @@
 date = "2017-11-17T11:30:24+08:00"
 menu = "main"
 title = "SNI"
-weight = 23
+weight = 25
 +++
 
 SNI是GOST支持的一种协议类型(Protocol)。

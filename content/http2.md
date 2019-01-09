@@ -2,7 +2,7 @@
 date = "2017-11-17T15:11:24+08:00"
 menu = "main"
 title = "HTTP2"
-weight = 35
+weight = 21
 +++
 
 在GOST中HTTP2有两种模式：代理模式和隧道模式。

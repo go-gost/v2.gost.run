@@ -2,7 +2,7 @@
 date = "2017-11-17T11:10:24+08:00"
 menu = "main"
 title = "SOCKS"
-weight = 21
+weight = 23
 +++
 
 SOCKS是GOST支持的协议类型(Protocol)，SOCKS协议有三个版本: SOCKS4, SOCKS4A和SOCKS5。

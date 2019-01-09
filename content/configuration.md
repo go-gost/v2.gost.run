@@ -145,12 +145,17 @@ gost -L=:8080?secrets=secrets.txt
 secrets.txt文件格式为按行分割的认证信息，每一行认证信息为用空格分割的user-pass对，以 `#` 开始的行为注释行。
 
 ```text
+# period for live reloading
+reload      10s
+
 # username password
 
-admin   123456
-test\user001 123456
-test.user@002 12345678
+admin           123456
+test\user001    123456
+test.user@002   12345678
 ```
+
+`reload` - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
 
 {{< admonition title="注意" type="warning" >}}
 所有的认证信息都是用于协议层(Protocol)。

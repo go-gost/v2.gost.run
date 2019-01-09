@@ -2,7 +2,7 @@
 date = "2017-11-17T11:16:24+08:00"
 menu = "main"
 title = "Shadowsocks"
-weight = 22
+weight = 24
 +++
 
 Shadowsocks是GOST支持的一种协议类型(Protocol)。

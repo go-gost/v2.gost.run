@@ -2,7 +2,7 @@
 date = "2017-11-20T12:07:40+08:00"
 menu = "main"
 title = "Shadowsocks"
-weight = 22
+weight = 24
 +++
 
 Shadowsocks is a protocol type supported by GOST.

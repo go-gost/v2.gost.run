@@ -2,7 +2,7 @@
 date = "2017-11-17T11:10:24+08:00"
 menu = "main"
 title = "SOCKS"
-weight = 21
+weight = 23
 +++
 
 SOCKS is the protocol type supported by GOST. There are three versions of the SOCKS protocol: SOCKS4, SOCKS4A and SOCKS5.

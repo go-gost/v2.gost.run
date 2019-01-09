@@ -2,7 +2,7 @@
 date = "2017-11-20T12:12:40+08:00"
 menu = "main"
 title = "SNI"
-weight = 23
+weight = 25
 +++
 
 SNI is a protocol type supported by GOST.

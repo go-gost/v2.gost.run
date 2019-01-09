@@ -141,12 +141,17 @@ gost -L=:8080?secrets=secrets.txt
 The file format of the secrets.txt file is line-by-line authentication information. Each line of authentication information is a user-pass pair separated by space. A line starting with `#` is a comment line.
 
 ```text
+# period for live reloading
+reload      10s
+
 # username password
 
-admin   123456
-test\user001 123456
-test.user@002 12345678
+admin           123456
+test\user001    123456
+test.user@002   12345678
 ```
+
+`reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
 
 {{< admonition title="NOTE" type="warning" >}}
 All authentication information is for the protocol layer.

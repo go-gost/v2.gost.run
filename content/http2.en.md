@@ -2,7 +2,7 @@
 date = "2017-11-20T12:49:31+08:00"
 menu = "main"
 title = "HTTP2"
-weight = 35
+weight = 21
 +++
 
 In GOST HTTP2 has two modes: proxy mode and tunnel mode.
