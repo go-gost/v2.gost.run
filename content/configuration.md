@@ -61,7 +61,7 @@ weight = 10
 
 * `obfs4` - OBFS4 (2.4+)
 
-* `ohttp` - HTTP Obfuscation (2.5+)
+* `ohttp` - HTTP Obfuscation (2.7+)
 
 
 ## 配置格式
@@ -136,7 +136,7 @@ gost -L ssu://chacha20:123456@:8338
 gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
 ```
 
-对于HTTP/SOCKS5服务，也可以通过`secrets`参数来设定多组认证信息：
+也可以通过`secrets`参数来设定多组认证信息：
 
 ```bash
 gost -L=:8080?secrets=secrets.txt
@@ -150,12 +150,14 @@ reload      10s
 
 # username password
 
-admin           123456
+admin           #123456
 test\user001    123456
 test.user@002   12345678
 ```
 
 `reload` - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
+
+**注意：** 当`secrets`参数用于shadowsocks协议时，仅会使用第一项作为认证信息。
 
 {{< admonition title="注意" type="warning" >}}
 所有的认证信息都是用于协议层(Protocol)。

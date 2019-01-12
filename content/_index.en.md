@@ -23,6 +23,7 @@ weight = 1
 * Listening on multiple ports
 * Multi-level forward proxies - proxy chain
 * Standard HTTP/HTTPS/HTTP2/SOCKS4(A)/SOCKS5 proxy protocols support
+* Probing resistance support for web proxy
 * TLS encryption via negotiation support for SOCKS5 proxy
 * Support multiple tunnel types
 * Tunnel UDP over TCP

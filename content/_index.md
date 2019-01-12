@@ -25,6 +25,7 @@ weight = 1
 * 多端口监听
 * 可设置转发代理，支持多级转发(代理链)
 * 支持标准HTTP/HTTPS/HTTP2/SOCKS4(A)/SOCKS5代理协议
+* Web代理支持探测防御
 * SOCKS5代理支持TLS协商加密
 * 支持多种隧道类型
 * Tunnel UDP over TCP

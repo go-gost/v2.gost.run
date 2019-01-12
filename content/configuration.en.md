@@ -57,7 +57,7 @@ When GOST connects to a proxy node, it first interacts with the transport type s
 
 * `obfs4` - OBFS4 (2.4+)
 
-* `ohttp` - HTTP Obfuscation (2.5+)
+* `ohttp` - HTTP Obfuscation (2.7+)
 
 ## Configuration format
 
@@ -146,12 +146,14 @@ reload      10s
 
 # username password
 
-admin           123456
+admin           #123456
 test\user001    123456
 test.user@002   12345678
 ```
 
 `reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
+
+**NOTE:** When the `secrets` parameter is used in the shadowsocks protocol, only the first entry is used as the authentication information.
 
 {{< admonition title="NOTE" type="warning" >}}
 All authentication information is for the protocol layer.
