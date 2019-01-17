@@ -38,3 +38,9 @@ gost -L mwss://:443
 ```
 
 Websocket tunnel with multiplexing and TLS encryption.
+
+The request URI can be set via the `path` parameter. The default value is `/ws`:
+
+```bash
+gost -L ws://:8080?path=/ws
+```

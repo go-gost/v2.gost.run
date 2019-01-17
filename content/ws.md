@@ -38,3 +38,9 @@ gost -L mwss://:443
 ```
 
 具有多路复用特性并使用TLS加密的Websocket隧道。
+
+可以通过`path`参数来设置请求URI，默认值为`/ws`：　
+
+```bash
+gost -L ws://:8080?path=/ws
+```
