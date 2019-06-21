@@ -15,13 +15,21 @@ Port forwarding service node configuration and ordinary proxy nodes are differen
 scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]?ip=[host]:hostport][,[host]:hostport]]
 ```
 
-> scheme - Forward mode, local: `tcp`, `udp`; remote: `rtcp`, `rudp`; tunnel: `tls`, `kcp`, etc.
->
-> [bind_address]:port - Local/remote binding address.
->
-> [host]:hostport[,[host]:hostport] - (Optional, 2.6+) Comma-separated target addresses.
->
-> `ip` parameter - (Optional, 2.8+) Comma-separated target addresses.
+scheme - Forward mode, local: `tcp`, `udp`; remote: `rtcp`, `rudp`; tunnel: `tls`, `kcp`, etc.
+
+[bind_address]:port - Local/remote binding address.
+
+[host]:hostport[,[host]:hostport] - (Optional, 2.6+) Comma-separated target addresses.
+
+**Options**
+
+`ip` - (Optional, 2.8+) Comma-separated target addresses.
+
+`strategy` - (2.6+) Specify node selection strategy, `round` for round-robin, `random` for random selection, `fifo` for top-down selection, the default is `round`.
+
+`max_fails` - (2.8.1+) The maximum number of failed connections for a specified node, When the number of failed connections with a node exceeds this set value, the node will be marked as a **Dead node**, Dead node will not be selected to use. default value is 1.
+
+`fail_timeout` - (2.8.1+) Specify the dead node's timeout period. When a node is marked as a dead node, it will not be selected within this set time interval. After this set time interval, it will participate in node selection again.
 
 ## Local TCP port forwarding
 

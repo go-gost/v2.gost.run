@@ -25,6 +25,8 @@ When GOST connects to a proxy node, it first interacts with the transport type s
 
 * `ss` - Shadowsocks
 
+* `ss2` - Shadowsocks with AEAD support (2.8+)
+
 * `sni` - SNI (2.5+)
 
 * `forward` - Forward

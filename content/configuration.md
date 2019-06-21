@@ -27,6 +27,8 @@ weight = 10
 
 * `ss` - Shadowsocks
 
+* `ss2` - Shadowsocks with AEAD support (2.8+)
+
 * `sni` - SNI (2.5+)
 
 * `forward` - Forward

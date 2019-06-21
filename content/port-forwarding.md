@@ -15,13 +15,21 @@ GOST从2.1版本开始增加了对端口转发的支持。
 scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]?ip=[host]:hostport][,[host]:hostport]]
 ```
 
-> scheme - 端口转发模式, 本地端口转发: `tcp`, `udp`; 远程端口转发: `rtcp`, `rudp`; 转发隧道: `tls`, `kcp`等传输类型。
->
-> [bind_address]:port - 本地/远程绑定地址。
->
-> [host]:hostport[,[host]:hostport] - (可选, 2.6+) 目标访问地址，支持以逗号分割的多地址形式。
->
-> `ip`参数 - (可选, 2.8+) 也可以通过此参数来指定目标地址。
+scheme - 端口转发模式, 本地端口转发: `tcp`, `udp`; 远程端口转发: `rtcp`, `rudp`; 转发隧道: `tls`, `kcp`等传输类型。
+
+[bind_address]:port - 本地/远程绑定地址。
+
+[host]:hostport[,[host]:hostport] - (可选, 2.6+) 目标访问地址，支持以逗号分割的多地址形式。
+
+**参数说明**
+
+`ip` - (可选, 2.8+) 也可以通过此参数来指定目标地址。
+
+`strategy` - 指定节点选择策略，`round` - 轮询，`random` - 随机, `fifo` - 自上而下。默认值为`round`。
+
+`max_fails` - (2.8.1+) 指定节点连接的最大失败次数，当与一个节点建立连接失败次数超过此设定值时，此节点会被标记为死亡节点(Dead)，死亡节点不会被选择使用。默认值为1。
+
+`fail_timeout` - (2.8.1+) 指定死亡节点的超时时间，当一个节点被标记为死亡节点后，在此设定的时间间隔内不会被选择使用，超过此设定时间间隔后，会再次参与节点选择。默认为30秒。
 
 ## TCP本地端口转发
 

@@ -19,14 +19,23 @@ There are two types of load balancing, here simply called **simple** and **compl
 Simple type is similar to DNS load balancing, you can specify multiple addresses for the proxy node:
 
 ```bash
-gost -L=:8080 -F=http://localhost:8080?ip=192.168.1.1,192.168.1.2:8081,192.168.1.3:8082 -F=socks5://localhost:1080?ip=172.20.1.1:1080,172.20.1.2:1081,172.20.1.3:1082
+gost -L=:8080 -F='http://localhost:8080?ip=192.168.1.1,192.168.1.2:8081,192.168.1.3:8082&strategy=round&max_fails=1&fail_timeout=30s' -F=socks5://localhost:1080?ip=172.20.1.1:1080,172.20.1.2:1081,172.20.1.3:1082
 ```
 
-The client specifies the actual proxy address via the `ip` parameter (a comma-separated list), the address format can be ip[:port] or hostname[:port], If no port is specified, the port in the URL is used by default.
+ **Options**
 
+`ip` - the actual proxy address(es) (a comma-separated list), the address format can be ip[:port] or hostname[:port], If no port is specified, the port in the URL is used by default.
+
+`strategy` - (2.6+) Specify node selection strategy, `round` for round-robin, `random` for random selection, `fifo` for top-down selection, the default is `round`.
+
+`max_fails` - (2.8.1+) The maximum number of failed connections for a specified node, When the number of failed connections with a node exceeds this set value, the node will be marked as a **Dead node**, Dead node will not be selected to use. default value is 1.
+
+`fail_timeout` - (2.8.1+) Specify the dead node's timeout period. When a node is marked as a dead node, it will not be selected within this set time interval. After this set time interval, it will participate in node selection again.
 
 {{< admonition title="NOTE" type="warning" >}}
 When the `ip` parameter is set, the address specified in the URL will be ignored.
+
+When the `peer` (see below) parameter is set, the options above will be overwritten.
 {{< /admonition >}}
 
 The node selection strategy can be specified with the `strategy` parameter. Default value is `round` (**NOTE: `strategy` parameter requires 2.6+ version**).
@@ -93,11 +102,11 @@ peer    ss://chacha20:123456@:18338
 
 Format description:
 
-`strategy` - Specify node selection strategy, `round` for round-robin, `random` for random selection, `fifo` for top-down selection, the default is `round`.
+`strategy` - Same as the `strategy` option.
 
-`max_fails` - The maximum number of failed connections for a specified node, When the number of failed connections with a node exceeds this set value, the node will be marked as a **Dead node**, Dead node will not be selected to use. default value is 1.
+`max_fails` - Same as the `max_fails` option.
 
-`fail_timeout` - Specify the dead node's timeout period. When a node is marked as a dead node, it will not be selected within this set time interval. After this set time interval, it will participate in node selection again.
+`fail_timeout` - Same as the `fail_timeout` option.
 
 `reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
 
