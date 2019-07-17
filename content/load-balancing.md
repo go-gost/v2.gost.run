@@ -76,7 +76,7 @@ example.com:8083
 ![figure 03](../img/lb03.png)
 
 ```bash
-gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.json -F=http2://172.20.1.1:443?peer=peer2.json
+gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.txt -F=http2://172.20.1.1:443?peer=peer2.txt
 ```
 
 客户端通过`peer`参数指定额外的节点配置文件，配置文件格式为：
@@ -121,7 +121,9 @@ peer    ss://chacha20:123456@:18338
 ![figure 05](../img/lb05.png)
 
 #### 完整的示例配置
+
 *gost.json*:
+
 ```json
 {
     "Debug": false,
@@ -133,24 +135,28 @@ peer    ss://chacha20:123456@:18338
                 ":8888"
             ],
             "ChainNodes": [
-                ":1080?peer=peer.json"
+                ":1080?peer=peer.txt"
             ]
         }
     ]
 }
 ```
-*peer.json*:
-```json
-{
-    "strategy": "fifo",
-    "max_fails": 1,
-    "fail_timeout": 86400,
-    "nodes": [
-        "ss+kcp://aes-128-cfb:pass@[host]:port?ip=ips.txt"
-    ]
-}
+
+*peer.txt*:
+
+```txt
+strategy        random
+max_fails       1
+fail_timeout    30s
+
+reload          10s
+
+# peers
+peer    ss+kcp://aes-128-cfb:pass@[host]:port?ip=ips.txt
 ```
+
 *ips.txt*:
+
 ```txt
 host1[:port]
 host2[:port]
