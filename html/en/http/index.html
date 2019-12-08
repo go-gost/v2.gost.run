@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head >
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+	<meta name="description" content="A simple tunnel written in Golang">
+	<meta name="generator" content="Hugo 0.40.1" />
+	
+	<title>HTTP(S) &mdash; GOST</title>
+	
+	<link rel="stylesheet" href="https://docs.ginuerzh.xyz/gost/css/alabaster.css" type="text/css" />
+	<link rel="stylesheet" href="https://docs.ginuerzh.xyz/gost/css/highlight.css" type="text/css" />
+
+	
+
+	<link rel="shortcut icon" href="https://docs.ginuerzh.xyz/gost/favicon.ico" type="image/x-icon"/>
+</head>
+
+	<body role="document">
+		<div class="document">
+			<div class="documentwrapper">
+				<div class="bodywrapper">
+					<div class="body" role="main">
+						
+	<h1>HTTP(S)</h1>
+	
+	
+
+<p>HTTP is a protocol type supported by GOST, with a variety of transport types can be very flexible to build proxy services:</p>
+
+<h2 id="standard-http-proxy-service">Standard HTTP Proxy Service</h2>
+
+<pre><code class="language-bash">gost -L http://:8080
+</code></pre>
+
+<p>This is one of the most basic and most commonly used type of proxy service and does not itself have any encryption mechanism.</p>
+
+<h2 id="standard-https-proxy-service">Standard HTTPS Proxy Service</h2>
+
+<pre><code class="language-bash">gost -L https://:443
+</code></pre>
+
+<p>HTTP proxy service using TLS encryption.</p>
+
+<h2 id="http-over-websocket-secure">HTTP Over Websocket (Secure)</h2>
+
+<pre><code class="language-bash">gost -L http+ws://:8080
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="language-bash">gost -L http+wss://:443
+</code></pre>
+
+<h2 id="http-over-kcp">HTTP Over KCP</h2>
+
+<pre><code class="language-bash">gost -L http+kcp://:8388
+</code></pre>
+
+<p>KCP is used as the transport type.</p>
+
+
+
+						<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "gost-ginuerzh-xyz" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+	<div class="sphinxsidebarwrapper">
+		<p class="logo">
+			<a href="https://docs.ginuerzh.xyz/gost/">
+				<img class="logo" src="https://docs.ginuerzh.xyz/gost/favicon.ico" alt="Logo"/>
+				<h1 class="logo logo-name">GOST</h1>
+			</a>
+		</p>
+		
+		<p class="blurb">A simple tunnel written in Golang</p>
+
+		
+
+	<p>
+		<iframe src="https://ghbtns.com/github-btn.html?user=ginuerzh&repo=gost&type=watch&count=true&size=large"
+		allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+	</p>
+
+	
+
+	
+		
+
+		
+
+<h3>Navigation</h3>
+<ul>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/">GOST</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/getting-started/">Getting Started</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/configuration/">Configuration</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/http/">HTTP(S)</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/http2/">HTTP2</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/probe_resist/">Probing Resistance</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/socks/">SOCKS</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/ss/">Shadowsocks</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/sni/">SNI</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/tls/">TLS</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/ws/">Websocket</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/kcp/">KCP</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/quic/">QUIC</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/ssh/">SSH</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/simple-obfs/">Simple-obfs</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/obfs4/">Obfs4</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/redirect/">Transparent Proxy</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/port-forwarding/">Port Forwarding</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/permission/">Permission Control</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/load-balancing/">Load Balancing</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/bypass/">Routing Control</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/dns/">DNS Control</a>
+	</li>
+	
+</ul>
+
+
+		
+
+	</div>
+</div>
+<div class="clearer"></div>
+</div>
+			<div class="footer">
+	&copy; 2019 <a href="https://github.com/ginuerzh">ginuerzh</a>
+	|
+	Powered by <a href="http://gohugo.io/">Hugo 0.40.1</a>
+	&amp; <a href="https://github.com/digitalcraftsman/hugo-alabaster-theme">Alabaster</a>
+	
+</div>
+
+
+
+
+			
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+			<script>hljs.initHighlightingOnLoad();</script>
+			
+
+			
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-98791308-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+		</div>
+	</body>
+</html>

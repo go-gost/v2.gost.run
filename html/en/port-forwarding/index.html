@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head >
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+	<meta name="description" content="A simple tunnel written in Golang">
+	<meta name="generator" content="Hugo 0.40.1" />
+	
+	<title>Port Forwarding &mdash; GOST</title>
+	
+	<link rel="stylesheet" href="https://docs.ginuerzh.xyz/gost/css/alabaster.css" type="text/css" />
+	<link rel="stylesheet" href="https://docs.ginuerzh.xyz/gost/css/highlight.css" type="text/css" />
+
+	
+
+	<link rel="shortcut icon" href="https://docs.ginuerzh.xyz/gost/favicon.ico" type="image/x-icon"/>
+</head>
+
+	<body role="document">
+		<div class="document">
+			<div class="documentwrapper">
+				<div class="bodywrapper">
+					<div class="body" role="main">
+						
+	<h1>Port Forwarding</h1>
+	
+	
+
+<p>GOST has added support for port forwarding since version 2.1.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Port forwarding service node configuration and ordinary proxy nodes are different:</p>
+
+<pre><code class="language-bash">scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]?ip=[host]:hostport][,[host]:hostport]]
+</code></pre>
+
+<p>scheme - Forward mode, local: <code>tcp</code>, <code>udp</code>; remote: <code>rtcp</code>, <code>rudp</code>; tunnel: <code>tls</code>, <code>kcp</code>, etc.</p>
+
+<p>[bind_address]:port - Local/remote binding address.</p>
+
+<p>[host]:hostport[,[host]:hostport] - (Optional, 2.6+) Comma-separated target addresses.</p>
+
+<p><strong>Options</strong></p>
+
+<p><code>ip</code> - (Optional, 2.8+) Comma-separated target addresses.</p>
+
+<p><code>strategy</code> - (2.6+) Specify node selection strategy, <code>round</code> for round-robin, <code>random</code> for random selection, <code>fifo</code> for top-down selection, the default is <code>round</code>.</p>
+
+<p><code>max_fails</code> - (2.8.1+) The maximum number of failed connections for a specified node, When the number of failed connections with a node exceeds this set value, the node will be marked as a <strong>Dead node</strong>, Dead node will not be selected to use. default value is 1.</p>
+
+<p><code>fail_timeout</code> - (2.8.1+) Specify the dead node&rsquo;s timeout period. When a node is marked as a dead node, it will not be selected within this set time interval. After this set time interval, it will participate in node selection again.</p>
+
+<h2 id="local-tcp-port-forwarding">Local TCP port forwarding</h2>
+
+<p>Map local TCP port A to the specified destination TCP port B. All data to port A is forwarded to port B. This feature is similar to SSH&rsquo;s local port forwarding feature.</p>
+
+<pre><code class="language-bash">gost -L=tcp://:2222/192.168.1.1:22 [-F=..]
+</code></pre>
+
+<p>The data of the local TCP port 2222 is forwarded to 192.168.1.1:22 (through the proxy chain if exists).</p>
+
+<p>When the end of the chain (the last -F parameter) is of type <code>forward+ssh</code>, GOST will directly use SSH&rsquo;s local port forwarding feature:</p>
+
+<pre><code class="language-bash">gost -L=tcp://:2222/192.168.1.1:22 -F forward+ssh://:2222
+</code></pre>
+
+<p>Server can be a standard SSH program, it can also be GOST&rsquo;s SSH forwarding mode:</p>
+
+<pre><code class="language-bash">gost -L forward+ssh://:2222
+</code></pre>
+
+<p>scheme must be <code>forward+ssh</code>.</p>
+
+<h2 id="remote-tcp-port-forwarding">Remote TCP port forwarding</h2>
+
+<p>Map the specified destination TCP port B to local TCP port A. All data to port B is forwarded to port A. This feature is similar to SSH&rsquo;s remote port forwarding feature.</p>
+
+<pre><code class="language-bash">gost -L=rtcp://:2222/192.168.1.1:22 [-F=... -F=socks5://172.24.10.1:1080]
+</code></pre>
+
+<p>The data of 172.24.10.1:2222 is forwarded to 192.168.1.1:22 (through the proxy chain if exists).</p>
+
+<h3 id="socks5-bind-method-with-multiplexing-enabled">SOCKS5 BIND method with multiplexing enabled</h3>
+
+<p>SOCKS5 BIND method has added support for multiplexing since version 2.5, remote port forwarding can use this feature to improve transport efficiency.</p>
+
+<pre><code class="language-bash">gost -L rtcp://:8080/192.168.1.1:80 -F socks5://:1080?mbind=true
+</code></pre>
+
+<p>The client enables the SOCKS5 BIND multiplexing mode with the <code>mbind=true</code> parameter.</p>
+
+<h3 id="ssh-port-forwarding-mode">SSH port forwarding mode</h3>
+
+<p>When the end of the chain (the last -F parameter) is of type <code>forward+ssh</code>, GOST will directly use SSH&rsquo;s remote port forwarding feature:</p>
+
+<pre><code class="language-bash">gost -L=rtcp://:2222/192.168.1.1:22 -F forward+ssh://:2222
+</code></pre>
+
+<p>Server can be a standard SSH program, it can also be GOST&rsquo;s SSH forwarding mode:</p>
+
+<pre><code class="language-bash">gost -L forward+ssh://:2222
+</code></pre>
+
+<p>scheme must be <code>forward+ssh</code>.</p>
+
+<h2 id="local-udp-port-forwarding">Local UDP port forwarding</h2>
+
+<p>Map local UDP port A to the specified destination UDP port B. All data to port A is forwarded to port B.</p>
+
+<pre><code class="language-bash">gost -L=udp://:5353/192.168.1.1:53?ttl=60 [-F=... -F=socks5://172.24.10.1:1080]
+</code></pre>
+
+<p>The data of the local UDP port 5353 is forwarded to 192.168.1.1:53 (through the proxy chain if exists).</p>
+
+<p>Each different client (has different source port) corresponds to a forwarding channel, and each forwarding channel has a timeout. When the timeout is expired and there is no data interaction during this time, the channel will be closed.</p>
+
+<p>The timeout value can be set by the <code>ttl</code> parameter. The default value is 60 seconds.</p>
+
+<h2 id="remote-udp-port-forwarding">Remote UDP port forwarding</h2>
+
+<p>Map the specified destination UDP port B to local UDP port A. All data to port B is forwarded to port A.</p>
+
+<pre><code class="language-bash">gost -L=rudp://:5353/192.168.1.1:53?ttl=60 [-F=... -F=socks5://172.24.10.1:1080]
+</code></pre>
+
+<p>The data of 172.24.10.1:5353 is forwarded to 192.168.1.1:53 (through the proxy chain if exists).</p>
+
+<p>Each different client (has different source port) corresponds to a forwarding channel, and each forwarding channel has a timeout. When the timeout is expired and there is no data interaction during this time, the channel will be closed.</p>
+
+<p>The timeout value can be set by the <code>ttl</code> parameter. The default value is 60 seconds.</p>
+
+<div class="admonition warning">
+<p class="first admonition-title">NOTE</p>
+<p>When forwarding UDP data, if there is a proxy chain, the end of the proxy chain (the last -F parameter) must be a GOST SOCKS5 type proxy, and the GOST will forward UDP data using UDP-over-TCP.</p>
+</div>
+
+<h2 id="forward-tunnel">Forward Tunnel</h2>
+
+<p>Local TCP port forwarding can be used with transport types in version 2.5:</p>
+
+<p>Server:</p>
+
+<pre><code class="language-bash">gost -L tls://:443/:1443 -L sni://:1443
+</code></pre>
+
+<p>The <code>scheme</code> must be transport type only.</p>
+
+<p>Client:</p>
+
+<pre><code class="language-bash">gost -L :8080 -F forward+tls://server_ip:443
+</code></pre>
+
+<p>The <code>scheme</code> is <code>forward+transport</code> format, The protocol type must be <code>forward</code>.</p>
+
+<h3 id="use-cases">Use Cases</h3>
+
+<h4 id="encryption">Encryption</h4>
+
+<pre><code class="language-bash">gost -L tls://:443/:8080 -L http://:8080
+</code></pre>
+
+<p>Convert the HTTP proxy service on port 8080 to the HTTPS proxy service on port 443.</p>
+
+<h4 id="network-acceleration">Network Acceleration</h4>
+
+<pre><code class="language-bash">gost -L kcp://:8388/:8338 -L ss://chacha20:123456@:8338
+</code></pre>
+
+<p>Use shadowsocks proxy service on port 8338 with KCP transport on port 8388.</p>
+
+
+
+						<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "gost-ginuerzh-xyz" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+	<div class="sphinxsidebarwrapper">
+		<p class="logo">
+			<a href="https://docs.ginuerzh.xyz/gost/">
+				<img class="logo" src="https://docs.ginuerzh.xyz/gost/favicon.ico" alt="Logo"/>
+				<h1 class="logo logo-name">GOST</h1>
+			</a>
+		</p>
+		
+		<p class="blurb">A simple tunnel written in Golang</p>
+
+		
+
+	<p>
+		<iframe src="https://ghbtns.com/github-btn.html?user=ginuerzh&repo=gost&type=watch&count=true&size=large"
+		allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+	</p>
+
+	
+
+	
+		
+
+		
+
+<h3>Navigation</h3>
+<ul>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/">GOST</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/getting-started/">Getting Started</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/configuration/">Configuration</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/http/">HTTP(S)</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/http2/">HTTP2</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/probe_resist/">Probing Resistance</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/socks/">SOCKS</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/ss/">Shadowsocks</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/sni/">SNI</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/tls/">TLS</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/ws/">Websocket</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/kcp/">KCP</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/quic/">QUIC</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/ssh/">SSH</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/simple-obfs/">Simple-obfs</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/obfs4/">Obfs4</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/redirect/">Transparent Proxy</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/port-forwarding/">Port Forwarding</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/permission/">Permission Control</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/load-balancing/">Load Balancing</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/bypass/">Routing Control</a>
+	</li>
+	
+	<li class="toctree-l1">
+		<a class="reference internal" href="/gost/en/dns/">DNS Control</a>
+	</li>
+	
+</ul>
+
+
+		
+
+	</div>
+</div>
+<div class="clearer"></div>
+</div>
+			<div class="footer">
+	&copy; 2019 <a href="https://github.com/ginuerzh">ginuerzh</a>
+	|
+	Powered by <a href="http://gohugo.io/">Hugo 0.40.1</a>
+	&amp; <a href="https://github.com/digitalcraftsman/hugo-alabaster-theme">Alabaster</a>
+	
+</div>
+
+
+
+
+			
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+			<script>hljs.initHighlightingOnLoad();</script>
+			
+
+			
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-98791308-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+		</div>
+	</body>
+</html>

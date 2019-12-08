@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GOST</title>
+    <link>https://docs.ginuerzh.xyz/gost/en/</link>
+    <description>Recent content on GOST</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 17 Nov 2017 20:34:20 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/gost/en/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Getting Started</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/getting-started/</link>
+      <pubDate>Wed, 15 Nov 2017 16:50:24 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/getting-started/</guid>
+      <description>Proxy Node
+In GOST，GOST and other proxy services are considered as proxy nodes, GOST can handle the requests itself, or forward the requests to any one or more proxy nodes.
+ Run Start a service Start an HTTP / SOCKS5 proxy service listening on port 8080:
+gost -L :8080  Run multiple services gost -L http2://:443 -L socks5://:1080 -L ss://aes-128-cfb:123456@:8338  Use the forwarding proxy gost -L :8080 -F 192.</description>
+    </item>
+    
+    <item>
+      <title>Configuration</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/configuration/</link>
+      <pubDate>Mon, 20 Nov 2017 10:18:10 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/configuration/</guid>
+      <description>Logical Layering
+A proxy service in GOST is logically divided into two layers: Protocol and Transport, There are several optional types on each layer. The two layers are independent of each other and can be used in any combination.
+ When GOST connects to a proxy node, it first interacts with the transport type set by the transport layer. After the transport layer is established, it interacts with the protocol type set by the protocol layer.</description>
+    </item>
+    
+    <item>
+      <title>HTTP(S)</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/http/</link>
+      <pubDate>Mon, 20 Nov 2017 10:51:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/http/</guid>
+      <description>HTTP is a protocol type supported by GOST, with a variety of transport types can be very flexible to build proxy services:
+Standard HTTP Proxy Service gost -L http://:8080  This is one of the most basic and most commonly used type of proxy service and does not itself have any encryption mechanism.
+Standard HTTPS Proxy Service gost -L https://:443  HTTP proxy service using TLS encryption.
+HTTP Over Websocket (Secure) gost -L http+ws://:8080  or</description>
+    </item>
+    
+    <item>
+      <title>HTTP2</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/http2/</link>
+      <pubDate>Mon, 20 Nov 2017 12:49:31 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/http2/</guid>
+      <description>In GOST HTTP2 has two modes: proxy mode and tunnel mode.
+Proxy Mode In proxy mode, HTTP2 is used as the protocol type and the transport type must be empty.
+gost -L http2://:443  As a standard HTTP2 proxy service.
+NOTE
+Proxy mode only supports the use of TLS encryption HTTP2 protocol, does not support plaintext HTTP2.
+ Tunnel Mode In tunnel mode, HTTP2 is used as the transport type: h2 and h2c.</description>
+    </item>
+    
+    <item>
+      <title>Probing Resistance</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/probe_resist/</link>
+      <pubDate>Sat, 05 Jan 2019 14:36:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/probe_resist/</guid>
+      <description>GOST added probing resistance to the HTTP/HTTPS/HTTP2 proxy in version 2.7. When the proxy server receives an invalid request, it will return the corresponding response according to the probing resistance policy.
+NOTE
+The probing resistance feature is only valid when the proxy server has user authentication enabled.
+ gost -L=&amp;quot;http2://admin:123456@:443?probe_resist=code:400&amp;amp;knock=www.example.com&amp;quot;  probe_resist The proxy server specifies the policy through the probe_resist parameter. The format of the parameter is：type:value.
+The optional values for type are:</description>
+    </item>
+    
+    <item>
+      <title>SOCKS</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/socks/</link>
+      <pubDate>Fri, 17 Nov 2017 11:10:24 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/socks/</guid>
+      <description>SOCKS is the protocol type supported by GOST. There are three versions of the SOCKS protocol: SOCKS4, SOCKS4A and SOCKS5.
+SOCKS4 gost -L socks4://:1080  Standard SOCKS4 proxy service, compatible with SOCKS4A protocol.
+SOCKS4A gost -L socks4a://:1080  Standard SOCKS4A proxy service,
+NOTE
+SOCKS4(A) currently supports only the CONNECT method and does not support the BIND method.
+ SOCKS5 gost -L socks5://:1080  SOCKS5 negotiated encryption GOST supports the standard SOCKS5 protocol methods: no-auth (0x00) and user/pass (0x02), and extends two methods for data encryption: tls(0x80) and tls-auth(0x82).</description>
+    </item>
+    
+    <item>
+      <title>Shadowsocks</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/ss/</link>
+      <pubDate>Mon, 20 Nov 2017 12:07:40 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/ss/</guid>
+      <description>Shadowsocks is a protocol type supported by GOST.
+Support for shadowsocks is based on library shadowsocks/shadowsocks-go. As of v2.8, GOST supports AEAD cipher based on shadowsocks/go-shadowsocks2.
+Encryption
+The encryption method and password are mandatory for shadowsocks
+ Server:
+gost -L=ss://chacha20:password@:8338  Client:
+gost -L=:8080 -F=ss://chacha20:password@server_ip:8338  Shadowsocks UDP relay Currently only the server supports UDP Relay.
+Server:
+gost -L=ssu://chacha20:password@:8338  AEAD cipher Server:
+gost -L=ss2://AEAD_CHACHA20_POLY1305:password@:8338  Client:
+gost -L=:8080 -F=ss2://AEAD_CHACHA20_POLY1305:password@server_ip:8338  The shadowsocks protocol can be used in combination with various transport types</description>
+    </item>
+    
+    <item>
+      <title>SNI</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/sni/</link>
+      <pubDate>Mon, 20 Nov 2017 12:12:40 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/sni/</guid>
+      <description>SNI is a protocol type supported by GOST.
+Server:
+gost -L sni://:443  Client:
+The SNI proxy service can be used directly by configuring hosts, or use GOST for forwarding:
+gost -L :8080 -F sni://server_ip:443  Host obfuscation In GOST, the SNI client can specify the host alias by using the host parameter:
+gost -L :8080 -F sni://server_ip:443?host=example.com  The SNI client replaces the host name in the TLS handshake or HTTP request header with the one specified by the host parameter.</description>
+    </item>
+    
+    <item>
+      <title>TLS</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/tls/</link>
+      <pubDate>Mon, 20 Nov 2017 12:18:24 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/tls/</guid>
+      <description>TLS is a transport type supported by GOST.
+Server:
+gost -L tls://:443  Client:
+gost -L :8080 -F tls://server_ip:443  GOST extends the TLS transport type (mtls) with multiplex features on the basis of TLS.
+Server:
+gost -L mtls://:443  Client:
+gost -L :8080 -F mtls://server_ip:443  TLS Certificate There is built-in TLS certificate in gost, if you need to use other TLS certificate, there are two ways:
+ Place two files cert.</description>
+    </item>
+    
+    <item>
+      <title>Websocket</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/ws/</link>
+      <pubDate>Mon, 20 Nov 2017 12:28:52 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/ws/</guid>
+      <description>Websocket is the transport type supported by GOST. There are four types of Websocket in GOST:
+Websocket gost -L ws://:8080  Unencrypted websocket tunnel.
+Multiplex Websocket gost -L mws://:8080  Unencrypted websocket tunnel with multiplexing features.
+Websocket Secure gost -L wss://:443  Websocket tunnel using TLS encryption.
+Multiplex Websocket Secure gost -L mwss://:443  Websocket tunnel with multiplexing and TLS encryption.
+The request URI can be set via the path parameter.</description>
+    </item>
+    
+    <item>
+      <title>KCP</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/kcp/</link>
+      <pubDate>Mon, 20 Nov 2017 12:33:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/kcp/</guid>
+      <description>KCP is a transport type supported by GOST.
+Support for KCP is based on libraries xtaci/kcp-go and xtaci/kcptun.
+Server:
+gost -L=kcp://:8388  Client:
+gost -L=:8080 -F=kcp://server_ip:8388  Configuration GOST has a default KCP configuration built-in，and is the same as xtaci/kcptun.
+GOST will automatically load kcp.json configuration file from current working directory if exists, or you can use the parameter c to specify the path to the file.
+gost -L=kcp://:8388?c=/path/to/conf/file  File format:</description>
+    </item>
+    
+    <item>
+      <title>QUIC</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/quic/</link>
+      <pubDate>Mon, 20 Nov 2017 12:40:44 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/quic/</guid>
+      <description>QUIC is a transport type supported by GOST.
+Support for QUIC is based on library lucas-clemente/quic-go.
+Server:
+gost -L=quic://:6121  Client:
+gost -L=:8080 -F=quic://server_ip:6121  Keep Alive Client can use the keepalive parameter to start heartbeat detection
+gost -L=:8080 -F=quic://server_ip:6121?keepalive=true  NOTE
+To use a QUIC node in a proxy chain, there can be only one QUIC node in the proxy chain, and this node can only serve as the first node in the proxy chain.</description>
+    </item>
+    
+    <item>
+      <title>SSH</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/ssh/</link>
+      <pubDate>Mon, 20 Nov 2017 12:45:12 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/ssh/</guid>
+      <description>SSH is a transport type supported by GOST.
+Server:
+gost -L=ssh://:2222  Client:
+gost -L=:8080 -F=ssh://server_ip:2222?ping=60  Client can use the ping parameter to set the heartbeat sending period in seconds. By default, no heartbeat packet is sent.
+Port Forwarding GOST SSH also supports standard SSH protocol port forwarding function, please refer to Port Forwarding for more detail.</description>
+    </item>
+    
+    <item>
+      <title>Simple-obfs</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/simple-obfs/</link>
+      <pubDate>Fri, 17 Nov 2017 15:30:24 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/simple-obfs/</guid>
+      <description>Simple-obfs is a transport type supported by GOST in version 2.7. It is compatible with shadowsocks/simple-obfs and Android Simple Obfuscation plugin. Currently only HTTP mode is supported.
+Server:
+gost -L=ss+ohttp://chacha20:123456@:8338  Client:
+gost -L=:8080 -F=ss+ohttp://chacha20:123456@server_ip:8338?host=bing.com  The client can customize the request host through the host parameter.</description>
+    </item>
+    
+    <item>
+      <title>Obfs4</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/obfs4/</link>
+      <pubDate>Mon, 20 Nov 2017 12:57:39 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/obfs4/</guid>
+      <description>Obfs4 is a transport type supported by GOST.
+First to run the server, generate a URL for client access:
+gost -L ss+obfs4://:18080  When it starts up normally, it will display the URL on the console
+ss+obfs4://:18080/?cert=06ss%2FlcDWVkTZLXLcRkH8tozyP0aUXmOm%2BuT5KtbkEP%2BTnCqNumFx9p218Vy0WityAM0Kg&amp;amp;iat-mode=0  Then use the generated parameters to start the client:
+gost -L :8080 -F ss+obfs4://server_ip:18080/?cert=06ss%2FlcDWVkTZLXLcRkH8tozyP0aUXmOm%2BuT5KtbkEP%2BTnCqNumFx9p218Vy0WityAM0Kg&amp;amp;iat-mode=0  The URL generated here does not contain host IP address, so if the client and the server are not the same host, it is necessary to specify the server&amp;rsquo;s IP.</description>
+    </item>
+    
+    <item>
+      <title>Transparent Proxy</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/redirect/</link>
+      <pubDate>Mon, 20 Nov 2017 13:03:15 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/redirect/</guid>
+      <description>GOST added support for TCP Transparent Proxy in version 2.3.
+gost -L redirect://:12345 -F 192.168.1.1:1080  Together with iptables, global proxy can be achieved.
+iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345  NOTE
+Transparent proxy supports only Linux system.
+ </description>
+    </item>
+    
+    <item>
+      <title>Port Forwarding</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/port-forwarding/</link>
+      <pubDate>Mon, 20 Nov 2017 13:24:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/port-forwarding/</guid>
+      <description>GOST has added support for port forwarding since version 2.1.
+Configuration Port forwarding service node configuration and ordinary proxy nodes are different:
+scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]?ip=[host]:hostport][,[host]:hostport]]  scheme - Forward mode, local: tcp, udp; remote: rtcp, rudp; tunnel: tls, kcp, etc.
+[bind_address]:port - Local/remote binding address.
+[host]:hostport[,[host]:hostport] - (Optional, 2.6+) Comma-separated target addresses.
+Options
+ip - (Optional, 2.8+) Comma-separated target addresses.
+strategy - (2.6+) Specify node selection strategy, round for round-robin, random for random selection, fifo for top-down selection, the default is round.</description>
+    </item>
+    
+    <item>
+      <title>Permission Control</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/permission/</link>
+      <pubDate>Mon, 20 Nov 2017 13:57:41 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/permission/</guid>
+      <description>One can pass available permissions with whitelist and blacklist values when starting a socks and ssh server. The format for each rule is as follows: [actions]:[hosts]:[ports].
+[actions] are comma-separted list of allowed actions: rtcp, rudp, tcp, udp. can be * to encompass all actions.
+[hosts] are comma-separated list of allowed hosts that one can bind on (in case of rtcp and rudp), or forward to (incase of tcp and udp). hosts support globs, like *.</description>
+    </item>
+    
+    <item>
+      <title>Load Balancing</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/load-balancing/</link>
+      <pubDate>Mon, 20 Nov 2017 14:00:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/load-balancing/</guid>
+      <description>Node Group
+A node group consists of one or more nodes, each node can be any type. In GOST, each level of the proxy chain is a node group.
+ GOST added support for load balancing in version 2.5. Load balancing can be applied at all levels of the proxy chain.
+There are two types of load balancing, here simply called simple and complex, the two types can be used in combination.</description>
+    </item>
+    
+    <item>
+      <title>Routing Control</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/bypass/</link>
+      <pubDate>Sat, 03 Nov 2018 14:00:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/bypass/</guid>
+      <description>GOST added routing control in version 2.6 to control client requests through black and white lists. Routing control can be applied to service nodes (-L parameters) and all hierarchical nodes of the proxy chain (-F parameters).
+gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.10.0.0/16,localhost,*.example.com  Specify the requested destination address list (comma-separated IP, CIDR, domain name or domain name wildcard address) via the bypass parameter.
+When the node selection of the proxy chain is performed, the routing configuration (bypass parameter) on this node is applied every time a proxy chain node is determined.</description>
+    </item>
+    
+    <item>
+      <title>DNS Control</title>
+      <link>https://docs.ginuerzh.xyz/gost/en/dns/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/en/dns/</guid>
+      <description>GOST added support for custom DNS services in version 2.6, and DNS control can be applied to service nodes. When the node receives a request, it resolves the target address of this request using the DNS service specified on this node.
+gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-query  The server uses the dns parameter to specify a list of DNS services (separated by commas). The format of each DNS service is: ip[:port][/protocol], The port defaults to 53 and the protocol optional values are: udp, tcp, tls, https.</description>
+    </item>
+    
+  </channel>
+</rss>
