@@ -52,7 +52,7 @@
       <pubDate>Sat, 05 Jan 2019 14:36:00 +0800</pubDate>
       
       <guid>https://docs.ginuerzh.xyz/gost/probe_resist/</guid>
-      <description>GOST在2.7版本中增加了对HTTP/HTTPS/HTTP2代理的探测防御功能。当代理服务收到非法请求时，会按照探测防御策略返回对应的响</description>
+      <description>GOST在2.7版本中增加了对HTTP/HTTPS/HTTP2代理的探测防御功能。当代理服务收到非法请求时，会按照探测防御策略返回对应的响应</description>
     </item>
     
     <item>
@@ -197,6 +197,15 @@
       
       <guid>https://docs.ginuerzh.xyz/gost/dns/</guid>
       <description>GOST在2.6版本中增加了自定义DNS服务功能，DNS控制可以应用于服务节点。每当此节点收到请求时，会使用此节点上指定的DNS服务对此请求</description>
+    </item>
+    
+    <item>
+      <title>TUN设备(Beta)</title>
+      <link>https://docs.ginuerzh.xyz/gost/tun/</link>
+      <pubDate>Thu, 26 Dec 2019 15:33:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/gost/tun/</guid>
+      <description>GOST在2.9版本中增加了对TUN设备的支持。基于TUN设备可以简单的创建VPN。 注意 此功能目前处于测试阶段，不能保证功能的完善和稳定性，</description>
     </item>
     
   </channel>

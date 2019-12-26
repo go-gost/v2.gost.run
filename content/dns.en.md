@@ -24,8 +24,10 @@ The format of the configuration file is:
 ```text
 # options
 timeout     30s
-# ttl         60s
+# ttl       60s
 reload      10s
+
+# prefer    ipv6
 
 # ip[:port] [protocol] [hostname]
 8.8.8.8
@@ -41,6 +43,8 @@ https://1.0.0.1/dns-query
 `ttl` - DNS cache expiration, default to the TTL in DNS server response. When set to a negative value, no cache is used.
 
 `reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
+
+`prefer` - (2.8.2+) AAAA(IPv6) lookups before A(IPv4).
 
 The DNS service list is divided into three columns:
 

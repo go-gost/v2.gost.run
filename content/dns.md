@@ -24,8 +24,10 @@ gost -L=:8080?dns=dns.txt
 ```text
 # options
 timeout     5s
-# ttl         60s
+# ttl       60s
 reload      10s
+
+# prefer    ipv6
 
 # ip[:port] [protocol] [hostname]
 8.8.8.8
@@ -41,6 +43,8 @@ https://1.0.0.1/dns-query
 `ttl` - DNS缓存有效期，默认使用DNS查询返回结果中的TTL。当设置为负值，则不使用缓存。
 
 `reload` - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
+
+`prefer` - (2.8.2+) AAAA(IPv6)优先于A(IPv4)。
 
 DNS服务项分为三列：
 
