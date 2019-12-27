@@ -5,7 +5,24 @@ title = "Websocket"
 weight = 31
 +++
 
-Websocket is the transport type supported by GOST. There are four types of Websocket in GOST:
+Websocket is the transport type supported by GOST. 
+
+## Parameters
+
+```bash
+gost -L "ws://:8080?path=/ws&rbuf=4096&wbuf=4096&compression=false"
+```
+
+`path` - request URI，default value is `/ws`　
+
+`rbuf` - receive buffer size in byte，default value is 4096
+
+`wbuf` - send buffer size in byte, default value is 4096
+
+`compression` - compression flag，default value is false
+
+
+There are four types of Websocket in GOST:
 
 ## Websocket
 
@@ -38,9 +55,3 @@ gost -L mwss://:443
 ```
 
 Websocket tunnel with multiplexing and TLS encryption.
-
-The request URI can be set via the `path` parameter. The default value is `/ws`:
-
-```bash
-gost -L ws://:8080?path=/ws
-```
