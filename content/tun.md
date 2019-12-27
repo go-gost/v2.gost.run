@@ -34,6 +34,10 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 `route` - 可选，逗号分割的路由列表:，例如：10.100.0.0/16,172.20.1.0/24,1.2.3.4/32
 
+## Windows
+
+Windows下需要安装tap驱动后才能使用，可以选择安装[OpenVPN/tap-windows6](https://github.com/OpenVPN/tap-windows6)或[OpenVPN client](https://github.com/OpenVPN/openvpn)。
+
 ## 构建基于TUN设备的VPN
 
 ### 创建TUN设备并建立UDP隧道
