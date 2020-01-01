@@ -96,7 +96,7 @@ scheme must be `forward+ssh`.
 Map local UDP port A to the specified destination UDP port B. All data to port A is forwarded to port B.
 
 ```bash
-gost -L=udp://:5353/192.168.1.1:53?ttl=60 [-F=... -F=socks5://172.24.10.1:1080]
+gost -L=udp://:5353/192.168.1.1:53?ttl=60s [-F=... -F=socks5://172.24.10.1:1080]
 ```
 
 The data of the local UDP port 5353 is forwarded to 192.168.1.1:53 (through the proxy chain if exists).
@@ -110,7 +110,7 @@ The timeout value can be set by the `ttl` parameter. The default value is 60 sec
 Map the specified destination UDP port B to local UDP port A. All data to port B is forwarded to port A.
 
 ```bash
-gost -L=rudp://:5353/192.168.1.1:53?ttl=60 [-F=... -F=socks5://172.24.10.1:1080]
+gost -L=rudp://:5353/192.168.1.1:53?ttl=60s [-F=... -F=socks5://172.24.10.1:1080]
 ```
 
 The data of 172.24.10.1:5353 is forwarded to 192.168.1.1:53 (through the proxy chain if exists).
