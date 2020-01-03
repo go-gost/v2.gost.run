@@ -9,19 +9,17 @@ GOST在2.9版本中增加了对TUN/TAP设备的支持。基于TUN/TAP设备可�
 
 {{< admonition title="注意" type="warning" >}} 
 此功能目前处于测试阶段，不能保证功能的完善和稳定性，请谨慎使用。
-
-目前仅支持IPv4协议。
 {{< /admonition >}}
 
 
-# Windows
+## Windows
 
 Windows下需要安装tap驱动后才能使用，可以选择安装[OpenVPN/tap-windows6](https://github.com/OpenVPN/tap-windows6)或[OpenVPN client](https://github.com/OpenVPN/openvpn)。
 
 
-# TUN
+## TUN
 
-## 使用说明
+### 使用说明
 
 ```
 gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.1/24&name=tun0&mtu=1350&route=10.100.0.0/16"
@@ -41,19 +39,19 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 `route` - 可选，逗号分割的路由列表:，例如：`10.100.0.0/16,172.20.1.0/24,1.2.3.4/32`
 
-## 构建基于TUN设备的VPN (Linux)
+### 构建基于TUN设备的VPN (Linux)
 
-### 创建TUN设备并建立UDP隧道
+#### 创建TUN设备并建立UDP隧道
 
 **注意：** `net`所指定的地址可能需要根据实际情况进行调整。
 
-#### 服务端
+##### 服务端
 
 ```
 gost -L tun://:8421?net=192.168.123.1/24
 ```
 
-#### 客户端
+##### 客户端
 
 ```
 gost -L tun://:8421/SERVER_IP:8421?net=192.168.123.2/24
@@ -81,25 +79,25 @@ $ ping 192.168.123.1
 如果能ping通，说明隧道已经成功建立。
 
 
-### iperf3测试
+#### iperf3测试
 
-#### 服务端：
+##### 服务端：
 
 ```
 $ iperf3 -s
 ```
 
-#### 客户端
+##### 客户端
 
 ```
 $ iperf3 -c 192.168.123.1
 ```
 
-### 路由规则和防火墙设置
+#### 路由规则和防火墙设置
 
 如果想让客户端访问到服务端的网络，还需要根据需求设置相应的路由和防火墙规则。例如可以将客户端的所有外网流量转发给服务端处理
 
-#### 服务端
+##### 服务端
 
 开启IP转发并设置防火墙规则
 
@@ -111,7 +109,7 @@ $ iptables -A FORWARD -i tun0 ! -o tun0 -j ACCEPT
 $ iptables -A FORWARD -o tun0 -j ACCEPT
 ```
 
-#### 客户端
+##### 客户端
 
 设置路由规则
 
@@ -123,27 +121,27 @@ $ ip route del default   # 删除默认的路由
 $ ip route add default via 192.168.123.2  # 使用新的默认路由
 ```
 
-# TAP
+## TAP
 
 **注意：目前不支持MacOS。** 
 
-## 使用说明
+### 使用说明
 
 ```
 gost -L="tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.1/24&name=tap0&mtu=1350&route=10.100.0.0/16"
 ```
 
-# 基于TCP的TUN/TAP隧道
+## 基于TCP的TUN/TAP隧道
 
 GOST中的TUN/TAP隧道是基于UDP协议进行数据传输。如果想采用TCP传输，可以通过端口转发来实现
 
-### 服务端
+##### 服务端
 
 ```
 gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
 ```
 
-### 服务端
+##### 服务端
 
 ```
 gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
