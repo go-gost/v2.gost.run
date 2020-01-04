@@ -22,7 +22,7 @@ Windows下需要安装tap驱动后才能使用，可以选择安装[OpenVPN/tap-
 ### 使用说明
 
 ```
-gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.1/24&name=tun0&mtu=1350&route=10.100.0.0/16"
+gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&name=tun0&mtu=1350&route=10.100.0.0/16&gw=192.168.123.1"
 ```
 
 `method:password` - 指定UDP隧道数据加密方法和密码。所支持的加密方法与[shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)一致。
@@ -38,6 +38,8 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 `mtu` - 可选，设置TUN设备的MTU值，默认值为1350。
 
 `route` - 可选，逗号分割的路由列表:，例如：`10.100.0.0/16,172.20.1.0/24,1.2.3.4/32`
+
+`gw` - 可选，设置TUN设备的路由网关IP。
 
 ### 构建基于TUN设备的VPN (Linux)
 
@@ -128,7 +130,7 @@ $ ip route add default via 192.168.123.2  # 使用新的默认路由
 ### 使用说明
 
 ```
-gost -L="tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.1/24&name=tap0&mtu=1350&route=10.100.0.0/16"
+gost -L="tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&name=tap0&mtu=1350&route=10.100.0.0/16&gw=192.168.123.1"
 ```
 
 ## 基于TCP的TUN/TAP隧道
