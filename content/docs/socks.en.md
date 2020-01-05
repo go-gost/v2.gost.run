@@ -23,9 +23,9 @@ gost -L socks4a://:1080
 
 Standard SOCKS4A proxy service,
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 SOCKS4(A) currently supports only the CONNECT method and does not support the BIND method.
-{{< /admonition >}}
+{{< /hint >}}
 
 ## SOCKS5
 
@@ -57,23 +57,23 @@ GOST SOCKS5 also supports UDP Relay, and supports TCP-over-UDP features.
 
 #### No forward proxy
 
-![Figure 01](/gost/img/udp01.png)
+![Figure 01](/img/udp01.png)
 
 GOST acts as the standard SOCKS5 proxy for UDP relay.
 
 #### Forward proxy
 
-![Figure 02](/gost/img/udp02.png)
+![Figure 02](/img/udp02.png)
 
 #### Multi-level forward proxy
 
-![Figure 03](/gost/img/udp03.png)
+![Figure 03](/img/udp03.png)
 
 When forward proxies are set, GOST uses UDP-over-TCP to forward UDP data, proxy1 to proxyN can be any type.
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 If the BIND and UDP requests for SOCKS5 are to be forwarded, the end of the chain (the last -F parameter) must be the GOST SOCKS5 proxy.
-{{< /admonition >}}
+{{< /hint >}}
 
 The SOCKS protocol can also be used in combination with various transport types
 

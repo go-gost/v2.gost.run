@@ -17,9 +17,9 @@ gost -L http2://:443
 
 443端口就是一个标准的HTTP2代理服务。
 
-{{< admonition title="注意" type="note" >}}
+{{< hint warning>}}
 代理模式下仅支持使用TLS加密的HTTP2协议，不支持明文HTTP2传输。
-{{< /admonition >}}
+{{< /hint >}}
 
 ## 隧道模式
 

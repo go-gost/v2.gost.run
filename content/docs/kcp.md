@@ -59,6 +59,6 @@ gost -L=kcp://:8388?c=/path/to/conf/file
 
 配置文件中的参数说明请参考[kcptun](https://github.com/xtaci/kcptun#usage)。
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 若要在代理链中使用KCP节点，则此代理链中只能有一个KCP节点，且此节点只能作为代理链的第一个节点。
-{{< /admonition >}}
+{{< /hint >}}

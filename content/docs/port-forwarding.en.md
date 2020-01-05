@@ -119,9 +119,9 @@ Each different client (has different source port) corresponds to a forwarding ch
 
 The timeout value can be set by the `ttl` parameter. The default value is 60 seconds.
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 When forwarding UDP data, if there is a proxy chain, the end of the proxy chain (the last -F parameter) must be a GOST SOCKS5 type proxy, and the GOST will forward UDP data using UDP-over-TCP.
-{{< /admonition >}}
+{{< /hint >}}
 
 ## Forward Tunnel
 

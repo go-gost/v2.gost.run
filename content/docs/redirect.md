@@ -17,6 +17,6 @@ gost -L redirect://:12345 -F 192.168.1.1:1080
 iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345
 ```
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 透明代理仅支持Linux系统。
-{{< /admonition >}}
+{{< /hint >}}

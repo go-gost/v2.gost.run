@@ -1,7 +1,6 @@
 +++
 date = "2017-11-15T16:50:24+08:00"
-menu = "main"
-type = "homepage"
+type = "docs"
 title = "GOST"
 weight = 1
 +++

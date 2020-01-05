@@ -9,9 +9,11 @@ Shadowsocks is a protocol type supported by GOST.
 
 Support for shadowsocks is based on library [shadowsocks/shadowsocks-go](https://github.com/shadowsocks/shadowsocks-go). As of v2.8, GOST supports AEAD cipher based on [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2).
 
-{{< admonition title="Encryption" type="note" >}}
+{{< hint warning >}}
+**Encryption**
+
 The encryption method and password are mandatory for shadowsocks
-{{< /admonition >}}
+{{< /hint >}}
 
 Server:
 

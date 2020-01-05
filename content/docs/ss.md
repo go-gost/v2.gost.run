@@ -9,9 +9,11 @@ Shadowsocks是GOST支持的一种协议类型(Protocol)。
 
 GOST对shadowsocks的支持是基于[shadowsocks/shadowsocks-go](https://github.com/shadowsocks/shadowsocks-go)库。在2.8版本中，GOST基于[shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)增加了对AEAD加密的支持。
 
-{{< admonition title="加密" type="note" >}}
+{{< hint warning >}}
+**加密**
+
 使用shadowsocks时必须指定加密方法和密码。
-{{< /admonition >}}
+{{< /hint >}}
 
 服务端:
 

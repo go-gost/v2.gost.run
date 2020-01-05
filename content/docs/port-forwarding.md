@@ -118,9 +118,9 @@ gost -L=rudp://:5353/192.168.1.1:53?ttl=60s [-F=... -F=socks5://172.24.10.1:1080
 可以通过`ttl`参数来设置超时时间，默认值为60秒。
 
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 转发UDP数据时，如果有代理链，则代理链的末端(最后一个-F参数)必须是GOST SOCKS5类型代理，GOST会使用UDP-over-TCP方式进行转发。
-{{< /admonition >}}
+{{< /hint >}}
 
 ## 转发隧道
 

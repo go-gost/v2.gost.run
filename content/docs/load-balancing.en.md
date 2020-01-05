@@ -5,10 +5,12 @@ title = "Load Balancing"
 weight = 70
 +++
 
-{{< admonition title="Node Group" type="note" >}}
+{{< hint info >}}
+**Node Group**
+
 A node group consists of one or more nodes, each node can be any type.
 In GOST, each level of the proxy chain is a node group.
-{{< /admonition >}}
+{{< /hint >}}
 
 GOST added support for load balancing in version 2.5. Load balancing can be applied at all levels of the proxy chain.
 
@@ -32,21 +34,21 @@ gost -L=:8080 -F='http://localhost:8080?ip=192.168.1.1,192.168.1.2:8081,192.168.
 
 `fail_timeout` - (2.8.1+) Specify the dead node's timeout period. When a node is marked as a dead node, it will not be selected within this set time interval. After this set time interval, it will participate in node selection again.
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 When the `ip` parameter is set, the address specified in the URL will be ignored.
 
 When the `peer` (see below) parameter is set, the options above will be overwritten.
-{{< /admonition >}}
+{{< /hint >}}
 
 The node selection strategy can be specified with the `strategy` parameter. Default value is `round` (**NOTE: `strategy` parameter requires 2.6+ version**).
 
-![figure 01](/gost/img/lb01.png)
+![figure 01](/img/lb01.png)
 
 When more than one node is assigned to a level, GOST places the nodes in the same node group in the specified order.
 
 Each time a client sends a request, the proxy chain first determines a path to perform node selection (random, round-robin or fifo) for each node group.
 
-![figure 02](/gost/img/lb02.png)
+![figure 02](/img/lb02.png)
 
 After node selection, the command line is equivalent to:
 
@@ -75,7 +77,7 @@ The simple type requires that the type and configuration of all nodes at each le
 
 Complex type overcomes the limitations of the simple type and gives you the freedom to specify the type of node in each node group in the proxy chain.
 
-![figure 03](/gost/img/lb03.png)
+![figure 03](/img/lb03.png)
 
 ```bash
 gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.txt -F=http2://172.20.1.1:443?peer=peer2.txt
@@ -114,7 +116,7 @@ Format description:
 
 Each time a client sends a request, the proxy chain first determines a path to perform node selection (random or round-robin) for each node group.
 
-![figure 04](/gost/img/lb04.png)
+![figure 04](/img/lb04.png)
 
 ## Simple + Complex
 

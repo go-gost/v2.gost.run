@@ -27,6 +27,6 @@ gost -L=:8080 -F=quic://server_ip:6121
 gost -L=:8080 -F=quic://server_ip:6121?keepalive=true
 ```
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 若要在代理链中使用QUIC节点，则此代理链中只能有一个QUIC节点，且此节点只能作为代理链的第一个节点。
-{{< /admonition >}}
+{{< /hint >}}

@@ -5,9 +5,11 @@ title = "Getting Started"
 weight = 5
 +++
 
-{{< admonition title="Proxy Node" type="note" >}}
+{{< hint info >}}
+**Proxy Node**
+
 In GOST，GOST and other proxy services are considered as proxy nodes, GOST can handle the requests itself, or forward the requests to any one or more proxy nodes.
-{{< /admonition >}}
+{{< /hint >}}
 
 ## Run
 

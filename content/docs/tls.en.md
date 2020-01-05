@@ -63,6 +63,6 @@ Client can specify the CA certificate via the `ca` parameter to perform [Certifi
 gost -L=:8080 -F="tls://:443?ca=ca.pem"
 ```
 
-{{< admonition title="NOTE" type="note" >}}
+{{< hint info >}}
 The above parameters can be used for all TLS-enabled services,such as HTTP2, QUIC, WSS, SSH, SOCKS5.
-{{< /admonition >}}
+{{< /hint >}}

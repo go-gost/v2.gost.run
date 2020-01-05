@@ -7,9 +7,9 @@ weight = 100
 
 GOST在2.9版本中增加了对TUN/TAP设备的支持。基于TUN/TAP设备可以简单的构建VPN。
 
-{{< admonition title="注意" type="warning" >}} 
+{{< hint danger >}} 
 此功能目前处于测试阶段，不能保证功能的完善和稳定性，请谨慎使用。
-{{< /admonition >}}
+{{< /hint >}}
 
 
 ## Windows
@@ -21,7 +21,7 @@ Windows下需要安装tap驱动后才能使用，可以选择安装[OpenVPN/tap-
 
 ### 使用说明
 
-```
+```bash
 gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&name=tun0&mtu=1350&route=10.100.0.0/16&gw=192.168.123.1"
 ```
 
@@ -49,18 +49,18 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 ##### 服务端
 
-```
+```bash
 gost -L tun://:8421?net=192.168.123.1/24
 ```
 
 ##### 客户端
 
-```
+```bash
 gost -L tun://:8421/SERVER_IP:8421?net=192.168.123.2/24
 ```
 
 当以上命令运行无误后，可以通过`ip addr`命令来查看创建的TUN设备：
-```
+```bash
 $ ip addr show tun0
 2: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1350 qdisc pfifo_fast state UNKNOWN group default qlen 500
     link/none 
@@ -71,7 +71,7 @@ $ ip addr show tun0
 ```
 
 可以通过在客户端执行`ping`命令来测试一下隧道是否连通：
-```
+```bash
 $ ping 192.168.123.1
 64 bytes from 192.168.123.1: icmp_seq=1 ttl=64 time=9.12 ms
 64 bytes from 192.168.123.1: icmp_seq=2 ttl=64 time=10.3 ms
@@ -85,13 +85,13 @@ $ ping 192.168.123.1
 
 ##### 服务端：
 
-```
+```bash
 $ iperf3 -s
 ```
 
 ##### 客户端
 
-```
+```bash
 $ iperf3 -c 192.168.123.1
 ```
 
@@ -103,7 +103,7 @@ $ iperf3 -c 192.168.123.1
 
 开启IP转发并设置防火墙规则
 
-```
+```bash
 $ sysctl -w net.ipv4.ip_forward=1
 
 $ iptables -t nat -A POSTROUTING -s 192.168.123.0/24 ! -o tun0 -j MASQUERADE
@@ -117,7 +117,7 @@ $ iptables -A FORWARD -o tun0 -j ACCEPT
 
 **注意：**以下操作会更改客户端的网络环境，除非你知道自己在做什么，请谨慎操作！
 
-```
+```bash
 $ ip route add SERVER_IP/32 via eth0   # 请根据实际情况替换SERVER_IP和eth0
 $ ip route del default   # 删除默认的路由
 $ ip route add default via 192.168.123.2  # 使用新的默认路由
@@ -129,7 +129,7 @@ $ ip route add default via 192.168.123.2  # 使用新的默认路由
 
 ### 使用说明
 
-```
+```bash
 gost -L="tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&name=tap0&mtu=1350&route=10.100.0.0/16&gw=192.168.123.1"
 ```
 
@@ -139,12 +139,12 @@ GOST中的TUN/TAP隧道是基于UDP协议进行数据传输。如果想采用TCP
 
 ##### 服务端
 
-```
+```bash
 gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
 ```
 
 ##### 服务端
 
-```
+```bash
 gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
 ```

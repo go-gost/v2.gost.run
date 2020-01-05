@@ -7,9 +7,9 @@ weight = 22
 
 GOST added probing resistance to the HTTP/HTTPS/HTTP2 proxy in version 2.7. When the proxy server receives an invalid request, it will return the corresponding response according to the probing resistance policy.
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 The probing resistance feature is only valid when the proxy server has user authentication enabled.
-{{< /admonition >}}
+{{< /hint >}}
 
 ```bash
 gost -L="http2://admin:123456@:443?probe_resist=code:400&knock=www.example.com"

@@ -7,9 +7,9 @@ weight = 22
 
 GOST在2.7版本中增加了对HTTP/HTTPS/HTTP2代理的探测防御功能。当代理服务收到非法请求时，会按照探测防御策略返回对应的响应内容。
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 只有当代理服务开启了用户认证，探测防御功能才有效。
-{{< /admonition >}}
+{{< /hint >}}
 
 ```bash
 gost -L="http2://admin:123456@:443?probe_resist=code:400&knock=www.example.com"

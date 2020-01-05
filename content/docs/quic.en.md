@@ -29,6 +29,6 @@ Client can use the `keepalive` parameter to start heartbeat detection
 gost -L=:8080 -F=quic://server_ip:6121?keepalive=true
 ```
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 To use a QUIC node in a proxy chain, there can be only one QUIC node in the proxy chain, and this node can only serve as the first node in the proxy chain.
-{{< /admonition >}}
+{{< /hint >}}

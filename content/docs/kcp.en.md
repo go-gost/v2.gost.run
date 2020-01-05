@@ -59,6 +59,6 @@ File format:
 
 Please refer to the [kcptun](https://github.com/xtaci/kcptun#usage) for more detail.
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 To use a KCP node in a proxy chain, there can be only one KCP node in the proxy chain, and this node can only serve as the first node in the proxy chain.
-{{< /admonition >}}
+{{< /hint >}}

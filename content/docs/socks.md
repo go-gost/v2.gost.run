@@ -23,9 +23,9 @@ gost -L socks4a://:1080
 
 标准的SOCKS4A代理服务。
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 SOCKS4(A)当前仅支持CONNECT方法，不支持BIND方法。
-{{< /admonition >}}
+{{< /hint >}}
 
 ## SOCKS5
 
@@ -57,23 +57,23 @@ GOST中SOCKS5同时也支持UDP Relay，并支持TCP-over-UDP特性。
 
 #### 不设置转发代理
 
-![Figure 01](/gost/img/udp01.png)
+![Figure 01](/img/udp01.png)
 
 GOST做为标准SOCKS5代理处理UDP数据。
 
 #### 设置转发代理
 
-![Figure 02](/gost/img/udp02.png)
+![Figure 02](/img/udp02.png)
 
 #### 设置多个转发代理(代理链)
 
-![Figure 03](/gost/img/udp03.png)
+![Figure 03](/img/udp03.png)
 
 当设置转发代理时，GOST会使用UDP-over-TCP方式转发UDP数据。proxy1 - proxyN可以为任意类型代理。
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning >}}
 如果要转发SOCKS5的BIND和UDP请求，代理链的末端(最后一个-F参数)必须是GOST SOCKS5类型代理。
-{{< /admonition >}}
+{{< /hint >}}
 
 SOCKS协议也可以与各种传输类型(Transport)组合使用
 

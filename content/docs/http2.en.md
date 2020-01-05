@@ -17,9 +17,9 @@ gost -L http2://:443
 
 As a standard HTTP2 proxy service.
 
-{{< admonition title="NOTE" type="note" >}}
+{{< hint info >}}
 Proxy mode only supports the use of TLS encryption HTTP2 protocol, does not support plaintext HTTP2.
-{{< /admonition >}}
+{{< /hint >}}
 
 ## Tunnel Mode
 

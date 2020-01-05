@@ -17,6 +17,6 @@ Together with iptables, global proxy can be achieved.
 iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345
 ```
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 Transparent proxy supports only Linux system.
-{{< /admonition >}}
+{{< /hint >}}

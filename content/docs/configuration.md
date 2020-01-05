@@ -1,13 +1,14 @@
 +++
 date = "2017-11-16T16:50:24+08:00"
-menu = "main"
 title = "节点配置"
 weight = 10
 +++
 
-{{< admonition title="逻辑分层" type="note" >}}
+{{< hint info >}}
+**逻辑分层**
+
 在GOST中一个代理服务逻辑上被分成两层：协议层(Protocol)和传输层(Transport)，每层有若干可选的类型，两层之间相互独立，并可以任意组合使用。
-{{< /admonition >}}
+{{< /hint >}}
 
 当GOST去连接一个代理节点时，会先按照传输层设置的传输类型进行交互，当传输层建立以后，再按照协议层设置的协议类型进行交互。
 
@@ -161,6 +162,6 @@ test.user@002   12345678
 
 **注意：** 当`secrets`参数用于shadowsocks协议时，仅会使用第一项作为认证信息。
 
-{{< admonition title="注意" type="warning" >}}
+{{< hint warning>}}
 所有的认证信息都是用于协议层(Protocol)。
-{{< /admonition >}}
+{{< /hint >}}

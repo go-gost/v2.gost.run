@@ -5,9 +5,11 @@ title = "Configuration"
 weight = 10
 +++
 
-{{< admonition title="Logical Layering" type="note" >}}
+{{< hint info >}}
+**Logical Layering**
+
 A proxy service in GOST is logically divided into two layers: Protocol and Transport, There are several optional types on each layer. The two layers are independent of each other and can be used in any combination.
-{{< /admonition >}}
+{{< /hint >}}
 
 When GOST connects to a proxy node, it first interacts with the transport type set by the transport layer. After the transport layer is established, it interacts with the protocol type set by the protocol layer.
 
@@ -157,6 +159,6 @@ test.user@002   12345678
 
 **NOTE:** When the `secrets` parameter is used in the shadowsocks protocol, only the first entry is used as the authentication information.
 
-{{< admonition title="NOTE" type="warning" >}}
+{{< hint warning >}}
 All authentication information is for the protocol layer.
-{{< /admonition >}}
+{{< /hint >}}
