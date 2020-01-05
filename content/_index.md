@@ -39,7 +39,9 @@ weight = 1
 
 ## 下载安装
 
-二进制文件下载: [https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
+### 二进制文件
+
+[https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
 
 ### 源码编译
 
@@ -55,8 +57,6 @@ docker pull ginuerzh/gost
 
 ### Ubuntu Store
 
-gost已经上架ubuntu store，在ubuntu 16.04上可以直接通过`snap`来安装:
-
 ```bash
 sudo snap install gost
 ```
@@ -65,6 +65,6 @@ sudo snap install gost
 
 提交Issue: [https://github.com/ginuerzh/gost/issues](https://github.com/ginuerzh/gost/issues)
 
-Google讨论组: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)
-
 Telegram讨论群: [https://t.me/gogost](https://t.me/gogost)
+
+Google讨论组: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)

@@ -35,9 +35,12 @@ weight = 1
 * Route control
 * DNS control
 
-## Download
 
-Binary file download: [https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
+## Installation
+
+### Binary files
+
+[https://github.com/ginuerzh/gost/releases](https://github.com/ginuerzh/gost/releases)
 
 ### From Source
 
@@ -53,8 +56,6 @@ docker pull ginuerzh/gost
 
 ### Ubuntu Store
 
-GOST has been released in ubuntu store, and can be installed directly through the snap in ubuntu 16.04:
-
 ```bash
 sudo snap install gost
 ```
@@ -63,6 +64,6 @@ sudo snap install gost
 
 Github Issue: [https://github.com/ginuerzh/gost/issues](https://github.com/ginuerzh/gost/issues)
 
-Google Group: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)
-
 Telegram Group: [https://t.me/gogost](https://t.me/gogost)
+
+Google Group: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)
