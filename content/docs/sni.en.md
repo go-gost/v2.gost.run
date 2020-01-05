@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:12:40+08:00"
-menu = "main"
 title = "SNI"
+url = "sni"
 weight = 25
 +++
 

@@ -1,7 +1,7 @@
 +++
 date = "2017-11-17T15:40:24+08:00"
-menu = "main"
 title = "透明代理"
+url = "redirect"
 weight = 40
 +++
 

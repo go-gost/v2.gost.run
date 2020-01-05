@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:49:31+08:00"
-menu = "main"
 title = "HTTP2"
+url = "http2"
 weight = 21
 +++
 

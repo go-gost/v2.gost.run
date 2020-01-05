@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:33:00+08:00"
-menu = "main"
 title = "KCP"
+url = "kcp"
 weight = 32
 +++
 

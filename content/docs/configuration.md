@@ -1,6 +1,7 @@
 +++
 date = "2017-11-16T16:50:24+08:00"
 title = "节点配置"
+url = "configuration"
 weight = 10
 +++
 

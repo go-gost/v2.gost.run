@@ -1,7 +1,7 @@
 +++
 date = "2017-11-16T20:26:24+08:00"
-menu = "main"
 title = "端口转发"
+url = "port-forwarding"
 weight = 50
 +++
 

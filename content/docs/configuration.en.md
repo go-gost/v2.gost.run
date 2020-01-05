@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T10:18:10+08:00"
-menu = "main"
 title = "Configuration"
+url = "configuration"
 weight = 10
 +++
 

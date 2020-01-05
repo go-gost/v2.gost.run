@@ -1,7 +1,7 @@
 +++
 date = "2019-12-26T15:33:00+08:00"
-menu = "main"
 title = "TUN/TAP设备(Beta)"
+url = "tuntap"
 weight = 100
 +++
 

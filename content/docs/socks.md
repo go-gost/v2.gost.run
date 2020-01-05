@@ -1,7 +1,7 @@
 +++
 date = "2017-11-17T11:10:24+08:00"
-menu = "main"
 title = "SOCKS"
+url = "socks"
 weight = 23
 +++
 
@@ -57,17 +57,17 @@ GOST中SOCKS5同时也支持UDP Relay，并支持TCP-over-UDP特性。
 
 #### 不设置转发代理
 
-![Figure 01](/img/udp01.png)
+![Figure 01](/gost/img/udp01.png)
 
 GOST做为标准SOCKS5代理处理UDP数据。
 
 #### 设置转发代理
 
-![Figure 02](/img/udp02.png)
+![Figure 02](/gost/img/udp02.png)
 
 #### 设置多个转发代理(代理链)
 
-![Figure 03](/img/udp03.png)
+![Figure 03](/gost/img/udp03.png)
 
 当设置转发代理时，GOST会使用UDP-over-TCP方式转发UDP数据。proxy1 - proxyN可以为任意类型代理。
 

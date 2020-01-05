@@ -1,7 +1,7 @@
 +++
 date = "2017-11-17T15:50:24+08:00"
-menu = "main"
 title = "负载均衡"
+url = "load-balancing"
 weight = 70
 +++
 
@@ -40,13 +40,13 @@ gost -L=:8080 -F='http://localhost:8080?ip=192.168.1.1,192.168.1.2:8081,192.168.
 当设置了`peer`参数(见下方说明)，以上参数会被peer参数覆盖。
 {{< /hint >}}
 
-![figure 01](/img/lb01.png)
+![figure 01](/gost/img/lb01.png)
 
 当为一个层级指定了多个节点，GOST会将这些节点按指定顺序放在同一个节点组中。
 
 每次客户端发送请求，代理链会先确定一条路径，对每一个节点组执行节点选择(随机或轮询)。
 
-![figure 02](/img/lb02.png)
+![figure 02](/gost/img/lb02.png)
 
 相当于将上面的命令转化为：
 
@@ -75,7 +75,7 @@ example.com:8083
 
 复杂型克服了简单型中的限制，可以自由指定代理链中每一层级节点组中节点的类型。
 
-![figure 03](/img/lb03.png)
+![figure 03](/gost/img/lb03.png)
 
 ```bash
 gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.txt -F=http2://172.20.1.1:443?peer=peer2.txt
@@ -114,13 +114,13 @@ peer    ss://chacha20:123456@:18338
 
 每次客户端发送请求，代理链会确定一条路径，对每一个节点组执行节点选择(随机或轮询)。
 
-![figure 04](/img/lb04.png)
+![figure 04](/gost/img/lb04.png)
 
 ## 简单型+复杂型
 
 组合使用时，代理链会将每一层级上(通过`ip`和`peer`参数)指定的所有节点放在同一个节点组中，再对每一个节点组执行节点选择(随机或轮询)，最终确定一条路径：
 
-![figure 05](/img/lb05.png)
+![figure 05](/gost/img/lb05.png)
 
 #### 完整的示例配置
 

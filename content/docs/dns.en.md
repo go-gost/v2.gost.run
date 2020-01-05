@@ -1,7 +1,7 @@
 +++
 date = "2018-5-19T21:15:00+08:00"
-menu = "main"
 title = "DNS Control"
+url = "dns"
 weight = 90
 +++
 

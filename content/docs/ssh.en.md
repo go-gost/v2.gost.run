@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:45:12+08:00"
-menu = "main"
 title = "SSH"
+url = "ssh"
 weight = 34
 +++
 

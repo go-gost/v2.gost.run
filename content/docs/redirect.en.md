@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T13:03:15+08:00"
-menu = "main"
 title = "Transparent Proxy"
+url = "redirect"
 weight = 40
 +++
 

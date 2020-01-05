@@ -1,7 +1,7 @@
 +++
 date = "2017-11-17T15:30:24+08:00"
-menu = "main"
 title = "Simple-obfs"
+url = "simple-obfs"
 weight = 35
 +++
 

@@ -1,7 +1,7 @@
 +++
 date = "2019-01-05T14:36:00+08:00"
-menu = "main"
 title = "探测防御"
+url = "probe_resist"
 weight = 22
 +++
 

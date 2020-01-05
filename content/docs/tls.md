@@ -1,7 +1,7 @@
 +++
 date = "2017-11-17T11:45:24+08:00"
-menu = "main"
 title = "TLS"
+url = "tls"
 weight = 30
 +++
 

@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:40:44+08:00"
-menu = "main"
 title = "QUIC"
+url = "quic"
 weight = 33
 +++
 

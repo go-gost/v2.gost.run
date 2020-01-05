@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:07:40+08:00"
-menu = "main"
 title = "Shadowsocks"
+url = "ss"
 weight = 24
 +++
 

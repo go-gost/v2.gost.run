@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T12:28:52+08:00"
-menu = "main"
 title = "Websocket"
+url = "ws"
 weight = 31
 +++
 

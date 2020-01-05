@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T13:57:41+08:00"
-menu = "main"
 title = "Permission Control"
+url = "permission"
 weight = 60
 +++
 

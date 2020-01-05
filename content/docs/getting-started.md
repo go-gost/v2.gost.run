@@ -1,6 +1,7 @@
 +++
 date = "2017-11-15T16:50:24+08:00"
 title = "快速开始"
+url = "getting-started"
 weight = 5
 +++
 
@@ -14,7 +15,7 @@ weight = 5
 
 ### 开启代理服务
 
-![Figure 01](/img/001.png)
+![Figure 01](/gost/img/001.png)
 
 启动一个监听在8080端口的HTTP/SOCKS5代理服务：
 
@@ -30,7 +31,7 @@ gost -L http2://:443 -L socks5://:1080 -L ss://aes-128-cfb:123456@:8338
 
 ### 使用转发代理
 
-![Figure 02](/img/002.png)
+![Figure 02](/gost/img/002.png)
 
 ```bash
 gost -L :8080 -F 192.168.1.1:8081
@@ -41,7 +42,7 @@ gost -L :8080 -F 192.168.1.1:8081
 
 ### 使用多级转发代理(代理链)
 
-![Figure 03](/img/003.png)
+![Figure 03](/gost/img/003.png)
 
 ```bash
 gost -L=:8080 -F=quic://192.168.1.1:8081 -F=socks5+wss://192.168.1.2:8082 -F=http2://192.168.1.3:8083 ... -F=a.b.c.d:NNNN

@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T10:51:00+08:00"
-menu = "main"
 title = "HTTP(S)"
+url = "http"
 weight = 20
 +++
 

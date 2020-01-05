@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T13:24:00+08:00"
-menu = "main"
 title = "Port Forwarding"
+url = "port-forwarding"
 weight = 50
 +++
 

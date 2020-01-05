@@ -1,7 +1,7 @@
 +++
 date = "2017-11-17T11:10:24+08:00"
-menu = "main"
 title = "SOCKS"
+url = "socks"
 weight = 23
 +++
 
@@ -57,17 +57,17 @@ GOST SOCKS5 also supports UDP Relay, and supports TCP-over-UDP features.
 
 #### No forward proxy
 
-![Figure 01](/img/udp01.png)
+![Figure 01](/gost/img/udp01.png)
 
 GOST acts as the standard SOCKS5 proxy for UDP relay.
 
 #### Forward proxy
 
-![Figure 02](/img/udp02.png)
+![Figure 02](/gost/img/udp02.png)
 
 #### Multi-level forward proxy
 
-![Figure 03](/img/udp03.png)
+![Figure 03](/gost/img/udp03.png)
 
 When forward proxies are set, GOST uses UDP-over-TCP to forward UDP data, proxy1 to proxyN can be any type.
 

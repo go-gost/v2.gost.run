@@ -1,7 +1,7 @@
 +++
 date = "2017-11-20T14:00:00+08:00"
-menu = "main"
 title = "Load Balancing"
+url = "load-balancing"
 weight = 70
 +++
 
@@ -42,13 +42,13 @@ When the `peer` (see below) parameter is set, the options above will be overwrit
 
 The node selection strategy can be specified with the `strategy` parameter. Default value is `round` (**NOTE: `strategy` parameter requires 2.6+ version**).
 
-![figure 01](/img/lb01.png)
+![figure 01](/gost/img/lb01.png)
 
 When more than one node is assigned to a level, GOST places the nodes in the same node group in the specified order.
 
 Each time a client sends a request, the proxy chain first determines a path to perform node selection (random, round-robin or fifo) for each node group.
 
-![figure 02](/img/lb02.png)
+![figure 02](/gost/img/lb02.png)
 
 After node selection, the command line is equivalent to:
 
@@ -77,7 +77,7 @@ The simple type requires that the type and configuration of all nodes at each le
 
 Complex type overcomes the limitations of the simple type and gives you the freedom to specify the type of node in each node group in the proxy chain.
 
-![figure 03](/img/lb03.png)
+![figure 03](/gost/img/lb03.png)
 
 ```bash
 gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.txt -F=http2://172.20.1.1:443?peer=peer2.txt
@@ -116,7 +116,7 @@ Format description:
 
 Each time a client sends a request, the proxy chain first determines a path to perform node selection (random or round-robin) for each node group.
 
-![figure 04](/img/lb04.png)
+![figure 04](/gost/img/lb04.png)
 
 ## Simple + Complex
 
