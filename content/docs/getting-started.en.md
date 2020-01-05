@@ -15,7 +15,7 @@ In GOST，GOST and other proxy services are considered as proxy nodes, GOST can 
 
 ### Start a service
 
-![Figure 01](/gost/img/001.png)
+![Figure 01](/img/001.png)
 
 Start an HTTP / SOCKS5 proxy service listening on port 8080:
 
@@ -31,7 +31,7 @@ gost -L http2://:443 -L socks5://:1080 -L ss://aes-128-cfb:123456@:8338
 
 ### Use the forwarding proxy
 
-![Figure 02](/gost/img/002.png)
+![Figure 02](/img/002.png)
 
 ```bash
 gost -L :8080 -F 192.168.1.1:8081
@@ -42,7 +42,7 @@ HTTP / SOCKS5 proxy service listening on port 8080, using 192.168.1.1:8081 as th
 
 ### Multi-level forwarding proxy (proxy chain)
 
-![Figure 03](/gost/img/003.png)
+![Figure 03](/img/003.png)
 
 ```bash
 gost -L=:8080 -F=quic://192.168.1.1:8081 -F=socks5+wss://192.168.1.2:8082 -F=http2://192.168.1.3:8083 ... -F=a.b.c.d:NNNN
