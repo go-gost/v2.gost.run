@@ -8,8 +8,8 @@ disqusShortname: "gost-ginuerzh-xyz"
 googleAnalytics: "UA-98791308-2"
 
 # Book configuration
-disablePathToLower: true
-enableGitInfo: true
+# disablePathToLower: true
+# enableGitInfo: true
 
 languages:
   cn:
