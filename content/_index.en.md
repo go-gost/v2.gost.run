@@ -34,6 +34,7 @@ weight = 1
 * Load balancing
 * Route control
 * DNS control
+* TUN/TAP Device
 
 
 ## Installation

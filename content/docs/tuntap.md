@@ -41,6 +41,8 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 `gw` - 可选，设置TUN设备的路由网关IP。
 
+`tcp` - 可选，是否使用raw TCP，默认false。
+
 ### 构建基于TUN设备的VPN (Linux)
 
 #### 创建TUN设备并建立UDP隧道
@@ -135,7 +137,31 @@ gost -L="tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 ## 基于TCP的TUN/TAP隧道
 
-GOST中的TUN/TAP隧道是基于UDP协议进行数据传输。如果想采用TCP传输，可以通过端口转发来实现
+GOST中的TUN/TAP隧道默认是基于UDP协议进行数据传输。
+
+如果想使用TCP传输，可以选择采用以下几种方式：
+
+### Fake TCP
+
+{{< hint warning >}} 
+Fake TCP不是标准的TCP，只是模拟了TCP协议。
+{{< /hint >}}
+
+GOST中采用[xtaci/tcpraw](https://github.com/xtaci/tcpraw)内置了对TCP的支持。通过`tcp`参数开启此功能。
+
+##### 服务端
+
+```
+gost -L "tun://:8421?net=192.168.123.1/24&tcp=true"
+```
+
+##### 客户端
+
+```
+gost -L "tun://:0/SERVER_IP:8421?net=192.168.123.2/24&tcp=true"
+```
+
+### 端口转发
 
 ##### 服务端
 
@@ -148,3 +174,7 @@ gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
 ```bash
 gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
 ```
+
+### 第三方转发工具
+
+例如[udp2raw-tunnel](https://github.com/wangyu-/udp2raw-tunnel)。

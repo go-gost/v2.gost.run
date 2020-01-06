@@ -7,7 +7,7 @@ weight = 24
 
 Shadowsocks是GOST支持的一种协议类型(Protocol)。
 
-GOST对shadowsocks的支持是基于[shadowsocks/shadowsocks-go](https://github.com/shadowsocks/shadowsocks-go)库。在2.8版本中，GOST基于[shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)增加了对AEAD加密的支持。
+GOST对shadowsocks的支持是基于[shadowsocks/shadowsocks-go](https://github.com/shadowsocks/shadowsocks-go)库。
 
 {{< hint warning >}}
 **加密**
@@ -38,6 +38,8 @@ gost -L=ssu://chacha20:password@:8338
 ```
 
 ## AEAD加密
+
+在2.8版本中，GOST基于[shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)增加了对AEAD加密的支持。
 
 服务端:
 

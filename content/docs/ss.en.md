@@ -7,7 +7,7 @@ weight = 24
 
 Shadowsocks is a protocol type supported by GOST.
 
-Support for shadowsocks is based on library [shadowsocks/shadowsocks-go](https://github.com/shadowsocks/shadowsocks-go). As of v2.8, GOST supports AEAD cipher based on [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2).
+Support for shadowsocks is based on library [shadowsocks/shadowsocks-go](https://github.com/shadowsocks/shadowsocks-go).
 
 {{< hint warning >}}
 **Encryption**
@@ -38,6 +38,8 @@ gost -L=ssu://chacha20:password@:8338
 ```
 
 ## AEAD cipher
+
+As of v2.8, GOST supports AEAD cipher based on [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2).
 
 Server:
 
