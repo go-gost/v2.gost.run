@@ -8,7 +8,7 @@ weight = 100
 GOST在2.9版本中增加了对TUN/TAP设备的支持。基于TUN/TAP设备可以简单的构建VPN。
 
 {{< hint danger >}} 
-此功能目前处于测试阶段，不能保证功能的完善和稳定性，请谨慎使用。
+此功能目前处于测试阶段，不能保证功能的完善和稳定性，请谨慎使用！
 {{< /hint >}}
 
 
@@ -37,7 +37,7 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 `mtu` - 可选，设置TUN设备的MTU值，默认值为1350。
 
-`route` - 可选，逗号分割的路由列表:，例如：`10.100.0.0/16,172.20.1.0/24,1.2.3.4/32`
+`route` - 可选，逗号分割的路由列表:，例如：10.100.0.0/16,172.20.1.0/24,1.2.3.4/32
 
 `gw` - 可选，设置TUN设备的路由网关IP。
 
@@ -85,7 +85,7 @@ $ ping 192.168.123.1
 
 #### iperf3测试
 
-##### 服务端：
+##### 服务端
 
 ```bash
 $ iperf3 -s
@@ -117,7 +117,9 @@ $ iptables -A FORWARD -o tun0 -j ACCEPT
 
 设置路由规则
 
-**注意：**以下操作会更改客户端的网络环境，除非你知道自己在做什么，请谨慎操作！
+{{< hint danger >}}
+以下操作会更改客户端的网络环境，除非你知道自己在做什么，请谨慎操作！
+{{< /hint >}}
 
 ```bash
 $ ip route add SERVER_IP/32 via eth0   # 请根据实际情况替换SERVER_IP和eth0
@@ -127,7 +129,9 @@ $ ip route add default via 192.168.123.2  # 使用新的默认路由
 
 ## TAP
 
-**注意：目前不支持MacOS。** 
+{{< hint warning >}}
+目前不支持MacOS。
+{{< /hint >}} 
 
 ### 使用说明
 
@@ -145,19 +149,21 @@ GOST中的TUN/TAP隧道默认是基于UDP协议进行数据传输。
 
 {{< hint warning >}} 
 Fake TCP不是标准的TCP，只是模拟了TCP协议。
+
+此功能仅适用于Linux。
 {{< /hint >}}
 
 GOST中采用[xtaci/tcpraw](https://github.com/xtaci/tcpraw)内置了对TCP的支持。通过`tcp`参数开启此功能。
 
 ##### 服务端
 
-```
+```bash
 gost -L "tun://:8421?net=192.168.123.1/24&tcp=true"
 ```
 
 ##### 客户端
 
-```
+```bash
 gost -L "tun://:0/SERVER_IP:8421?net=192.168.123.2/24&tcp=true"
 ```
 
@@ -169,7 +175,7 @@ gost -L "tun://:0/SERVER_IP:8421?net=192.168.123.2/24&tcp=true"
 gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
 ```
 
-##### 服务端
+##### 客户端
 
 ```bash
 gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
