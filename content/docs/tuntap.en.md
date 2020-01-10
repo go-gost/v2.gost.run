@@ -1,17 +1,11 @@
 +++
 date = "2020-01-07T14:58:00+08:00"
-title = "TUN/TAP Device (Beta)"
+title = "TUN/TAP Device"
 url = "tuntap"
 weight = 100
 +++
 
 GOST added support for TUN/TAP devices in version 2.9. You can create VPN via TUN/TAP devices.
-
-
-{{< hint danger >}}
-This feature is currently under development. The stability cannot be guaranteed, please use it with caution!
-{{< /hint >}}
-
 
 ## Windows
 
@@ -129,7 +123,7 @@ $ ip route add default via 192.168.123.2  # add new default route
 ## TAP
 
 {{< hint warning >}}
-TAP devices not supported by macOS.
+TAP devices are not supported by macOS.
 {{< /hint >}} 
 
 ### Usage

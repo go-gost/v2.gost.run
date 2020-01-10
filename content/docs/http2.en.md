@@ -35,4 +35,8 @@ or
 gost -L http+h2c://:443
 ```
 
-Tunnel mode supports encryption (h2) and plaintext (h2c) two modes.
+Tunnel mode supports encryption (h2) and plain-text (h2c) two modes.
+
+### Parameters
+
+`path` - (2.9+) Optional, specify the request URI.

@@ -1,16 +1,11 @@
 +++
 date = "2019-12-26T15:33:00+08:00"
-title = "TUN/TAP设备(Beta)"
+title = "TUN/TAP设备"
 url = "tuntap"
 weight = 100
 +++
 
 GOST在2.9版本中增加了对TUN/TAP设备的支持。基于TUN/TAP设备可以简单的构建VPN。
-
-{{< hint danger >}} 
-此功能目前处于测试阶段，不能保证功能的完善和稳定性，请谨慎使用！
-{{< /hint >}}
-
 
 ## Windows
 
