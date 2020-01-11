@@ -9,7 +9,7 @@ HTTP是GOST支持的一种协议类型(Protocol)，配合各种传输类型(Tran
 
 ## 标准HTTP代理服务
 
-```bash
+```
 gost -L http://:8080
 ```
 
@@ -17,7 +17,7 @@ gost -L http://:8080
 
 ## 标准HTTPS代理服务
 
-```bash
+```
 gost -L https://:443
 ```
 
@@ -25,13 +25,13 @@ gost -L https://:443
 
 ## HTTP Over Websocket
 
-```bash
+```
 gost -L http+ws://:8080
 ```
 
 或
 
-```bash
+```
 gost -L http+wss://:443
 ```
 
@@ -39,7 +39,7 @@ gost -L http+wss://:443
 
 ## HTTP Over KCP
 
-```bash
+```
 gost -L http+kcp://:8388
 ```
 

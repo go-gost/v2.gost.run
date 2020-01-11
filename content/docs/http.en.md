@@ -9,7 +9,7 @@ HTTP is a protocol type supported by GOST, with a variety of transport types can
 
 ## Standard HTTP Proxy Service
 
-```bash
+```
 gost -L http://:8080
 ```
 
@@ -17,7 +17,7 @@ This is one of the most basic and most commonly used type of proxy service and d
 
 ## Standard HTTPS Proxy Service
 
-```bash
+```
 gost -L https://:443
 ```
 
@@ -25,19 +25,19 @@ HTTP proxy service using TLS encryption.
 
 ## HTTP Over Websocket (Secure)
 
-```bash
+```
 gost -L http+ws://:8080
 ```
 
 or
 
-```bash
+```
 gost -L http+wss://:443
 ```
 
 ## HTTP Over KCP
 
-```bash
+```
 gost -L http+kcp://:8388
 ```
 

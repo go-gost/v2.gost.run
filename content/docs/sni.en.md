@@ -7,17 +7,19 @@ weight = 25
 
 SNI is a protocol type supported by GOST.
 
-Server:
+## Usage
 
-```bash
+### Server side
+
+```
 gost -L sni://:443
 ```
 
-Client:
+### Client side
 
 The SNI proxy service can be used directly by configuring hosts, or use GOST for forwarding:
 
-```bash
+```
 gost -L :8080 -F sni://server_ip:443
 ```
 
@@ -25,7 +27,7 @@ gost -L :8080 -F sni://server_ip:443
 
 In GOST, the SNI client can specify the host alias by using the `host` parameter:
 
-```bash
+```
 gost -L :8080 -F sni://server_ip:443?host=example.com
 ```
 
@@ -35,12 +37,12 @@ The SNI protocol can be used in combination with various transport types
 
 ### SNI Over TLS
 
-```bash
+```
 gost -L sni+tls://:443
 ```
 
 ### SNI Over Websocket
 
-```bash
+```
 gost -L sni+ws://:443
 ```

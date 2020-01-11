@@ -7,7 +7,7 @@ weight = 90
 
 GOST在2.6版本中增加了自定义DNS服务功能，DNS控制可以应用于服务节点。每当此节点收到请求时，会使用此节点上指定的DNS服务对此请求的目标地址进行解析。
 
-```bash
+```
 gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-query
 ```
 
@@ -15,13 +15,13 @@ gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-que
 
 也可以使用外部文件来指定DNS服务列表：
 
-```bash
+```
 gost -L=:8080?dns=dns.txt
 ```
 
 配置文件的格式为(按行分割的地址列表)：
 
-```text
+```
 # options
 timeout     5s
 # ttl       60s
@@ -58,13 +58,13 @@ DNS服务项分为三列：
 
 除了可以自定义DNS服务用来解析域名外，还可以手动指定域名-IP映射关系，类似于Linux下的/etc/hosts文件功能。
 
-```bash
+```
 gost -L=:8080?hosts=hosts.txt
 ```
 
 配置文件的格式：
 
-```text
+```
 # options
 reload  10s
 

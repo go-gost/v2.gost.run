@@ -7,11 +7,11 @@ weight = 50
 
 GOST has added support for port forwarding since version 2.1.
 
-## Configuration
+## Usage
 
 Port forwarding service node configuration and ordinary proxy nodes are different:
 
-```bash
+```
 scheme://[bind_address]:port/[host]:hostport[,[host]:hostport]?ip=[host]:hostport][,[host]:hostport]]
 ```
 
@@ -21,7 +21,7 @@ scheme - Forward mode, local: `tcp`, `udp`; remote: `rtcp`, `rudp`; tunnel: `tls
 
 [host]:hostport[,[host]:hostport] - (Optional, 2.6+) Comma-separated target addresses.
 
-**Options**
+### Parameters
 
 `ip` - (Optional, 2.8+) Comma-separated target addresses.
 
@@ -35,7 +35,7 @@ scheme - Forward mode, local: `tcp`, `udp`; remote: `rtcp`, `rudp`; tunnel: `tls
 
 Map local TCP port A to the specified destination TCP port B. All data to port A is forwarded to port B. This feature is similar to SSH's local port forwarding feature.
 
-```bash
+```
 gost -L=tcp://:2222/192.168.1.1:22 [-F=..]
 ```
 
@@ -43,13 +43,13 @@ The data of the local TCP port 2222 is forwarded to 192.168.1.1:22 (through the 
 
 When the end of the chain (the last -F parameter) is of type `forward+ssh`, GOST will directly use SSH's local port forwarding feature:
 
-```bash
+```
 gost -L=tcp://:2222/192.168.1.1:22 -F forward+ssh://:2222
 ```
 
 Server can be a standard SSH program, it can also be GOST's SSH forwarding mode:
 
-```bash
+```
 gost -L forward+ssh://:2222
 ```
 
@@ -59,7 +59,7 @@ scheme must be `forward+ssh`.
 
 Map the specified destination TCP port B to local TCP port A. All data to port B is forwarded to port A. This feature is similar to SSH's remote port forwarding feature.
 
-```bash
+```
 gost -L=rtcp://:2222/192.168.1.1:22 [-F=... -F=socks5://172.24.10.1:1080]
 ```
 
@@ -69,7 +69,7 @@ The data of 172.24.10.1:2222 is forwarded to 192.168.1.1:22 (through the proxy c
 
 SOCKS5 BIND method has added support for multiplexing since version 2.5, remote port forwarding can use this feature to improve transport efficiency.
 
-```bash
+```
 gost -L rtcp://:8080/192.168.1.1:80 -F socks5://:1080?mbind=true
 ```
 
@@ -79,13 +79,13 @@ The client enables the SOCKS5 BIND multiplexing mode with the `mbind=true` param
 
 When the end of the chain (the last -F parameter) is of type `forward+ssh`, GOST will directly use SSH's remote port forwarding feature:
 
-```bash
+```
 gost -L=rtcp://:2222/192.168.1.1:22 -F forward+ssh://:2222
 ```
 
 Server can be a standard SSH program, it can also be GOST's SSH forwarding mode:
 
-```bash
+```
 gost -L forward+ssh://:2222
 ```
 
@@ -95,7 +95,7 @@ scheme must be `forward+ssh`.
 
 Map local UDP port A to the specified destination UDP port B. All data to port A is forwarded to port B.
 
-```bash
+```
 gost -L=udp://:5353/192.168.1.1:53?ttl=60s [-F=... -F=socks5://172.24.10.1:1080]
 ```
 
@@ -109,7 +109,7 @@ The timeout value can be set by the `ttl` parameter. The default value is 60 sec
 
 Map the specified destination UDP port B to local UDP port A. All data to port B is forwarded to port A.
 
-```bash
+```
 gost -L=rudp://:5353/192.168.1.1:53?ttl=60s [-F=... -F=socks5://172.24.10.1:1080]
 ```
 
@@ -120,7 +120,7 @@ Each different client (has different source port) corresponds to a forwarding ch
 The timeout value can be set by the `ttl` parameter. The default value is 60 seconds.
 
 {{< hint warning >}}
-When forwarding UDP data, if there is a proxy chain, the end of the proxy chain (the last -F parameter) must be a GOST SOCKS5 type proxy, and the GOST will forward UDP data using UDP-over-TCP.
+When forwarding UDP data, if there is a proxy chain, the protocol type of the last node of the proxy chain (the last -F parameter) must be GOST SOCKS5, the transport can be any one.
 {{< /hint >}}
 
 ## Forward Tunnel
@@ -129,7 +129,7 @@ Local TCP port forwarding can be used with transport types in version 2.5:
 
 Server:
 
-```bash
+```
 gost -L tls://:443/:1443 -L sni://:1443
 ```
 
@@ -137,7 +137,7 @@ The `scheme` must be transport type only.
 
 Client:
 
-```bash
+```
 gost -L :8080 -F forward+tls://server_ip:443
 ```
 
@@ -147,7 +147,7 @@ The `scheme` is `forward+transport` format, The protocol type must be `forward`.
 
 #### Encryption
 
-```bash
+```
 gost -L tls://:443/:8080 -L http://:8080
 ```
 
@@ -155,7 +155,7 @@ Convert the HTTP proxy service on port 8080 to the HTTPS proxy service on port 4
 
 #### Network Acceleration
 
-```bash
+```
 gost -L kcp://:8388/:8338 -L ss://chacha20:123456@:8338
 ```
 

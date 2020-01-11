@@ -9,7 +9,7 @@ SOCKS is the protocol type supported by GOST. There are three versions of the SO
 
 ## SOCKS4
 
-```bash
+```
 gost -L socks4://:1080
 ```
 
@@ -17,7 +17,7 @@ Standard SOCKS4 proxy service, compatible with SOCKS4A protocol.
 
 ## SOCKS4A
 
-```bash
+```
 gost -L socks4a://:1080
 ```
 
@@ -29,7 +29,7 @@ SOCKS4(A) currently supports only the CONNECT method and does not support the BI
 
 ## SOCKS5
 
-```bash
+```
 gost -L socks5://:1080
 ```
 
@@ -37,15 +37,15 @@ gost -L socks5://:1080
 
 GOST supports the standard SOCKS5 protocol methods: no-auth (0x00) and user/pass (0x02), and extends two methods for data encryption: tls(0x80) and tls-auth(0x82).
 
-Server:
+### Server side
 
-```bash
+```
 gost -L=socks5://:1080
 ```
 
-Client:
+### Client side
 
-```bash
+```
 gost -L=:8080 -F=socks5://server_ip:1080
 ```
 
@@ -79,7 +79,7 @@ The SOCKS protocol can also be used in combination with various transport types
 
 ### SOCKS5 Over TLS
 
-```bash
+```
 gost -L socks5+tls://:1080
 ```
 
@@ -87,6 +87,6 @@ SOCKS5 proxy service using TLS encryption.
 
 ### SOCKS5 Over QUIC
 
-```bash
+```
 gost -L socks5+quic://:1080
 ```

@@ -20,11 +20,11 @@ There are two types of load balancing, here simply called **simple** and **compl
 
 Simple type is similar to DNS load balancing, you can specify multiple addresses for the proxy node:
 
-```bash
+```
 gost -L=:8080 -F='http://localhost:8080?ip=192.168.1.1,192.168.1.2:8081,192.168.1.3:8082&strategy=round&max_fails=1&fail_timeout=30s' -F=socks5://localhost:1080?ip=172.20.1.1:1080,172.20.1.2:1081,172.20.1.3:1082
 ```
 
- **Options**
+### Parameters
 
 `ip` - the actual proxy address(es) (a comma-separated list), the address format can be ip[:port] or hostname[:port], If no port is specified, the port in the URL is used by default.
 
@@ -52,19 +52,19 @@ Each time a client sends a request, the proxy chain first determines a path to p
 
 After node selection, the command line is equivalent to:
 
-```bash
+```
 gost -L=:8080 -F=http://192.168.1.3:8082 -F=socks5://172.20.1.2:1081
 ```
 
 If there are too many addresses, you can use the configuration file:
 
-```bash
+```
 gost -L=:8080 -F=http://localhost:8080?ip=iplist1.txt -F=socks5://localhost:1080?ip=iplist2.txt
 ```
 
 The configuration file format is a list of addresses separated by new-line:
 
-```text
+```
 192.168.1.1
 192.168.1.2:8081
 192.168.1.3:8082
@@ -79,13 +79,13 @@ Complex type overcomes the limitations of the simple type and gives you the free
 
 ![figure 03](/gost/img/lb03.png)
 
-```bash
+```
 gost -L=:8080 -F=kcp://192.168.1.1:8388?peer=peer1.txt -F=http2://172.20.1.1:443?peer=peer2.txt
 ```
 
 The client specifies additional node configuration file via the `peer` parameter. The configuration file format is:
 
-```text
+```
 # strategy for node selecting
 strategy        random
 
@@ -128,7 +128,7 @@ When used in combination, the proxy chain places all nodes specified at each lev
 
 *gost.json*:
 
-```json
+```
 {
     "Debug": false,
     "Retries": 3,
@@ -148,7 +148,7 @@ When used in combination, the proxy chain places all nodes specified at each lev
 
 *peer.json*:
 
-```txt
+```
 strategy        random
 max_fails       1
 fail_timeout    30s
@@ -161,7 +161,7 @@ peer    ss+kcp://aes-128-cfb:pass@[host]:port?ip=ips.txt
 
 *ips.txt*:
 
-```txt
+```
 host1[:port]
 host2[:port]
 host3[:port]

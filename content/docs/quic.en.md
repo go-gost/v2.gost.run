@@ -9,15 +9,17 @@ QUIC is a transport type supported by GOST.
 
 Support for QUIC is based on library [lucas-clemente/quic-go](https://github.com/lucas-clemente/quic-go).
 
-Server:
+## Usage
 
-```bash
+### Server side
+
+```
 gost -L=quic://:6121
 ```
 
-Client:
+### Client side 
 
-```bash
+```
 gost -L=:8080 -F=quic://server_ip:6121
 ```
 
@@ -25,7 +27,7 @@ gost -L=:8080 -F=quic://server_ip:6121
 
 Client can use the `keepalive` parameter to start heartbeat detection
 
-```bash
+```
 gost -L=:8080 -F=quic://server_ip:6121?keepalive=true
 ```
 

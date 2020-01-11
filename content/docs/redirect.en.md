@@ -7,7 +7,7 @@ weight = 40
 
 GOST added support for TCP Transparent Proxy in version 2.3.
 
-```bash
+```
 gost -L redirect://:12345 -F 192.168.1.1:1080
 ```
 

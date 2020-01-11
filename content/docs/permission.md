@@ -20,18 +20,18 @@ weight = 60
 
 SSH远程端口转发只能绑定到127.0.0.1:8000
 
-```bash
+```
 gost -L=forward+ssh://localhost:8389?whitelist=rtcp:127.0.0.1:8000
 ```
 
 SOCKS5的TCP/UDP远程端口转发只允许绑定到大于1000的端口
 
-```bash
+```
 gost -L=socks://localhost:8389?blacklist=rtcp,rudp:*:0-1000
 ```
 
 SOCKS5的UDP转发只能转发到8.8.8.8:53
 
-```bash
+```
 gost -L=socks://localhost:8389?whitelist=udp:8.8.8.8:53
 ```

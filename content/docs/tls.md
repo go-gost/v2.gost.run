@@ -7,29 +7,35 @@ weight = 30
 
 TLS是GOST支持的一种传输类型(Transport)。
 
-服务端:
+## 使用说明
 
-```bash
+### 标准TLS
+
+#### 服务端
+
+```
 gost -L tls://:443
 ```
 
-客户端:
+#### 客户端
 
-```bash
+```
 gost -L :8080 -F tls://server_ip:443
 ```
 
+### 多路复用TLS
+
 GOST在TLS基础之上扩展出具有多路复用(Multiplex)特性的TLS传输类型(mtls)。
 
-服务端:
+#### 服务端
 
-```bash
+```
 gost -L mtls://:443
 ```
 
-客户端:
+#### 客户端
 
-```bash
+```
 gost -L :8080 -F mtls://server_ip:443
 ```
 
@@ -41,7 +47,7 @@ GOST内置了TLS证书，如果需要使用自定义TLS证书，有两种方法�
 
 * 使用`key`和`cert`参数指定证书文件路径：
 
-```bash
+```
 gost -L="tls://:443?cert=/path/to/my/cert/file&key=/path/to/my/key/file"
 ```
 
@@ -49,7 +55,7 @@ gost -L="tls://:443?cert=/path/to/my/cert/file&key=/path/to/my/key/file"
 
 对于客户端可以通过`secure`参数开启服务器证书和域名校验，默认不校验证书:
 
-```bash
+```
 gost -L=:8080 -F="tls://server_domain_name:443?secure=true"
 ```
 
@@ -59,7 +65,7 @@ gost -L=:8080 -F="tls://server_domain_name:443?secure=true"
 
 对于客户端可以通过`ca`参数指定CA证书进行[证书锁定](https://en.wikipedia.org/wiki/Transport_Layer_Security#Certificate_pinning)(Certificate Pinning):
 
-```bash
+```
 gost -L=:8080 -F="tls://:443?ca=ca.pem"
 ```
 

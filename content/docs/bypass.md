@@ -7,7 +7,7 @@ weight = 80
 
 GOST在2.6版本中增加了路由控制功能，可以通过黑白名单来控制客户端的请求。路由控制可以应用于服务节点(`-L`参数)和代理链的所有层级节点(`-F`参数)。
 
-```bash
+```
 gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.10.0.0/16,localhost,*.example.com
 ```
 
@@ -17,13 +17,13 @@ gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.1
 
 若地址比较多，可以使用外部配置文件：
 
-```bash
+```
 gost -L :8080?bypass=bypass.txt -F :1080?bypass=bypass2.txt
 ```
 
 配置文件的格式为(地址列表和可选的配置项)：
 
-```text
+```
 # options
 reload   10s
 reverse  true
@@ -42,12 +42,12 @@ localhost
 
 若要转换为白名单，则通过在`bypass`参数值前添加`~`前缀：
 
-```bash
+```
 gost -L=:8080?bypass=~127.0.0.1,172.10.0.0/16,localhost,*.example.com,.example.org
 ```
 
 对于文件方式也是一样：
 
-```bash
+```
 gost -L=:8080?bypass=~bypass.txt
 ```

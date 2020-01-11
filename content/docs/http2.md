@@ -11,7 +11,7 @@ weight = 21
 
 在代理模式中，HTTP2被用作协议类型，传输类型必须为空。
 
-```bash
+```
 gost -L http2://:443
 ```
 
@@ -25,13 +25,13 @@ gost -L http2://:443
 
 在隧道模式中，HTTP2被用作传输类型：`h2`, `h2c`。
 
-```bash
+```
 gost -L socks5+h2://:443
 ```
 
 或
 
-```bash
+```
 gost -L http+h2c://:443
 ```
 

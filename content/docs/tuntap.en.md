@@ -15,11 +15,11 @@ You need to install the tap driver [OpenVPN/tap-windows6](https://github.com/Ope
 
 ### Usage
 
-```bash
+```
 gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&name=tun0&mtu=1350&route=10.100.0.0/16&gw=192.168.123.1"
 ```
 
-`method:password` - Encryption method and password for UDP tunnel. Supported methods are the same as [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2).
+`method:password` - Optional, encryption method and password for UDP tunnel. Supported methods are the same as [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2).
 
 `local_ip:port` - Local UDP tunnel listen address.
 
@@ -35,29 +35,32 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 `gw` - Optional, routing gateway.
 
-`tcp` - Optional, use raw TCP, default value is `false`.
+`tcp` - Optional, use fake TCP tunnel, default value is `false` means UDP-based tunnel.
 
 ### TUN-based VPN (Linux)
 
-#### Create a TUN device and establish a UDP tunnel
 
-**NOTE:** The value specified by `net` option may need to be adjusted according to your actual situation.
+{{< hint warning >}} 
+The value specified by `net` option may need to be adjusted according to your actual situation.
+{{< /hint >}}
+
+#### Create a TUN device and establish a UDP tunnel
 
 ##### Server side
 
-```bash
+```
 gost -L tun://:8421?net=192.168.123.1/24
 ```
 
 ##### Client side
 
-```bash
+```
 gost -L tun://:8421/SERVER_IP:8421?net=192.168.123.2/24
 ```
 
 When no error occurred, you can use the `ip addr` command to inspect the created TUN device:
 
-```bash
+```
 $ ip addr show tun0
 2: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1350 qdisc pfifo_fast state UNKNOWN group default qlen 500
     link/none 
@@ -69,7 +72,7 @@ $ ip addr show tun0
 
 Now you can `ping` the server address:
 
-```bash
+```
 $ ping 192.168.123.1
 64 bytes from 192.168.123.1: icmp_seq=1 ttl=64 time=9.12 ms
 64 bytes from 192.168.123.1: icmp_seq=2 ttl=64 time=10.3 ms
@@ -80,13 +83,13 @@ $ ping 192.168.123.1
 
 ##### Server side
 
-```bash
+```
 $ iperf3 -s
 ```
 
 ##### Client side
 
-```bash
+```
 $ iperf3 -c 192.168.123.1
 ```
 
@@ -98,7 +101,7 @@ If you want the client to access the server network, you need to set the corresp
 
 Enable IP forwarding and set up firewall rules
 
-```bash
+```
 $ sysctl -w net.ipv4.ip_forward=1
 
 $ iptables -t nat -A POSTROUTING -s 192.168.123.0/24 ! -o tun0 -j MASQUERADE
@@ -114,7 +117,7 @@ Set up firewall rules
 The following operations will change the client's network environment, unless you know what you are doing, please be careful!
 {{< /hint >}}
 
-```bash
+```
 $ ip route add SERVER_IP/32 via eth0   # replace the SERVER_IP and eth0
 $ ip route del default   # delete the default route
 $ ip route add default via 192.168.123.2  # add new default route
@@ -128,7 +131,7 @@ TAP devices are not supported by macOS.
 
 ### Usage
 
-```bash
+```
 gost -L="tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&name=tap0&mtu=1350&route=10.100.0.0/16&gw=192.168.123.1"
 ```
 
@@ -150,27 +153,51 @@ GOST uses [xtaci/tcpraw](https://github.com/xtaci/tcpraw) with built-in support 
 
 ##### Server side
 
-```bash
+```
 gost -L "tun://:8421?net=192.168.123.1/24&tcp=true"
 ```
 
 ##### Client side
 
-```bash
+```
 gost -L "tun://:0/SERVER_IP:8421?net=192.168.123.2/24&tcp=true"
 ```
 
-### GOST port-forwarding
+### Proxy chain (2.9.1+)
+
+You can add a proxy chain to forward UDP data, analogous to UDP port forwarding.
+
+High flexibility, recommended.
+
+{{< hint warning >}} 
+The protocol type of the last node of the proxy chain (the last -F parameter) must be GOST SOCKS5, the transport can be any one.
+{{< /hint >}}
 
 ##### Server side
 
-```bash
+```
+gost -L tun://:8421?net=192.168.123.1/24" -L socks5://:1080
+```
+
+##### Client side
+
+```
+gost -L tun://:0/:8421?net=192.168.123.2/24 -F socks5://SERVER_IP:1080
+```
+
+### GOST port forwarding
+
+Based on UDP port forwarding and proxy chain.
+
+##### Server side
+
+```
 gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
 ```
 
 ##### Client side
 
-```bash
+```
 gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
 ```
 

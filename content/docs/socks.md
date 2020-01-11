@@ -9,7 +9,7 @@ SOCKS是GOST支持的协议类型(Protocol)，SOCKS协议有三个版本: SOCKS4
 
 ## SOCKS4
 
-```bash
+```
 gost -L socks4://:1080
 ```
 
@@ -17,7 +17,7 @@ gost -L socks4://:1080
 
 ## SOCKS4A
 
-```bash
+```
 gost -L socks4a://:1080
 ```
 
@@ -29,7 +29,7 @@ SOCKS4(A)当前仅支持CONNECT方法，不支持BIND方法。
 
 ## SOCKS5
 
-```bash
+```
 gost -L socks5://:1080
 ```
 
@@ -37,15 +37,15 @@ gost -L socks5://:1080
 
 GOST支持标准SOCKS5协议的no-auth(0x00)和user-pass(0x02)方法，并在此基础上扩展了两个：tls(0x80)和tls-auth(0x82)，用于数据加密。
 
-服务端:
+### 服务端
 
-```bash
+```
 gost -L=socks5://:1080
 ```
 
-客户端:
+### 客户端
 
-```bash
+```
 gost -L=:8080 -F=socks5://server_ip:1080
 ```
 
@@ -79,7 +79,7 @@ SOCKS协议也可以与各种传输类型(Transport)组合使用
 
 ### SOCKS5 Over TLS
 
-```bash
+```
 gost -L socks5+tls://:1080
 ```
 
@@ -87,6 +87,6 @@ gost -L socks5+tls://:1080
 
 ### SOCKS5 Over QUIC
 
-```bash
+```
 gost -L socks5+quic://:1080
 ```

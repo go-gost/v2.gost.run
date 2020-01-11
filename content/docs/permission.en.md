@@ -19,18 +19,18 @@ Multiple permissions can be passed if seperated with `+`:
 
 SSH remote port forwarding can only bind on 127.0.0.1:8000
 
-```bash
+```
 gost -L=forward+ssh://localhost:8389?whitelist=rtcp:127.0.0.1:8000
 ```
 
 SOCKS5 TCP/UDP remote port forwarding can only bind on ports greater than 1000
 
-```bash
+```
 gost -L=socks://localhost:8389?blacklist=rtcp,rudp:*:0-1000
 ```
 
 SOCKS5 UDP forwading can only forward to 8.8.8.8:53
 
-```bash
+```
 gost -L=socks://localhost:8389?whitelist=udp:8.8.8.8:53
 ```

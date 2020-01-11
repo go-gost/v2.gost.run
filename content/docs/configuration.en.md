@@ -69,7 +69,7 @@ Refer to [Port Forwarding](../port-forwarding/) for the node configuration forma
 
 The configuration of nodes in GOST is similar to the URL format (For `-L` and `-F` parameters):
 
-```bash
+```
 [scheme://][user:pass@host]:port[?param1=value1&param2=value2]
 ```
 
@@ -84,7 +84,7 @@ The default transport layer is Raw TCP.
 
 The default protocol layer is HTTP & SOCKS5 for `-L` parameter and HTTP for `-F` parameter.
 
-```bash
+```
 gost -L :8080 -F :8888
 ```
 
@@ -92,7 +92,7 @@ gost -L :8080 -F :8888
 
 The default transport layer is Raw TCP.
 
-```bash
+```
 gost -L http://:8080 -F socks5://:1080
 ```
 
@@ -100,13 +100,13 @@ gost -L http://:8080 -F socks5://:1080
 
 The default protocol layer is HTTP & SOCKS5 for `-L` parameter and HTTP for `-F` parameter.
 
-```bash
+```
 gost -L tls://:443 -F ws://:1443
 ```
 
 #### Used in combination
 
-```bash
+```
 gost -L http+tls://:443 -F socks5+wss://:1443
 ```
 
@@ -118,13 +118,13 @@ In addition to the above types, there are several special shemes:
 
 * `redirect` - TCP transparent proxy (2.3+)
 
- ```bash
+ ```
  gost -L redirect://:12345
  ```
 
 * `ssu` - Shadowsocks UDP relay (2.4+)
 
-```bash
+```
 gost -L ssu://chacha20:123456@:8338
 ```
 
@@ -132,19 +132,19 @@ gost -L ssu://chacha20:123456@:8338
 
 `user:pass` is used to configure the service's authentication information. For shadowsocks，`user` is the encryption type.
 
-```bash
+```
 gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
 ```
 
 For HTTP / SOCKS5 services, you can also set multiple groups of authentication information through the `secrets` parameter:
 
-```bash
+```
 gost -L=:8080?secrets=secrets.txt
 ```
 
 The file format of the secrets.txt file is line-by-line authentication information. Each line of authentication information is a user-pass pair separated by space. A line starting with `#` is a comment line.
 
-```text
+```
 # period for live reloading
 reload      10s
 

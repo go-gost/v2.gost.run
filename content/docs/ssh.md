@@ -7,15 +7,17 @@ weight = 34
 
 SSH是GOST支持的一种传输类型(Transport)。
 
-服务端:
+## 使用说明
 
-```bash
+### 服务端
+
+```
 gost -L=ssh://:2222
 ```
 
-客户端:
+### 客户端
 
-```bash
+```
 gost -L=:8080 -F=ssh://server_ip:2222?ping=60
 ```
 

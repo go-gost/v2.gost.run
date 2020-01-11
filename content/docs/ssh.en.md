@@ -7,15 +7,17 @@ weight = 34
 
 SSH is a transport type supported by GOST.
 
-Server:
+## Usage
 
-```bash
+### Server side
+
+```
 gost -L=ssh://:2222
 ```
 
-Client:
+### Client side
 
-```bash
+```
 gost -L=:8080 -F=ssh://server_ip:2222?ping=60
 ```
 

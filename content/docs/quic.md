@@ -7,15 +7,17 @@ weight = 33
 
 QUIC是GOST支持的一种传输类型(Transport)。GOST对QUIC的支持是基于[lucas-clemente/quic-go](https://github.com/lucas-clemente/quic-go)库。
 
-服务端:
+## 使用说明
 
-```bash
+### 服务端
+
+```
 gost -L=quic://:6121
 ```
 
-客户端:
+### 客户端
 
-```bash
+```
 gost -L=:8080 -F=quic://server_ip:6121
 ```
 
@@ -23,7 +25,7 @@ gost -L=:8080 -F=quic://server_ip:6121
 
 客户端可以通过`keepalive`参数开启心跳检测
 
-```bash
+```
 gost -L=:8080 -F=quic://server_ip:6121?keepalive=true
 ```
 

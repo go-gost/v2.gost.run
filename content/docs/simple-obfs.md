@@ -5,17 +5,23 @@ url = "simple-obfs"
 weight = 35
 +++
 
-Simple-obfs是GOST支持的一种传输类型(Transport)。Simple-obfs兼容[shadowsocks/simple-obfs](https://github.com/shadowsocks/simple-obfs)和Android上的[Simple Obfuscation](https://play.google.com/store/apps/details?id=com.github.shadowsocks.plugin.obfs_local)插件。目前仅支持HTTP模式。
+Simple-obfs是GOST支持的一种传输类型(Transport)。
 
-服务端:
+Simple-obfs兼容[shadowsocks/simple-obfs](https://github.com/shadowsocks/simple-obfs)和Android上的[Simple Obfuscation](https://play.google.com/store/apps/details?id=com.github.shadowsocks.plugin.obfs_local)插件。
 
-```bash
+目前仅支持HTTP模式。
+
+## 使用说明
+
+### 服务端
+
+```
 gost -L=ss+ohttp://chacha20:123456@:8338
 ```
 
-客户端:
+### 客户端
 
-```bash
+```
 gost -L=:8080 -F=ss+ohttp://chacha20:123456@server_ip:8338?host=bing.com
 ```
 

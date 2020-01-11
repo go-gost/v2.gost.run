@@ -19,13 +19,13 @@ weight = 5
 
 启动一个监听在8080端口的HTTP/SOCKS5代理服务：
 
-```bash
+```
 gost -L :8080
 ```
 
 ### 开启多个代理服务
 
-```bash
+```
 gost -L http2://:443 -L socks5://:1080 -L ss://aes-128-cfb:123456@:8338
 ```
 
@@ -33,7 +33,7 @@ gost -L http2://:443 -L socks5://:1080 -L ss://aes-128-cfb:123456@:8338
 
 ![Figure 02](/gost/img/002.png)
 
-```bash
+```
 gost -L :8080 -F 192.168.1.1:8081
 ```
 
@@ -44,7 +44,7 @@ gost -L :8080 -F 192.168.1.1:8081
 
 ![Figure 03](/gost/img/003.png)
 
-```bash
+```
 gost -L=:8080 -F=quic://192.168.1.1:8081 -F=socks5+wss://192.168.1.2:8082 -F=http2://192.168.1.3:8083 ... -F=a.b.c.d:NNNN
 ```
 
@@ -68,13 +68,13 @@ GOST目前有以下几个参数项：
 
 除了通过命令行直接配置服务外，也可以通过`-C`参数指定外部配置文件来设置参数：
 
-```bash
+```
 gost -C gost.json
 ```
 
 配置文件为标准`json`格式：
 
-```json
+```
 {
     "Debug": true,
     "Retries": 0,

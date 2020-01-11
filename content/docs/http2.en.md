@@ -11,7 +11,7 @@ In GOST HTTP2 has two modes: proxy mode and tunnel mode.
 
 In proxy mode, HTTP2 is used as the protocol type and the transport type must be empty.
 
-```bash
+```
 gost -L http2://:443
 ```
 
@@ -25,13 +25,13 @@ Proxy mode only supports the use of TLS encryption HTTP2 protocol, does not supp
 
 In tunnel mode, HTTP2 is used as the transport type: `h2` and `h2c`.
 
-```bash
+```
 gost -L socks5+h2://:443
 ```
 
 or
 
-```bash
+```
 gost -L http+h2c://:443
 ```
 

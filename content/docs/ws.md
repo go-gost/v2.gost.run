@@ -7,11 +7,13 @@ weight = 31
 
 Websocket是GOST支持的传输类型(Transport)。
 
-## 参数说明
+## 使用说明
 
-```bash
+```
 gost -L "ws://:8080?path=/ws&rbuf=4096&wbuf=4096&compression=false"
 ```
+
+### 参数说明
 
 `path` - 设置请求URI，默认值为`/ws`
 
@@ -23,33 +25,33 @@ gost -L "ws://:8080?path=/ws&rbuf=4096&wbuf=4096&compression=false"
 
 GOST中的Websocket有四种类型：
 
-## Websocket
+### 标准Websocket
 
-```bash
+```
 gost -L ws://:8080
 ```
 
 未加密的websocket隧道。
 
-## Multiplex Websocket
+### Multiplex Websocket
 
-```bash
+```
 gost -L mws://:8080
 ```
 
 具有多路复用特性的未加密websocket隧道。
 
-## Websocket Secure
+### Websocket Secure
 
-```bash
+```
 gost -L wss://:443
 ```
 
 使用TLS加密的Websocket隧道。
 
-## Multiplex Websocket Secure
+### Multiplex Websocket Secure
 
-```bash
+```
 gost -L mwss://:443
 ```
 

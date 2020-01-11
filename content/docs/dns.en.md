@@ -7,7 +7,7 @@ weight = 90
 
 GOST added support for custom DNS services in version 2.6, and DNS control can be applied to service nodes. When the node receives a request, it resolves the target address of this request using the DNS service specified on this node.
 
-```bash
+```
 gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-query
 ```
 
@@ -15,13 +15,13 @@ The server uses the `dns` parameter to specify a list of DNS services (separated
 
 You can also use an external file to specify a list of DNS services:
 
-```bash
+```
 gost -L=:8080?dns=dns.txt
 ```
 
 The format of the configuration file is:
 
-```text
+```
 # options
 timeout     30s
 # ttl       60s
@@ -58,13 +58,13 @@ The third column is the DNS server domain name. It is valid when the protocol ty
 
 In addition to the ability to customize the DNS service to resolve domain names, you can also manually specify the domain-IP mapping relationship, similar to the `/etc/hosts` file under Linux.
 
-```bash
+```
 gost -L=:8080?hosts=hosts.txt
 ```
 
 The format of the configuration file:
 
-```text
+```
 # options
 reload  10s
 

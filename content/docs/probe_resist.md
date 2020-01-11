@@ -11,11 +11,11 @@ GOST在2.7版本中增加了对HTTP/HTTPS/HTTP2代理的探测防御功能。当
 只有当代理服务开启了用户认证，探测防御功能才有效。
 {{< /hint >}}
 
-```bash
+```
 gost -L="http2://admin:123456@:443?probe_resist=code:400&knock=www.example.com"
 ```
 
-### probe_resist
+## probe_resist
 
 代理服务通过`probe_resist`参数来指定防御策略。参数值的格式为：`type:value`。
 
@@ -29,20 +29,20 @@ type可选值有:
 
 * `file` - 对应的value为本地文件路径，代理服务器会回复客户端200响应码，并将指定的文件内容作为Body发送给客户端。例如：`probe_resist=file:/path/to/file.txt`
 
-### knock（2.8+)
+## knock（2.8+)
 
 开启了探测防御功能后，当认证失败时服务器默认不会响应`407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的SwitchyOmega插件)。通过`knock`参数设置一个私有地址，只有访问此地址时服务器才会发送`407`响应。
 
 此功能可应用于HTTP，HTTPS和HTTP/2代理：
 
-```bash
+```
 gost -L=http://admin:123456@:8080?probe_resist=code:403
 ```
 
-```bash
+```
 gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080
 ```
 
-```bash
+```
 gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt
 ```

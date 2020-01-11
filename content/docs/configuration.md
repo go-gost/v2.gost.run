@@ -74,7 +74,7 @@ weight = 10
 
 在GOST中节点的配置为类URL格式(适用于`-L`和`-F`参数)：
 
-```bash
+```
 [scheme://][user:pass@host]:port[?param1=value1&param2=value2]
 ```
 
@@ -88,7 +88,7 @@ weight = 10
 
 对于`-L`参数，协议层默认为是HTTP & SOCKS5，对于`-F`参数，协议层默认为是HTTP类型。
 
-```bash
+```
 gost -L :8080 -F :8888
 ```
 
@@ -96,7 +96,7 @@ gost -L :8080 -F :8888
 
 当仅指定协议类型时，传输层默认为原始TCP类型。
 
-```bash
+```
 gost -L http://:8080 -F socks5://:1080
 ```
 
@@ -104,13 +104,13 @@ gost -L http://:8080 -F socks5://:1080
 
 当仅指定传输类型时，对于`-L`参数，协议类型默认为HTTP+SOCKS5。对于`-F`参数，协议层默认为是HTTP类型。
 
-```bash
+```
 gost -L tls://:443 -F ws://:1443
 ```
 
 #### 组合使用
 
-```bash
+```
 gost -L http+tls://:443 -F socks5+wss://:1443
 ```
 
@@ -122,13 +122,13 @@ gost -L http+tls://:443 -F socks5+wss://:1443
 
 * `redirect` - TCP透明代理 (2.3+)
 
- ```bash
+ ```
  gost -L redirect://:12345
  ```
 
 * `ssu` - Shadowsocks UDP relay
 
-```bash
+```
 gost -L ssu://chacha20:123456@:8338
 ```
 
@@ -136,19 +136,19 @@ gost -L ssu://chacha20:123456@:8338
 
 `user:pass`用于指定服务的认证信息。对于shadowsocks，`user`为加密类型。
 
-```bash
+```
 gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
 ```
 
 也可以通过`secrets`参数来设定多组认证信息：
 
-```bash
+```
 gost -L=:8080?secrets=secrets.txt
 ```
 
 secrets.txt文件格式为按行分割的认证信息，每一行认证信息为用空格分割的user-pass对，以 `#` 开始的行为注释行。
 
-```text
+```
 # period for live reloading
 reload      10s
 
