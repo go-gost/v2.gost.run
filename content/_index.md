@@ -46,19 +46,19 @@ weight = 1
 
 ### 源码编译
 
-```bash
+```
 go get -u github.com/ginuerzh/gost/cmd/gost
 ```
 
 ### Docker
 
-```bash
+```
 docker pull ginuerzh/gost
 ```
 
 ### Ubuntu Store
 
-```bash
+```
 sudo snap install gost
 ```
 
