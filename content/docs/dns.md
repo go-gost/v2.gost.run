@@ -23,7 +23,7 @@ gost -L=:8080?dns=dns.txt
 
 ```
 # options
-timeout     5s
+timeout     3s
 # ttl       60s
 reload      10s
 
@@ -38,7 +38,7 @@ reload      10s
 https://1.0.0.1/dns-query
 ```
 
-`timeout` - DNS请求超时时间，默认5秒。
+`timeout` - DNS请求超时时间，默认3秒。
 
 `ttl` - DNS缓存有效期，默认使用DNS查询返回结果中的TTL。当设置为负值，则不使用缓存。
 

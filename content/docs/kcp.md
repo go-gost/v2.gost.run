@@ -9,13 +9,15 @@ KCP是GOST支持的一种传输类型(Transport)。
 
 GOST对KCP的支持是基于[xtaci/kcp-go](https://github.com/xtaci/kcp-go)和[xtaci/kcptun](https://github.com/xtaci/kcptun)库。
 
-服务端:
+## 使用说明
+
+### 服务端
 
 ```
 gost -L=kcp://:8388
 ```
 
-客户端:
+### 客户端
 
 ```
 gost -L=:8080 -F=kcp://server_ip:8388
@@ -64,7 +66,7 @@ gost -L=kcp://:8388?c=/path/to/conf/file
 若要在代理链中使用KCP节点，则此代理链中只能有一个KCP节点，且此节点只能作为代理链的第一个节点。
 {{< /hint >}}
 
-### Fake TCP (2.9.1+)
+## Fake TCP (2.9.1+)
 
 可以通过`tcp`参数或配置文件中的`tcp`项开启伪TCP模式。
 
@@ -72,13 +74,13 @@ gost -L=kcp://:8388?c=/path/to/conf/file
 此功能仅适用于Linux。
 {{< /hint >}}
 
-#### 服务端
+### 服务端
 
 ```
 gost -L=kcp://:8388?tcp=true
 ```
 
-#### 客户端
+### 客户端
 
 ```
 gost -L=:8080 -F=kcp://server_ip:8388?tcp=true

@@ -9,13 +9,15 @@ KCP is a transport type supported by GOST.
 
 Support for KCP is based on libraries [xtaci/kcp-go](https://github.com/xtaci/kcp-go) and [xtaci/kcptun](https://github.com/xtaci/kcptun).
 
-Server:
+## Usage
+
+### Server side
 
 ```
 gost -L=kcp://:8388
 ```
 
-Client:
+### Client side
 
 ```
 gost -L=:8080 -F=kcp://server_ip:8388
@@ -64,7 +66,7 @@ Please refer to the [kcptun](https://github.com/xtaci/kcptun#usage) for more det
 To use a KCP node in a proxy chain, there can be only one KCP node in the proxy chain, and this node can only serve as the first node in the proxy chain.
 {{< /hint >}}
 
-### Fake TCP (2.9.1+)
+## Fake TCP (2.9.1+)
 
 You can enable the fake TCP mode via `tcp` parameter or `tcp` option in the config file.
 
@@ -72,13 +74,13 @@ You can enable the fake TCP mode via `tcp` parameter or `tcp` option in the conf
 This feature is only available on Linux.
 {{< /hint >}}
 
-#### Server side
+### Server side
 
 ```
 gost -L=kcp://:8388?tcp=true
 ```
 
-#### Client side
+### Client side
 
 ```
 gost -L=:8080 -F=kcp://server_ip:8388?tcp=true

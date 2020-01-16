@@ -167,7 +167,7 @@ gost -L "tun://:0/SERVER_IP:8421?net=192.168.123.2/24&tcp=true"
 
 You can add a proxy chain to forward UDP data, analogous to UDP port forwarding.
 
-High flexibility, recommended.
+High flexibility and compatibility, recommended.
 
 {{< hint warning >}} 
 The protocol type of the last node of the proxy chain (the last -F parameter) must be GOST SOCKS5, the transport can be any one.

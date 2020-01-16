@@ -23,7 +23,7 @@ The format of the configuration file is:
 
 ```
 # options
-timeout     30s
+timeout     3s
 # ttl       60s
 reload      10s
 
@@ -38,7 +38,7 @@ reload      10s
 https://1.0.0.1/dns-query
 ```
 
-`timeout` - DNS request timeout, default 30 seconds.
+`timeout` - DNS request timeout, default 3 seconds.
 
 `ttl` - DNS cache expiration, default to the TTL in DNS server response. When set to a negative value, no cache is used.
 

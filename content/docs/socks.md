@@ -46,10 +46,12 @@ gost -L=socks5://:1080
 ### 客户端
 
 ```
-gost -L=:8080 -F=socks5://server_ip:1080
+gost -L=:8080 -F=socks5://server_ip:1080?notls=true
 ```
 
 如果两端都是GOST(如上)则数据传输会被加密(协商使用tls或tls-auth方法)，否则使用标准SOCKS5进行通讯(no-auth或user/pass方法)。
+
+`notls` - (2.9.1+) 通过此参数可以禁用协商加密，默认值：false。
 
 ### SOCKS5 UDP Relay
 

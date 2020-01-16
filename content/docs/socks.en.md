@@ -46,10 +46,12 @@ gost -L=socks5://:1080
 ### Client side
 
 ```
-gost -L=:8080 -F=socks5://server_ip:1080
+gost -L=:8080 -F=socks5://server_ip:1080?notls=true
 ```
 
 If both ends are GOST SOCKS5 mode (as example above), the data transfer will be encrypted (using tls or tls-auth). Otherwise, use standard SOCKS5 for communication (no-auth or user/pass).
+
+`notls` - (2.9.1+) You can disable negotiated encryption feature via this parameter, default value is `false`.
 
 ### SOCKS5 UDP Relay
 
