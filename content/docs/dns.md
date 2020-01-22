@@ -17,5 +17,5 @@ gost -L="dns://:1053?mode=udp&dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https:/
 
 `mode` - 指定代理服务的运行模式，可选值：`udp`，`tcp`，`tls`，`https`。默认值为`udp`。
 
-`dns` - 与[DNS解析](resolver/)中的`dns`参数功能和使用方式相同。
+`dns` - 与[DNS解析](../resolver/)中的`dns`参数功能和使用方式相同。
 

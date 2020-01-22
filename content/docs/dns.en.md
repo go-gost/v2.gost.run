@@ -17,5 +17,5 @@ gost -L="dns://:1053?mode=udp&dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https:/
 
 `mode` - proxy mode, optional values are: `udp`，`tcp`，`tls`，`https`. Default value is `udp`.
 
-`dns` - same as the `dns` parameter in [DNS Resolver](resolver/).
+`dns` - same as the `dns` parameter in [DNS Resolver](../resolver/).
 

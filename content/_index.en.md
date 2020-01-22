@@ -33,7 +33,7 @@ weight = 1
 * Permission control
 * Load balancing
 * Route control
-* DNS control
+* DNS resolver and proxy
 * TUN/TAP Device
 
 
