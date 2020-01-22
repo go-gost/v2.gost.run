@@ -134,11 +134,24 @@ gost -L ssu://chacha20:123456@:8338
 
 ### **节点认证**
 
-`user:pass`用于指定服务的认证信息。对于shadowsocks，`user`为加密类型。
+#### user:pass
+
+通过`user:pass`指定服务的认证信息。对于shadowsocks，`user`为加密类型。
 
 ```
 gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
 ```
+
+#### auth参数 (2.9.2+)
+
+如果认证信息中包含特殊字符，则可以通过`auth`参数来设置：
+
+```
+gost -L :8080?auth=YWRtaW46MTIzNDU2 -F ss://:8338?auth=Y2hhY2hhMjA6QWEjJiEkMTIzNEA1Njc4
+```
+`auth`的值为`user:pass`base64编码值
+
+#### secrets参数
 
 也可以通过`secrets`参数来设定多组认证信息：
 

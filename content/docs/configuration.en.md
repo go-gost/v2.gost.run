@@ -130,13 +130,27 @@ gost -L ssu://chacha20:123456@:8338
 
 ### **Node Authentication**
 
+#### user:pass
+
 `user:pass` is used to configure the service's authentication information. For shadowsocks，`user` is the encryption type.
 
 ```
 gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
 ```
 
-For HTTP / SOCKS5 services, you can also set multiple groups of authentication information through the `secrets` parameter:
+#### auth parameter (2.9.2+)
+
+If the auth info contains special characters, you can use `auth` parameter to encode the info:
+
+```
+gost -L :8080?auth=YWRtaW46MTIzNDU2 -F ss://:8338?auth=Y2hhY2hhMjA6QWEjJiEkMTIzNEA1Njc4
+```
+the value of `auth` is the base64 encoded of `user:pass`.
+
+
+#### secrets parameter
+
+You can also set multiple groups of authentication information through the `secrets` parameter:
 
 ```
 gost -L=:8080?secrets=secrets.txt

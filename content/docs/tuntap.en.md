@@ -37,8 +37,47 @@ gost -L="tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.12
 
 `tcp` - Optional, use fake TCP tunnel, default value is `false` means UDP-based tunnel.
 
-### TUN-based VPN (Linux)
 
+### Routing on server side (2.9.2+)
+
+The server can access the client network by setting up routing table and gateway.
+
+#### Default gateway
+
+The server can set the default gateway through the `gw` parameter to specify the gateway of the routes in `route` parameter.
+
+```
+gost -L="tun://:8421?net=192.168.123.1/24&gw=192.168.123.2&route=172.10.0.0/16,10.138.0.0/16"
+```
+
+Packets send to network 172.10.0.0/16 and 10.138.0.0/16 will be forwarded to the client with the IP 192.168.123.2 through the TUN tunnel.
+
+#### Gateway-specific routing
+
+If you want to set a specific gateway for each route, you can specify it through a route configuration file:
+
+```
+gost -L="tun://:8421?net=192.168.123.1/24&route=route.txt"
+```
+
+The configuration file `route.txt` format：
+
+```
+# Destination   Gateway
+
+172.10.0.0/16   192.168.123.2
+10.138.0.0/16   192.168.123.3
+```
+
+The first column is the destination network.
+
+The second column is the gateway.
+
+Packets send to network 172.10.0.0/16 will be forwarded to the client with the IP 192.168.123.2 through the TUN tunnel.
+
+Packets send to network 10.138.0.0/16 will be forwarded to the client with the IP 192.168.123.3 through the TUN tunnel.
+
+### TUN-based VPN (Linux)
 
 {{< hint warning >}} 
 The value specified by `net` option may need to be adjusted according to your actual situation.
