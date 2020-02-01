@@ -25,9 +25,7 @@ gost -L=:8080 -F=kcp://server_ip:8388
 
 ## 配置
 
-GOST中内置了一套默认的KCP配置项，默认值与xtaci/kcptun中的一致。
-
-GOST会自动加载当前工作目录中的kcp.json(如果存在)配置文件，或者可以手动通过参数`c`指定配置文件路径：
+GOST中内置了一套默认的KCP配置项，默认值与xtaci/kcptun中的一致。可以通过参数`c`指定外部配置文件：
 
 ```
 gost -L=kcp://:8388?c=/path/to/conf/file

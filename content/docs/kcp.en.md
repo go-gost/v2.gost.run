@@ -25,9 +25,7 @@ gost -L=:8080 -F=kcp://server_ip:8388
 
 ## Configuration
 
-GOST has a default KCP configuration built-in，and is the same as xtaci/kcptun.
-
-GOST will automatically load `kcp.json` configuration file from current working directory if exists, or you can use the parameter `c` to specify the path to the file.
+GOST has a default KCP configuration built-in，and is the same as xtaci/kcptun. you can also use the parameter `c` to specify the path to an external file.
 
 ```
 gost -L=kcp://:8388?c=/path/to/conf/file

@@ -30,7 +30,7 @@ gost -L=http://:8080?dns=8.8.8.8/udp-chain,1.1.1.1:853/tls-chain,https-chain://d
 ```
 
 {{< hint warning >}}
-如果要转发`udp-chain`，代理链的末端(最后一个-F参数)必须是GOST SOCKS5类型代理。
+如果要转发`udp-chain`，代理链的末端(最后一个-F参数)必须是GOST `socks5`或`ssu`类型代理。
 {{< /hint >}}
 
 ### 配置文件
