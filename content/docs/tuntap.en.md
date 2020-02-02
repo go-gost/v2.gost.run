@@ -157,7 +157,7 @@ The following operations will change the client's network environment, unless yo
 {{< /hint >}}
 
 ```
-$ ip route add SERVER_IP/32 via eth0   # replace the SERVER_IP and eth0
+$ ip route add SERVER_IP/32 dev eth0   # replace the SERVER_IP and eth0
 $ ip route del default   # delete the default route
 $ ip route add default via 192.168.123.2  # add new default route
 ```

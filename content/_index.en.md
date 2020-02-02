@@ -27,7 +27,7 @@ weight = 1
 * Support multiple tunnel types
 * Tunnel UDP over TCP
 * Local/remote TCP/UDP port forwarding
-* Transparent TCP proxy
+* TCP/UDP Transparent proxy
 * Shadowsocks Protocol (TCP/UDP)
 * SNI Proxy
 * Permission control

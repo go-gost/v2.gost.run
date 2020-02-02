@@ -159,7 +159,7 @@ $ iptables -A FORWARD -o tun0 -j ACCEPT
 {{< /hint >}}
 
 ```
-$ ip route add SERVER_IP/32 via eth0   # 请根据实际情况替换SERVER_IP和eth0
+$ ip route add SERVER_IP/32 dev eth0   # 请根据实际情况替换SERVER_IP和eth0
 $ ip route del default   # 删除默认的路由
 $ ip route add default via 192.168.123.2  # 使用新的默认路由
 ```

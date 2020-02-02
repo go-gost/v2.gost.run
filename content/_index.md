@@ -29,7 +29,7 @@ weight = 1
 * 支持多种隧道类型
 * Tunnel UDP over TCP
 * 本地/远程TCP/UDP端口转发
-* TCP透明代理
+* TCP/UDP透明代理
 * 支持Shadowsocks(TCP/UDP)协议
 * 支持SNI代理
 * 权限控制
