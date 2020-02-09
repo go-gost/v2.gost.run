@@ -37,11 +37,13 @@ The format of the configuration file is:
 
 ```
 # options
-timeout     3s
+timeout     5s
 # ttl       60s
 reload      10s
 
 # prefer    ipv6
+
+# ip        1.2.3.4
 
 # ip[:port] [protocol] [hostname]
 8.8.8.8
@@ -52,13 +54,15 @@ reload      10s
 https://1.0.0.1/dns-query    https-chain
 ```
 
-`timeout` - DNS request timeout, default 3 seconds.
+`timeout` - DNS request timeout, default 5 seconds.
 
 `ttl` - DNS cache expiration, default to the TTL in DNS server response. When set to a negative value, no cache is used.
 
 `reload` - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.
 
 `prefer` - (2.8.2+) AAAA(IPv6) lookups before A(IPv4).
+
+`ip` - 2.10.1+，client host IP. Will enable the ECS(EDNS Client Subnet) extension if set.
 
 The DNS service list is divided into three columns:
 

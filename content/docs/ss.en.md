@@ -12,11 +12,8 @@ Support for shadowsocks is based on library [shadowsocks/shadowsocks-go](https:/
 ## TCP
 
 {{< hint warning >}}
-**Encryption**
-
-The encryption method and password are mandatory for shadowsocks
+Starting from 2.10.1+, encryption becomes optional.
 {{< /hint >}}
-
 
 ##### Server side
 
@@ -31,6 +28,10 @@ gost -L=:8080 -F=ss://chacha20:password@server_ip:8338
 ```
 
 ## AEAD cipher
+
+{{< hint warning >}}
+As of 2.10.1+, features of `ss2` have been merged into `ss`, the AEAD cipher methods can be used directly in `ss`, and ` ss2` is deprecated.
+{{< /hint >}}
 
 As of v2.8, GOST supports AEAD cipher based on [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2).
 

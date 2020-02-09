@@ -19,3 +19,8 @@ gost -L="dns://:1053?mode=udp&dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https:/
 
 `dns` - same as the `dns` parameter in [DNS Resolver](../resolver/).
 
+`ttl` - 2.10.1+, cache timeout, negative value will disable the cache. Default value is the TTL in reply.
+
+`timeout` - 2.10.1+，request timeout, default value is 5s.
+
+`ip` - 2.10.1+，client host IP. Will enable the ECS(EDNS Client Subnet) extension if set.

@@ -46,7 +46,9 @@ weight = 1
 ### From Source
 
 ```
-go get -u github.com/ginuerzh/gost/cmd/gost
+git clone https://github.com/ginuerzh/gost.git
+cd gost/cmd/gost
+go build
 ```
 
 ### Docker
@@ -58,6 +60,7 @@ docker pull ginuerzh/gost
 ### Ubuntu Store
 
 ```
+sudo snap install core
 sudo snap install gost
 ```
 

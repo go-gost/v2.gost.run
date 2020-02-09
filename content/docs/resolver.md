@@ -51,6 +51,8 @@ reload      10s
 
 # prefer    ipv6
 
+# ip        1.2.3.4
+
 # ip[:port] [protocol] [hostname]
 8.8.8.8
 8.8.8.8     tcp
@@ -67,6 +69,8 @@ https://1.0.0.1/dns-query   https-chain
 `reload` - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
 
 `prefer` - (2.8.2+) AAAA(IPv6)优先于A(IPv4)。
+
+`ip` - 2.10.1+，客户端IP，设置后会开启ECS(EDNS Client Subnet)扩展功能。
 
 DNS服务项分为三列：
 

@@ -12,9 +12,7 @@ GOST对shadowsocks的支持是基于[shadowsocks/shadowsocks-go](https://github.
 ## TCP
 
 {{< hint warning >}}
-**加密**
-
-使用shadowsocks时必须指定加密方法和密码。
+从2.10.1+开始加密变为可选。
 {{< /hint >}}
 
 ##### 服务端
@@ -30,6 +28,10 @@ gost -L=:8080 -F=ss://chacha20:password@server_ip:8338
 ```
 
 ### AEAD加密
+
+{{< hint warning >}}
+2.10.1+后，`ss2`功能已经合并到`ss`中，可以直接在`ss`中使用AEAD加密，`ss2`已废弃。
+{{< /hint >}}
 
 在2.8版本中，GOST基于[shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)增加了对AEAD加密的支持。
 

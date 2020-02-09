@@ -209,7 +209,9 @@ You can add a proxy chain to forward UDP data, analogous to UDP port forwarding.
 High flexibility and compatibility, recommended.
 
 {{< hint warning >}} 
-The protocol type of the last node of the proxy chain (the last -F parameter) must be GOST SOCKS5, the transport can be any one.
+The last node of the proxy chain (the last -F parameter) must support GOST `socks5` or `ssu` protocol type, the transport can be any one.
+
+`ssu` is supported in 2.10.1+.
 {{< /hint >}}
 
 ##### Server side
