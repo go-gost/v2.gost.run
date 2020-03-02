@@ -9,13 +9,13 @@ SSH是GOST支持的一种传输类型(Transport)。
 
 ## 使用说明
 
-### 服务端
+##### 服务端
 
 ```
 gost -L=ssh://:2222
 ```
 
-### 客户端
+##### 客户端
 
 ```
 gost -L=:8080 -F=ssh://server_ip:2222?ping=60
@@ -26,3 +26,21 @@ gost -L=:8080 -F=ssh://server_ip:2222?ping=60
 ## 端口转发
 
 GOST中的SSH也支持标准SSH协议的端口转发功能，具体使用方法请参考[端口转发](../port-forwarding)
+
+## PubKey认证 (2.11+)
+
+##### 服务端
+
+```
+gost -L="ssh://:2222?ssh_authorized_keys=/path/to/authorized_keys"
+```
+
+`ssh_authorized_keys` - 客户端公钥列表文件
+
+##### 客户端
+
+```
+gost -L :8080 -F=ssh://server_ip:2222?ssh_key=/path/to/id_rsa"
+```
+
+`ssh_key` - 客户端私钥文件

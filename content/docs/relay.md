@@ -58,5 +58,5 @@ gost -L relay://:12345/:53
 ##### 客户端
 
 ```
-gost -L udp://:53 -L tcp://:53 -F relay://:12345
+gost -L udp://:1053 -L tcp://:1053 -F relay://:12345
 ```

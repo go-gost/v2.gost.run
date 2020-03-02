@@ -9,13 +9,13 @@ SSH is a transport type supported by GOST.
 
 ## Usage
 
-### Server side
+##### Server side
 
 ```
 gost -L=ssh://:2222
 ```
 
-### Client side
+##### Client side
 
 ```
 gost -L=:8080 -F=ssh://server_ip:2222?ping=60
@@ -26,3 +26,21 @@ Client can use the `ping` parameter to set the heartbeat sending period in secon
 ## Port Forwarding
 
 GOST SSH also supports standard SSH protocol port forwarding function, please refer to [Port Forwarding](../port-forwarding) for more detail.
+
+## PubKey authentication (2.11+)
+
+##### Server side
+
+```
+gost -L="ssh://:2222?ssh_authorized_keys=/path/to/authorized_keys"
+```
+
+`ssh_authorized_keys` - authorized public keys file
+
+##### Client side
+
+```
+gost -L :8080 -F=ssh://server_ip:2222?ssh_key=/path/to/id_rsa"
+```
+
+`ssh_key` - private key file
