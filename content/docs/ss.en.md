@@ -89,7 +89,7 @@ Encryption becomes optional.
 
 GOST supports AEAD cipher methods based on [shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2), and compatible with cipher methods in older version. 
 
-When encryption is enabled, the cipher methods in (shadowsocks/go-shadowsocks2) will be used first. If not supported, switch to the (shadowsocks/shadowsocks-go).
+When encryption is enabled, the cipher methods in (shadowsocks/shadowsocks-go) will be used first. If not supported, switch to the (shadowsocks/go-shadowsocks2).
 
 #### Combined with transport layer
 

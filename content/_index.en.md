@@ -64,6 +64,11 @@ sudo snap install core
 sudo snap install gost
 ```
 
+### Shadowsocks Android Plugin
+
+[xausky/ShadowsocksGostPlugin](https://github.com/xausky/ShadowsocksGostPlugin)
+
+
 ## Any Question
 
 Github Issue: [https://github.com/ginuerzh/gost/issues](https://github.com/ginuerzh/gost/issues)

@@ -89,7 +89,7 @@ gost -L udp://:5353/8.8.8.8:53 -F=ssu://method:password@:8338
 
 基于[shadowsocks/go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)增加了对AEAD加密的支持，且兼容老版本中的加密方式。
 
-当设置了加密，会优先使用新版加密(shadowsocks/go-shadowsocks2)，若新版中不支持，则切换到老版(shadowsocks/shadowsocks-go)。
+当设置了加密，会优先使用(shadowsocks/shadowsocks-go)库，若加密方法不支持，则切换到(shadowsocks/go-shadowsocks2)库。
 
 #### 组合传输层
 
