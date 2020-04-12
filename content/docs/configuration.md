@@ -35,6 +35,8 @@ weight = 10
 
 * `forward` - Forward
 
+* `relay` - TCP/UDP relay (2.11+)
+
 ## 传输类型(Transports)
 
 支持的传输类型有：
@@ -67,6 +69,7 @@ weight = 10
 
 * `ohttp` - HTTP Obfuscation (2.7+)
 
+* `otls` - TLS Obfuscation (2.11+)
 
 ## 配置格式
 

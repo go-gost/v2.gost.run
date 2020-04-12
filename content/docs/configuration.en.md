@@ -33,6 +33,8 @@ When GOST connects to a proxy node, it first interacts with the transport type s
 
 * `forward` - Forward
 
+* `relay` - TCP/UDP relay (2.11+)
+
 ## Transports
 
 * `tcp` - Raw TCP
@@ -62,6 +64,8 @@ When GOST connects to a proxy node, it first interacts with the transport type s
 * `obfs4` - OBFS4 (2.4+)
 
 * `ohttp` - HTTP Obfuscation (2.7+)
+
+* `otls` - TLS Obfuscation (2.11+)
 
 ## Configuration format
 
