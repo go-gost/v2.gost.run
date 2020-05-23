@@ -72,3 +72,18 @@ gost -L=:8080 -F="tls://:443?ca=ca.pem"
 {{< hint info >}}
 The above parameters can be used for all TLS-enabled services,such as HTTP2, QUIC, WSS, SSH, SOCKS5.
 {{< /hint >}}
+
+
+## Mutual TLS authentication (2.11.1+)
+
+The server can specify the CA certificate via the `ca` parameter to perform mandatory verification on the client certificate:
+
+```
+gost -L="tls://:443?cert=certfile&key=keyfile&ca=cafile"
+```
+
+At this time, the client must provide its own certificate:
+
+```
+gost -L=:8080 -F="tls://server_ip:443?cert=certfile&key=keyfile"
+```

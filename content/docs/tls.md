@@ -72,3 +72,17 @@ gost -L=:8080 -F="tls://:443?ca=ca.pem"
 {{< hint info >}}
 以上参数可以用于所有支持TLS的服务，例如HTTP2, QUIC, WSS, SSH, SOCKS5。
 {{< /hint >}}
+
+## 双向证书校验(2.11.1+)
+
+服务端可以通过`ca`参数指定CA证书来对客户端证书进行强制校验：
+
+```
+gost -L="tls://:443?cert=certfile&key=keyfile&ca=cafile"
+```
+
+此时客户端必须提供自己的证书：
+
+```
+gost -L=:8080 -F="tls://server_ip:443?cert=certfile&key=keyfile"
+```
