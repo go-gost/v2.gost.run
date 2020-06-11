@@ -29,12 +29,6 @@ type可选值有:
 
 * `file` - 对应的value为本地文件路径，代理服务器会回复客户端200响应码，并将指定的文件内容作为Body发送给客户端。例如：`probe_resist=file:/path/to/file.txt`
 
-## knock（2.8+)
-
-开启了探测防御功能后，当认证失败时服务器默认不会响应`407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的SwitchyOmega插件)。通过`knock`参数设置一个私有地址，只有访问此地址时服务器才会发送`407`响应。
-
-此功能可应用于HTTP，HTTPS和HTTP/2代理：
-
 ```
 gost -L=http://admin:123456@:8080?probe_resist=code:403
 ```
@@ -45,4 +39,22 @@ gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080
 
 ```
 gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt
+```
+
+## knock（2.8+)
+
+开启了探测防御功能后，当认证失败时服务器默认不会响应`407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的SwitchyOmega插件)。通过`knock`参数设置一个私有地址，只有访问此地址时服务器才会发送`407`响应。
+
+此功能可应用于HTTP，HTTPS和HTTP/2代理：
+
+```
+gost -L=http://admin:123456@:8080?probe_resist=code:403&knock=www.example.com
+```
+
+```
+gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080&knock=www.example.com
+```
+
+```
+gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt&knock=www.example.com
 ```
