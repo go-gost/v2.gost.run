@@ -41,7 +41,7 @@ gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080
 gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt
 ```
 
-## knock（2.8+)
+## knock(2.8+)
 
 开启了探测防御功能后，当认证失败时服务器默认不会响应`407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的SwitchyOmega插件)。通过`knock`参数设置一个私有地址，只有访问此地址时服务器才会发送`407`响应。
 

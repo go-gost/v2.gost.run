@@ -41,7 +41,7 @@ gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080
 gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt
 ```
 
-## knock（2.8+)
+## knock (2.8+)
 
 After the probe resistance is enabled, the server will not respond the `407 Proxy Authentication Required` to the client by default when authentication fails. But in some cases the client needs the server to tell if it needs authentication (for example, the SwitchyOmega plugin in Chrome). Set a private host with the `knock` parameter, the server will only send a `407` response when accessing this host.
 
