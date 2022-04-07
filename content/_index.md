@@ -17,6 +17,8 @@ weight = 1
 
 [English Version](en/)
 
+### ！！！[V3版本已经可用，欢迎抢先体验](https://latest.gost.run)！！！
+
 ## 功能特性
 
 * 多端口监听
