@@ -76,3 +76,15 @@ Github Issue: [https://github.com/ginuerzh/gost/issues](https://github.com/ginue
 Telegram Group: [https://t.me/gogost](https://t.me/gogost)
 
 Google Group: [https://groups.google.com/d/forum/go-gost](https://groups.google.com/d/forum/go-gost)
+
+
+## Donation
+
+
+Your feedback is the best support!
+
+Buy me a coffee if you want:
+
+![BTC](/img/btc.png) 
+![ETH](/img/eth.png)
+![USDT](/img/usdt.png)
