@@ -17,7 +17,7 @@ weight = 1
 
 [English Version](en/)
 
-### ！！！[V3版本已经可用，欢迎抢先体验](https://latest.gost.run)！！！
+### ！！！[V3版本已经可用，欢迎抢先体验](https://gost.run)！！！
 
 ## 功能特性
 
@@ -55,7 +55,7 @@ go build
 ### Docker
 
 ```
-docker pull ginuerzh/gost
+docker run --rm ginuerzh/gost -V
 ```
 
 ### Ubuntu Store

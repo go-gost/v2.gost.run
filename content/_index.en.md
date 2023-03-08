@@ -15,6 +15,8 @@ weight = 1
 [![GitHub release](https://img.shields.io/github/release/ginuerzh/gost.svg)](https://github.com/ginuerzh/gost/releases/latest)
 [![Docker](https://img.shields.io/docker/pulls/ginuerzh/gost.svg)](https://hub.docker.com/r/ginuerzh/gost/)
 
+### ！！！[GOST V3 is available, try it now](https://gost.run)！！！
+
 ## Features
 
 * Listening on multiple ports
@@ -52,7 +54,7 @@ go build
 ### Docker
 
 ```
-docker pull ginuerzh/gost
+docker run --rm ginuerzh/gost -V
 ```
 
 ### Ubuntu Store
