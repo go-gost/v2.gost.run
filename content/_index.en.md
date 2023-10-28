@@ -85,6 +85,12 @@ Your feedback is the best support!
 
 Buy me a coffee if you want:
 
+**WeChat Reward QR Code**
+
+![WeChat](/img/wechat.png) 
+
+**imToken**
+
 ![BTC](/img/btc.png) 
 ![ETH](/img/eth.png)
 ![USDT](/img/usdt.png)

@@ -84,6 +84,12 @@ Google讨论组: [https://groups.google.com/d/forum/go-gost](https://groups.goog
 
 如果您还想请开发者喝杯咖啡可以通过以下方式:
 
+**微信赞赏码**
+
+![WeChat](/img/wechat.png) 
+
+**imToken**
+
 ![BTC](/img/btc.png) 
 ![ETH](/img/eth.png)
 ![USDT](/img/usdt.png)
