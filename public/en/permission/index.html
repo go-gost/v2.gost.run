@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Permission Control"><meta property="og:title" content="Permission Control" />
+<meta property="og:description" content="One can pass available permissions with whitelist and blacklist values when starting a socks and ssh server. The format for each rule is as follows: [actions]:[hosts]:[ports].
+[actions] are comma-separted list of allowed actions: rtcp, rudp, tcp, udp. can be * to encompass all actions.
+[hosts] are comma-separated list of allowed hosts that one can bind on (in case of rtcp and rudp), or forward to (incase of tcp and udp). hosts support globs, like *." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/permission/" />
+<meta property="article:published_time" content="2017-11-20T13:57:41+08:00" />
+<meta property="article:modified_time" content="2017-11-20T13:57:41+08:00" />
+<title>Permission Control | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/"  class="active">
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Permission Control</strong>
+</header>
+
+      
+<article class="markdown"><p>One can pass available permissions with <code>whitelist</code> and <code>blacklist</code> values when starting a socks and ssh server. The format for each rule is as follows: <code>[actions]:[hosts]:[ports]</code>.</p>
+<p><code>[actions]</code> are comma-separted list of allowed actions: <code>rtcp</code>, <code>rudp</code>, <code>tcp</code>, <code>udp</code>. can be <code>*</code> to encompass all actions.</p>
+<p><code>[hosts]</code> are comma-separated list of allowed hosts that one can bind on (in case of <code>rtcp</code> and <code>rudp</code>), or forward to (incase of <code>tcp</code> and <code>udp</code>). hosts support globs, like <code>*.google.com</code>. can be <code>*</code> to encompass all hosts.</p>
+<p><code>[ports]</code> are comma-separated list of ports that one can bind to (in case of <code>rtcp</code> and <code>rudp</code>), or forward to (incase of <code>tcp</code> and <code>udp</code>), can be <code>*</code> to encompass all ports.</p>
+<p>Multiple permissions can be passed if seperated with <code>+</code>:</p>
+<p><code>rtcp,rudp:localhost,127.0.0.1:2222,8000-9000+udp:8.8.8.8,8.8.4.4:53</code> (allow for reverse tcp and udp binding on localhost and 127.0.0.1 on ports 2222 and 8000-9000 port range, plus allow for udp forwarding to 8.8.8.8 and 8.8.4.4 on port 53)</p>
+<p>SSH remote port forwarding can only bind on 127.0.0.1:8000</p>
+<pre><code>gost -L=forward+ssh://localhost:8389?whitelist=rtcp:127.0.0.1:8000
+</code></pre><p>SOCKS5 TCP/UDP remote port forwarding can only bind on ports greater than 1000</p>
+<pre><code>gost -L=socks://localhost:8389?blacklist=rtcp,rudp:*:0-1000
+</code></pre><p>SOCKS5 UDP forwading can only forward to 8.8.8.8:53</p>
+<pre><code>gost -L=socks://localhost:8389?whitelist=udp:8.8.8.8:53
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/permission/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

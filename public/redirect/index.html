@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="透明代理"><meta property="og:title" content="透明代理" />
+<meta property="og:description" content="GOST在2.3版本中增加了对TCP透明代理的支持，在2.10版本中增加了对UDP透明代理的支持。
+透明代理仅支持Linux系统。  TCP gost -L red://:12345 -F 192.168.1.1:1080 本地全局TCP代理： 设置iptables：
+iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345 UDP (2.10&#43;) UDP透明代理是基于iptables的tproxy模块实现的。
+gost -L redu://:12345?ttl=60s -F ssu://1.2.3.4:1080 ttl - 传输通道超时时间，默认为60s。
+本地全局UDP代理 设置iptables规则 规则中的192.168.0.0/16为本机所在网络，1.2.3.4/32为转发服务端地址，请根据实际情况进行修改。  iptables -t mangle -N GOST iptables -t mangle -N GOST_LOCAL iptables -t mangle -A GOST -d 255.255.255.255/32 -j RETURN iptables -t mangle -A GOST -d 127.0.0.0/8 -p udp -j RETURN iptables -t mangle -A GOST -d 192." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/redirect/" />
+<meta property="article:published_time" content="2017-11-17T15:40:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T15:40:24+08:00" />
+<title>透明代理 | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/"  class="active">
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>透明代理</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST在2.3版本中增加了对TCP透明代理的支持，在2.10版本中增加了对UDP透明代理的支持。</p>
+<blockquote class="book-hint warning">
+  透明代理仅支持Linux系统。
+</blockquote>
+
+<h2 id="tcp">TCP</h2>
+<pre><code>gost -L red://:12345 -F 192.168.1.1:1080
+</code></pre><h3 id="tcp-1">本地全局TCP代理：</h3>
+<p>设置iptables：</p>
+<pre><code>iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345
+</code></pre><h2 id="udp-210">UDP (2.10+)</h2>
+<p>UDP透明代理是基于iptables的tproxy模块实现的。</p>
+<pre><code>gost -L redu://:12345?ttl=60s -F ssu://1.2.3.4:1080
+</code></pre><p><code>ttl</code> - 传输通道超时时间，默认为60s。</p>
+<h3 id="udp">本地全局UDP代理</h3>
+<h4 id="iptables">设置iptables规则</h4>
+<blockquote class="book-hint warning">
+  规则中的<code>192.168.0.0/16</code>为本机所在网络，<code>1.2.3.4/32</code>为转发服务端地址，请根据实际情况进行修改。
+</blockquote>
+
+<pre><code>iptables -t mangle -N GOST
+iptables -t mangle -N GOST_LOCAL
+
+iptables -t mangle -A GOST -d 255.255.255.255/32 -j RETURN
+iptables -t mangle -A GOST -d 127.0.0.0/8 -p udp -j RETURN
+iptables -t mangle -A GOST -d 192.168.0.0/16 -p udp -j RETURN
+iptables -t mangle -A GOST -p udp -j TPROXY --on-port 12345 --on-ip 0.0.0.0 --tproxy-mark 1
+
+iptables -t mangle -A GOST_LOCAL -d 255.255.255.255/32 -j RETURN
+iptables -t mangle -A GOST_LOCAL -d 192.168.0.0/16 -p udp -j RETURN
+iptables -t mangle -A GOST_LOCAL -d 1.2.3.4/32 -p udp -j RETURN
+iptables -t mangle -A GOST_LOCAL -p udp -j MARK --set-mark 1
+
+iptables -t mangle -A PREROUTING -j GOST
+iptables -t mangle -A OUTPUT -j GOST_LOCAL
+</code></pre><h4 id="heading">设置路由表</h4>
+<pre><code>ip rule add fwmark 1 table 100
+ip route add local 0.0.0.0/0 dev lo table 100
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/redirect/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

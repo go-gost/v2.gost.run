@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Transparent Proxy"><meta property="og:title" content="Transparent Proxy" />
+<meta property="og:description" content="GOST added support for TCP Transparent Proxy in version 2.3.
+Transparent proxy is only available on Linux.  TCP gost -L redirect://:12345 -F 192.168.1.1:1080 Local global TCP proxy iptables rules iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345 UDP (2.10&#43;) UDP transparent proxy is based on iptables tproxy module.
+gost -L redu://:12345?ttl=60s -F ssu://1.2.3.4:1080 ttl - per tunnel time to live, default value is 60s." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/redirect/" />
+<meta property="article:published_time" content="2017-11-20T13:03:15+08:00" />
+<meta property="article:modified_time" content="2017-11-20T13:03:15+08:00" />
+<title>Transparent Proxy | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/"  class="active">
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Transparent Proxy</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST added support for TCP Transparent Proxy in version 2.3.</p>
+<blockquote class="book-hint warning">
+  Transparent proxy is only available on Linux.
+</blockquote>
+
+<h2 id="tcp">TCP</h2>
+<pre><code>gost -L redirect://:12345 -F 192.168.1.1:1080
+</code></pre><h3 id="local-global-tcp-proxy">Local global TCP proxy</h3>
+<h4 id="iptables-rules">iptables rules</h4>
+<pre><code>iptables -t nat -A OUTPUT -p tcp --match multiport ! --dports 12345,1080 -j DNAT --to-destination 127.0.0.1:12345
+</code></pre><h2 id="udp-210">UDP (2.10+)</h2>
+<p>UDP transparent proxy is based on iptables tproxy module.</p>
+<pre><code>gost -L redu://:12345?ttl=60s -F ssu://1.2.3.4:1080
+</code></pre><p><code>ttl</code> - per tunnel time to live, default value is 60s.</p>
+<h3 id="local-global-udp-proxy">Local global UDP proxy</h3>
+<h4 id="iptables-rules-1">iptables rules</h4>
+<blockquote class="book-hint warning">
+  <code>192.168.0.0/16</code> in the rules is the network where the machine is located, and <code>1.2.3.4/32</code> is the forwarding server address. Please modify them according to your environment.
+</blockquote>
+
+<pre><code>iptables -t mangle -N GOST
+iptables -t mangle -N GOST_LOCAL
+
+iptables -t mangle -A GOST -d 255.255.255.255/32 -j RETURN
+iptables -t mangle -A GOST -d 127.0.0.0/8 -p udp -j RETURN
+iptables -t mangle -A GOST -d 192.168.0.0/16 -p udp -j RETURN
+iptables -t mangle -A GOST -p udp -j TPROXY --on-port 12345 --on-ip 0.0.0.0 --tproxy-mark 1
+
+iptables -t mangle -A GOST_LOCAL -d 255.255.255.255/32 -j RETURN
+iptables -t mangle -A GOST_LOCAL -d 192.168.0.0/16 -p udp -j RETURN
+iptables -t mangle -A GOST_LOCAL -d 1.2.3.4/32 -p udp -j RETURN
+iptables -t mangle -A GOST_LOCAL -p udp -j MARK --set-mark 1
+
+iptables -t mangle -A PREROUTING -j GOST
+iptables -t mangle -A OUTPUT -j GOST_LOCAL
+</code></pre><h4 id="routing-table">routing table</h4>
+<pre><code>ip rule add fwmark 1 table 100
+ip route add local 0.0.0.0/0 dev lo table 100
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/redirect/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

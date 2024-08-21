@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="探测防御"><meta property="og:title" content="探测防御" />
+<meta property="og:description" content="GOST在2.7版本中增加了对HTTP/HTTPS/HTTP2代理的探测防御功能。当代理服务收到非法请求时，会按照探测防御策略返回对应的响应内容。
+只有当代理服务开启了用户认证，探测防御功能才有效。  gost -L=&quot;http2://admin:123456@:443?probe_resist=code:400&amp;knock=www.example.com&quot; probe_resist 代理服务通过probe_resist参数来指定防御策略。参数值的格式为：type:value。
+type可选值有:
+  code - 对应value为HTTP响应码，代理服务器会回复客户端指定的响应码。例如：probe_resist=code:404
+  web - 对应的value为URL，代理服务器会使用HTTP GET方式访问此URL，并将响应返回给客户端。例如: probe_resist=web:example.com/page.html
+  host - 对应的value为主机地址，代理服务器会将客户端请求转发给设置的主机地址，并将主机的响应返回给客户端，代理服务器在这里相当于端口转发服务。例如：probe_resist=host:example.com:8080
+  file - 对应的value为本地文件路径，代理服务器会回复客户端200响应码，并将指定的文件内容作为Body发送给客户端。例如：probe_resist=file:/path/to/file.txt
+  gost -L=http://admin:123456@:8080?probe_resist=code:403 gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080 gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt knock(2.8&#43;) 开启了探测防御功能后，当认证失败时服务器默认不会响应407 Proxy Authentication Required，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的SwitchyOmega插件)。通过knock参数设置一个私有地址，只有访问此地址时服务器才会发送407响应。
+此功能可应用于HTTP，HTTPS和HTTP/2代理：
+gost -L=http://admin:123456@:8080?probe_resist=code:403&amp;knock=www.example.com gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080&amp;knock=www.example.com gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt&amp;knock=www.example.com " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/probe_resist/" />
+<meta property="article:published_time" content="2019-01-05T14:36:00+08:00" />
+<meta property="article:modified_time" content="2019-01-05T14:36:00+08:00" />
+<title>探测防御 | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/"  class="active">
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>探测防御</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST在2.7版本中增加了对HTTP/HTTPS/HTTP2代理的探测防御功能。当代理服务收到非法请求时，会按照探测防御策略返回对应的响应内容。</p>
+<blockquote class="book-hint warning">
+  只有当代理服务开启了用户认证，探测防御功能才有效。
+</blockquote>
+
+<pre><code>gost -L=&quot;http2://admin:123456@:443?probe_resist=code:400&amp;knock=www.example.com&quot;
+</code></pre><h2 id="probe-resist">probe_resist</h2>
+<p>代理服务通过<code>probe_resist</code>参数来指定防御策略。参数值的格式为：<code>type:value</code>。</p>
+<p>type可选值有:</p>
+<ul>
+<li>
+<p><code>code</code> - 对应value为HTTP响应码，代理服务器会回复客户端指定的响应码。例如：<code>probe_resist=code:404</code></p>
+</li>
+<li>
+<p><code>web</code> - 对应的value为URL，代理服务器会使用HTTP GET方式访问此URL，并将响应返回给客户端。例如: <code>probe_resist=web:example.com/page.html</code></p>
+</li>
+<li>
+<p><code>host</code> - 对应的value为主机地址，代理服务器会将客户端请求转发给设置的主机地址，并将主机的响应返回给客户端，代理服务器在这里相当于端口转发服务。例如：<code>probe_resist=host:example.com:8080</code></p>
+</li>
+<li>
+<p><code>file</code> - 对应的value为本地文件路径，代理服务器会回复客户端200响应码，并将指定的文件内容作为Body发送给客户端。例如：<code>probe_resist=file:/path/to/file.txt</code></p>
+</li>
+</ul>
+<pre><code>gost -L=http://admin:123456@:8080?probe_resist=code:403
+</code></pre><pre><code>gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080
+</code></pre><pre><code>gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt
+</code></pre><h2 id="knock28">knock(2.8+)</h2>
+<p>开启了探测防御功能后，当认证失败时服务器默认不会响应<code>407 Proxy Authentication Required</code>，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的SwitchyOmega插件)。通过<code>knock</code>参数设置一个私有地址，只有访问此地址时服务器才会发送<code>407</code>响应。</p>
+<p>此功能可应用于HTTP，HTTPS和HTTP/2代理：</p>
+<pre><code>gost -L=http://admin:123456@:8080?probe_resist=code:403&amp;knock=www.example.com
+</code></pre><pre><code>gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080&amp;knock=www.example.com
+</code></pre><pre><code>gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt&amp;knock=www.example.com
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/probe_resist/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

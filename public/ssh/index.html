@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SSH"><meta property="og:title" content="SSH" />
+<meta property="og:description" content="SSH是GOST支持的一种传输类型(Transport)。
+使用说明 服务端 gost -L=ssh://:2222 客户端 gost -L=:8080 -F=ssh://server_ip:2222?ping=60 客户端可以通过ping参数设置心跳包发送周期，单位为秒。默认不发送心跳包。
+端口转发 GOST中的SSH也支持标准SSH协议的端口转发功能，具体使用方法请参考端口转发
+PubKey认证 (2.11&#43;) 服务端 gost -L=&quot;ssh://:2222?ssh_authorized_keys=/path/to/authorized_keys&quot; ssh_authorized_keys - 客户端公钥列表文件
+客户端 gost -L :8080 -F=ssh://server_ip:2222?ssh_key=/path/to/id_rsa&quot; ssh_key - 客户端私钥文件" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/ssh/" />
+<meta property="article:published_time" content="2017-11-17T12:15:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T12:15:24+08:00" />
+<title>SSH | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/"  class="active">
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>SSH</strong>
+</header>
+
+      
+<article class="markdown"><p>SSH是GOST支持的一种传输类型(Transport)。</p>
+<h2 id="heading">使用说明</h2>
+<h5 id="heading-1">服务端</h5>
+<pre><code>gost -L=ssh://:2222
+</code></pre><h5 id="heading-2">客户端</h5>
+<pre><code>gost -L=:8080 -F=ssh://server_ip:2222?ping=60
+</code></pre><p>客户端可以通过<code>ping</code>参数设置心跳包发送周期，单位为秒。默认不发送心跳包。</p>
+<h2 id="heading-3">端口转发</h2>
+<p>GOST中的SSH也支持标准SSH协议的端口转发功能，具体使用方法请参考<a href="/port-forwarding">端口转发</a></p>
+<h2 id="pubkey-211">PubKey认证 (2.11+)</h2>
+<h5 id="heading-4">服务端</h5>
+<pre><code>gost -L=&quot;ssh://:2222?ssh_authorized_keys=/path/to/authorized_keys&quot;
+</code></pre><p><code>ssh_authorized_keys</code> - 客户端公钥列表文件</p>
+<h5 id="heading-5">客户端</h5>
+<pre><code>gost -L :8080 -F=ssh://server_ip:2222?ssh_key=/path/to/id_rsa&quot;
+</code></pre><p><code>ssh_key</code> - 客户端私钥文件</p>
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/ssh/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SOCKS"><meta property="og:title" content="SOCKS" />
+<meta property="og:description" content="SOCKS是GOST支持的协议类型(Protocol)，SOCKS协议有三个版本: SOCKS4, SOCKS4A和SOCKS5。
+SOCKS4 gost -L socks4://:1080 标准的SOCKS4代理服务，同时兼容SOCKS4A协议。
+SOCKS4A gost -L socks4a://:1080 标准的SOCKS4A代理服务。
+SOCKS4(A)当前仅支持CONNECT方法，不支持BIND方法。  SOCKS5 gost -L socks5://:1080 SOCKS5协商加密 GOST支持标准SOCKS5协议的no-auth(0x00)和user-pass(0x02)方法，并在此基础上扩展了两个：tls(0x80)和tls-auth(0x82)，用于数据加密。
+服务端 gost -L=socks5://:1080 客户端 gost -L=:8080 -F=socks5://server_ip:1080?notls=true 如果两端都是GOST(如上)则数据传输会被加密(协商使用tls或tls-auth方法)，否则使用标准SOCKS5进行通讯(no-auth或user/pass方法)。
+notls - (2.9.1&#43;) 通过此参数可以禁用协商加密，默认值：false。
+SOCKS5 UDP Relay GOST中SOCKS5同时也支持UDP Relay，并支持TCP-over-UDP特性。
+不设置转发代理 GOST做为标准SOCKS5代理处理UDP数据。
+设置转发代理 设置多个转发代理(代理链) 当设置转发代理时，GOST会使用UDP-over-TCP方式转发UDP数据。proxy1 - proxyN可以为任意类型代理。
+如果要转发SOCKS5的BIND和UDP请求，代理链的末端(最后一个-F参数)必须是GOST SOCKS5类型代理。  SOCKS协议也可以与各种传输类型(Transport)组合使用
+SOCKS5 Over TLS gost -L socks5&#43;tls://:1080 使用TLS加密的SOCKS5代理服务。
+SOCKS5 Over QUIC gost -L socks5&#43;quic://:1080 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/socks/" />
+<meta property="article:published_time" content="2017-11-17T11:10:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T11:10:24+08:00" />
+<title>SOCKS | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/"  class="active">
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>SOCKS</strong>
+</header>
+
+      
+<article class="markdown"><p>SOCKS是GOST支持的协议类型(Protocol)，SOCKS协议有三个版本: SOCKS4, SOCKS4A和SOCKS5。</p>
+<h2 id="socks4">SOCKS4</h2>
+<pre><code>gost -L socks4://:1080
+</code></pre><p>标准的SOCKS4代理服务，同时兼容SOCKS4A协议。</p>
+<h2 id="socks4a">SOCKS4A</h2>
+<pre><code>gost -L socks4a://:1080
+</code></pre><p>标准的SOCKS4A代理服务。</p>
+<blockquote class="book-hint warning">
+  SOCKS4(A)当前仅支持CONNECT方法，不支持BIND方法。
+</blockquote>
+
+<h2 id="socks5">SOCKS5</h2>
+<pre><code>gost -L socks5://:1080
+</code></pre><h3 id="socks5-1">SOCKS5协商加密</h3>
+<p>GOST支持标准SOCKS5协议的no-auth(0x00)和user-pass(0x02)方法，并在此基础上扩展了两个：tls(0x80)和tls-auth(0x82)，用于数据加密。</p>
+<h3 id="heading">服务端</h3>
+<pre><code>gost -L=socks5://:1080
+</code></pre><h3 id="heading-1">客户端</h3>
+<pre><code>gost -L=:8080 -F=socks5://server_ip:1080?notls=true
+</code></pre><p>如果两端都是GOST(如上)则数据传输会被加密(协商使用tls或tls-auth方法)，否则使用标准SOCKS5进行通讯(no-auth或user/pass方法)。</p>
+<p><code>notls</code> - (2.9.1+) 通过此参数可以禁用协商加密，默认值：false。</p>
+<h3 id="socks5-udp-relay">SOCKS5 UDP Relay</h3>
+<p>GOST中SOCKS5同时也支持UDP Relay，并支持TCP-over-UDP特性。</p>
+<h4 id="heading-2">不设置转发代理</h4>
+<p><img src="/img/udp01.png" alt="Figure 01"></p>
+<p>GOST做为标准SOCKS5代理处理UDP数据。</p>
+<h4 id="heading-3">设置转发代理</h4>
+<p><img src="/img/udp02.png" alt="Figure 02"></p>
+<h4 id="heading-4">设置多个转发代理(代理链)</h4>
+<p><img src="/img/udp03.png" alt="Figure 03"></p>
+<p>当设置转发代理时，GOST会使用UDP-over-TCP方式转发UDP数据。proxy1 - proxyN可以为任意类型代理。</p>
+<blockquote class="book-hint warning">
+  如果要转发SOCKS5的BIND和UDP请求，代理链的末端(最后一个-F参数)必须是GOST SOCKS5类型代理。
+</blockquote>
+
+<p>SOCKS协议也可以与各种传输类型(Transport)组合使用</p>
+<h3 id="socks5-over-tls">SOCKS5 Over TLS</h3>
+<pre><code>gost -L socks5+tls://:1080
+</code></pre><p>使用TLS加密的SOCKS5代理服务。</p>
+<h3 id="socks5-over-quic">SOCKS5 Over QUIC</h3>
+<pre><code>gost -L socks5+quic://:1080
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/socks/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

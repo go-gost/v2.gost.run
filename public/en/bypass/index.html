@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Routing Control"><meta property="og:title" content="Routing Control" />
+<meta property="og:description" content="GOST added routing control in version 2.6 to control client requests through black and white lists. Routing control can be applied to service nodes (-L parameters) and all hierarchical nodes of the proxy chain (-F parameters).
+gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.10.0.0/16,localhost,*.example.com Specify the requested destination address list (comma-separated IP, CIDR, domain name or domain name wildcard address) via the bypass parameter.
+When the node selection of the proxy chain is performed, the routing configuration (bypass parameter) on this node is applied every time a proxy chain node is determined." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/bypass/" />
+<meta property="article:published_time" content="2018-11-03T14:00:00+08:00" />
+<meta property="article:modified_time" content="2018-11-03T14:00:00+08:00" />
+<title>Routing Control | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/"  class="active">
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Routing Control</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST added routing control in version 2.6 to control client requests through black and white lists. Routing control can be applied to service nodes (<code>-L</code> parameters) and all hierarchical nodes of the proxy chain (<code>-F</code> parameters).</p>
+<pre><code>gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.10.0.0/16,localhost,*.example.com
+</code></pre><p>Specify the requested destination address list (comma-separated IP, CIDR, domain name or domain name wildcard address) via the <code>bypass</code> parameter.</p>
+<p>When the node selection of the proxy chain is performed, the routing configuration (<code>bypass</code> parameter) on this node is applied every time a proxy chain node is determined. If the target address of the request is included in this configuration, the proxy chain terminates at this node (and do not include this node).</p>
+<p>If there are more addresses, you can use an external configuration file:</p>
+<pre><code>gost -L :8080?bypass=bypass.txt -F :1080?bypass=bypass2.txt
+</code></pre><p>The format of the configuration file is (address list and optional configuration options):</p>
+<pre><code># options
+reload   10s
+reverse  true
+
+# bypass addresses
+127.0.0.1
+172.10.0.0/16
+localhost
+*.example.com
+.example.org
+</code></pre><p><code>reload</code> - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.</p>
+<p><code>reverse</code> - Specifies whether to switch to a whitelist.</p>
+<p>To convert to a whitelist, you can also add the <code>~</code> prefix before the <code>bypass</code> parameter value:</p>
+<pre><code>gost -L=:8080?bypass=~127.0.0.1,172.10.0.0/16,localhost,*.example.com,.example.org
+</code></pre><p>The same is true for configuration file:</p>
+<pre><code>gost -L=:8080?bypass=~bypass.txt
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/bypass/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

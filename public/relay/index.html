@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Relay"><meta property="og:title" content="Relay" />
+<meta property="og:description" content="Relay是GOST(2.11&#43;)支持的一种协议类型(Protocol)。
+Relay协议本身不具备加密功能，如果需要对数据进行加密传输，可以配合加密隧道使用。  使用说明  Relay协议同时具有代理和转发功能，可同时处理TCP和UDP的数据，并支持用户认证。
+参数说明 nodelay - true/false (默认值为false)。默认情况下relay协议会等待客户端的请求数据，当收到请求数据后会把协议头部信息与请求数据一起发给服务端。当此参数设为true后，协议头部信息会立即发给服务端，不再等待客户端的请求。
+代理功能 Relay协议可以像HTTP/SOCKS5一样用作代理协议。
+服务端 gost -L relay&#43;tls://username:password@:12345 客户端 gost -L :8080 -F relay&#43;tls://username:password@:12345?nodelay=false 转发功能 Relay转发有两种模式，一种是配合端口转发使用，另一种是配合转发隧道使用。两种模式均可以同时转发TCP和UDP数据。
+端口转发 服务端 gost -L relay://:12345 客户端 gost -L udp://:1053/:53 -L tcp://:1053/:53 -F relay://:12345 转发隧道 服务端 gost -L relay://:12345/:53 客户端 gost -L udp://:1053 -L tcp://:1053 -F relay://:12345 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/relay/" />
+<meta property="article:published_time" content="2020-02-26T17:30:00+08:00" />
+<meta property="article:modified_time" content="2020-02-26T17:30:00+08:00" />
+<title>Relay | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/"  class="active">
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Relay</strong>
+</header>
+
+      
+<article class="markdown"><p>Relay是GOST(2.11+)支持的一种协议类型(Protocol)。</p>
+<blockquote class="book-hint warning">
+  Relay协议本身不具备加密功能，如果需要对数据进行加密传输，可以配合加密隧道使用。
+</blockquote>
+
+<h2 id="heading">使用说明</h2>
+<hr>
+<p>Relay协议同时具有代理和转发功能，可同时处理TCP和UDP的数据，并支持用户认证。</p>
+<h3 id="heading-1">参数说明</h3>
+<p><code>nodelay</code> - true/false (默认值为false)。默认情况下relay协议会等待客户端的请求数据，当收到请求数据后会把协议头部信息与请求数据一起发给服务端。当此参数设为<code>true</code>后，协议头部信息会立即发给服务端，不再等待客户端的请求。</p>
+<h3 id="heading-2">代理功能</h3>
+<p>Relay协议可以像HTTP/SOCKS5一样用作代理协议。</p>
+<h5 id="heading-3">服务端</h5>
+<pre><code>gost -L relay+tls://username:password@:12345
+</code></pre><h5 id="heading-4">客户端</h5>
+<pre><code>gost -L :8080 -F relay+tls://username:password@:12345?nodelay=false
+</code></pre><h3 id="heading-5">转发功能</h3>
+<p>Relay转发有两种模式，一种是配合端口转发使用，另一种是配合转发隧道使用。两种模式均可以同时转发TCP和UDP数据。</p>
+<h4 id="heading-6">端口转发</h4>
+<h5 id="heading-7">服务端</h5>
+<pre><code>gost -L relay://:12345
+</code></pre><h5 id="heading-8">客户端</h5>
+<pre><code>gost -L udp://:1053/:53 -L tcp://:1053/:53 -F relay://:12345
+</code></pre><h4 id="heading-9">转发隧道</h4>
+<h5 id="heading-10">服务端</h5>
+<pre><code>gost -L relay://:12345/:53
+</code></pre><h5 id="heading-11">客户端</h5>
+<pre><code>gost -L udp://:1053 -L tcp://:1053 -F relay://:12345
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

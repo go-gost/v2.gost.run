@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TLS"><meta property="og:title" content="TLS" />
+<meta property="og:description" content="TLS is a transport type supported by GOST.
+Usage Standard TLS Server side gost -L tls://:443 Client side gost -L :8080 -F tls://server_ip:443 Multiplex TLS GOST extends the TLS transport type (mtls) with multiplex features on the basis of TLS.
+Server side gost -L mtls://:443 Client side gost -L :8080 -F mtls://server_ip:443 TLS Certificate There is built-in TLS certificate in GOST, if you need to use other TLS certificate, there are two ways:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/tls/" />
+<meta property="article:published_time" content="2017-11-20T12:18:24+08:00" />
+<meta property="article:modified_time" content="2017-11-20T12:18:24+08:00" />
+<title>TLS | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/"  class="active">
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>TLS</strong>
+</header>
+
+      
+<article class="markdown"><p>TLS is a transport type supported by GOST.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="standard-tls">Standard TLS</h3>
+<h4 id="server-side">Server side</h4>
+<pre><code>gost -L tls://:443
+</code></pre><h4 id="client-side">Client side</h4>
+<pre><code>gost -L :8080 -F tls://server_ip:443
+</code></pre><h3 id="multiplex-tls">Multiplex TLS</h3>
+<p>GOST extends the TLS transport type (mtls) with multiplex features on the basis of TLS.</p>
+<h4 id="server-side-1">Server side</h4>
+<pre><code>gost -L mtls://:443
+</code></pre><h4 id="client-side-1">Client side</h4>
+<pre><code>gost -L :8080 -F mtls://server_ip:443
+</code></pre><h2 id="tls-certificate">TLS Certificate</h2>
+<p>There is built-in TLS certificate in GOST, if you need to use other TLS certificate, there are two ways:</p>
+<ul>
+<li>
+<p>Place two files <code>cert.pem</code> (public key) and <code>key.pem</code> (private key) in the current working directory, gost will automatically load them.</p>
+</li>
+<li>
+<p>Use the parameters <code>key</code> and <code>cert</code> to specify the path to the certificate files:</p>
+</li>
+</ul>
+<pre><code>gost -L=&quot;tls://:443?cert=/path/to/my/cert/file&amp;key=/path/to/my/key/file&quot;
+</code></pre><h2 id="certificate-verification">Certificate Verification</h2>
+<p>Client can specify <code>secure</code> parameter to perform server's certificate chain and host name verification (Default does not verify the certificate):</p>
+<pre><code>gost -L=:8080 -F=&quot;tls://server_domain_name:443?secure=true&quot;
+</code></pre><p>When you need to verify the certificate, the <code>server_domain_name</code> section of the node configuration must fill in the server's domain name.</p>
+<h2 id="certificate-pinning">Certificate Pinning</h2>
+<p>Client can specify the CA certificate via the <code>ca</code> parameter to perform <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Certificate_pinning">Certificate Pinning</a>(Certificate Pinning):</p>
+<pre><code>gost -L=:8080 -F=&quot;tls://:443?ca=ca.pem&quot;
+</code></pre><blockquote class="book-hint info">
+  The above parameters can be used for all TLS-enabled services,such as HTTP2, QUIC, WSS, SSH, SOCKS5.
+</blockquote>
+
+<h2 id="mutual-tls-authentication-2111">Mutual TLS authentication (2.11.1+)</h2>
+<p>The server can specify the CA certificate via the <code>ca</code> parameter to perform mandatory verification on the client certificate:</p>
+<pre><code>gost -L=&quot;tls://:443?cert=certfile&amp;key=keyfile&amp;ca=cafile&quot;
+</code></pre><p>At this time, the client must provide its own certificate:</p>
+<pre><code>gost -L=:8080 -F=&quot;tls://server_ip:443?cert=certfile&amp;key=keyfile&quot;
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/tls/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

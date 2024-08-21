@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Simple-obfs"><meta property="og:title" content="Simple-obfs" />
+<meta property="og:description" content="Simple-obfs is a transport type supported by GOST in version 2.7.
+It is compatible with shadowsocks/simple-obfs and Android Simple Obfuscation plugin.
+Currently only HTTP mode is supported.
+Usage Server side gost -L=ss&#43;ohttp://chacha20:123456@:8338 Client side gost -L=:8080 -F=ss&#43;ohttp://chacha20:123456@server_ip:8338?host=bing.com The client can customize the request host through the host parameter." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/simple-obfs/" />
+<meta property="article:published_time" content="2017-11-17T15:30:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T15:30:24+08:00" />
+<title>Simple-obfs | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/"  class="active">
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Simple-obfs</strong>
+</header>
+
+      
+<article class="markdown"><p>Simple-obfs is a transport type supported by GOST in version 2.7.</p>
+<p>It is compatible with <a href="https://github.com/shadowsocks/simple-obfs">shadowsocks/simple-obfs</a> and Android <a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks.plugin.obfs_local">Simple Obfuscation</a> plugin.</p>
+<p>Currently only HTTP mode is supported.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="server-side">Server side</h3>
+<pre><code>gost -L=ss+ohttp://chacha20:123456@:8338
+</code></pre><h3 id="client-side">Client side</h3>
+<pre><code>gost -L=:8080 -F=ss+ohttp://chacha20:123456@server_ip:8338?host=bing.com
+</code></pre><p>The client can customize the request host through the <code>host</code> parameter.</p>
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/simple-obfs/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

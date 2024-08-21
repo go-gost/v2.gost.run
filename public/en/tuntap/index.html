@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TUN/TAP Device"><meta property="og:title" content="TUN/TAP Device" />
+<meta property="og:description" content="GOST added support for TUN/TAP devices in version 2.9. You can create VPN via TUN/TAP devices.
+Windows You need to install the tap driver OpenVPN/tap-windows6 or OpenVPN client for Windows.
+TUN Usage gost -L=&quot;tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&amp;name=tun0&amp;mtu=1350&amp;route=10.100.0.0/16&amp;gw=192.168.123.1&quot; method:password - Optional, encryption method and password for UDP tunnel. Supported methods are the same as shadowsocks/go-shadowsocks2.
+local_ip:port - Local UDP tunnel listen address.
+remote_ip:port - Optional, remote UDP server address, IP packets received by the local TUN device will be forwarded to the remote server via UDP tunnel." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/tuntap/" />
+<meta property="article:published_time" content="2020-01-07T14:58:00+08:00" />
+<meta property="article:modified_time" content="2020-01-07T14:58:00+08:00" />
+<title>TUN/TAP Device | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/"  class="active">
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>TUN/TAP Device</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST added support for TUN/TAP devices in version 2.9. You can create VPN via TUN/TAP devices.</p>
+<h2 id="windows">Windows</h2>
+<p>You need to install the tap driver <a href="https://github.com/OpenVPN/tap-windows6">OpenVPN/tap-windows6</a> or <a href="https://github.com/OpenVPN/openvpn">OpenVPN client</a> for Windows.</p>
+<h2 id="tun">TUN</h2>
+<h3 id="usage">Usage</h3>
+<pre><code>gost -L=&quot;tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&amp;name=tun0&amp;mtu=1350&amp;route=10.100.0.0/16&amp;gw=192.168.123.1&quot;
+</code></pre><p><code>method:password</code> - Optional, encryption method and password for UDP tunnel. Supported methods are the same as <a href="https://github.com/shadowsocks/go-shadowsocks2">shadowsocks/go-shadowsocks2</a>.</p>
+<p><code>local_ip:port</code> - Local UDP tunnel listen address.</p>
+<p><code>remote_ip:port</code> - Optional, remote UDP server address, IP packets received by the local TUN device will be forwarded to the remote server via UDP tunnel.</p>
+<p><code>net</code> - Required, CIDR IP address of the TUN device, such as: 192.168.123.1/24.</p>
+<p><code>name</code> - Optional, TUN device name.</p>
+<p><code>mtu</code> - Optional, MTU for TUN device. Default value is 1350.</p>
+<p><code>route</code> - Optional, comma-separated routing items, such as: 10.100.0.0/16,172.20.1.0/24,1.2.3.4/32</p>
+<p><code>gw</code> - Optional, routing gateway.</p>
+<p><code>tcp</code> - Optional, use fake TCP tunnel, default value is <code>false</code> means UDP-based tunnel.</p>
+<h3 id="routing-on-server-side-292">Routing on server side (2.9.2+)</h3>
+<p>The server can access the client network by setting up routing table and gateway.</p>
+<h4 id="default-gateway">Default gateway</h4>
+<p>The server can set the default gateway through the <code>gw</code> parameter to specify the gateway of the routes in <code>route</code> parameter.</p>
+<pre><code>gost -L=&quot;tun://:8421?net=192.168.123.1/24&amp;gw=192.168.123.2&amp;route=172.10.0.0/16,10.138.0.0/16&quot;
+</code></pre><p>Packets send to network 172.10.0.0/16 and 10.138.0.0/16 will be forwarded to the client with the IP 192.168.123.2 through the TUN tunnel.</p>
+<h4 id="gateway-specific-routing">Gateway-specific routing</h4>
+<p>If you want to set a specific gateway for each route, you can specify it through a route configuration file:</p>
+<pre><code>gost -L=&quot;tun://:8421?net=192.168.123.1/24&amp;route=route.txt&quot;
+</code></pre><p>The configuration file <code>route.txt</code> format：</p>
+<pre><code># Destination   Gateway
+
+172.10.0.0/16   192.168.123.2
+10.138.0.0/16   192.168.123.3
+</code></pre><p>The first column is the destination network.</p>
+<p>The second column is the gateway.</p>
+<p>Packets send to network 172.10.0.0/16 will be forwarded to the client with the IP 192.168.123.2 through the TUN tunnel.</p>
+<p>Packets send to network 10.138.0.0/16 will be forwarded to the client with the IP 192.168.123.3 through the TUN tunnel.</p>
+<h3 id="tun-based-vpn-linux">TUN-based VPN (Linux)</h3>
+<blockquote class="book-hint warning">
+  The value specified by <code>net</code> option may need to be adjusted according to your actual situation.
+</blockquote>
+
+<h4 id="create-a-tun-device-and-establish-a-udp-tunnel">Create a TUN device and establish a UDP tunnel</h4>
+<h5 id="server-side">Server side</h5>
+<pre><code>gost -L tun://:8421?net=192.168.123.1/24
+</code></pre><h5 id="client-side">Client side</h5>
+<pre><code>gost -L tun://:8421/SERVER_IP:8421?net=192.168.123.2/24
+</code></pre><p>When no error occurred, you can use the <code>ip addr</code> command to inspect the created TUN device:</p>
+<pre><code>$ ip addr show tun0
+2: tun0: &lt;POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP&gt; mtu 1350 qdisc pfifo_fast state UNKNOWN group default qlen 500
+    link/none 
+    inet 192.168.123.2/24 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d521:ad59:87d0:53e4/64 scope link flags 800 
+       valid_lft forever preferred_lft forever
+</code></pre><p>Now you can <code>ping</code> the server address:</p>
+<pre><code>$ ping 192.168.123.1
+64 bytes from 192.168.123.1: icmp_seq=1 ttl=64 time=9.12 ms
+64 bytes from 192.168.123.1: icmp_seq=2 ttl=64 time=10.3 ms
+64 bytes from 192.168.123.1: icmp_seq=3 ttl=64 time=7.18 ms
+</code></pre><h4 id="iperf3-testing">iperf3 testing</h4>
+<h5 id="server-side-1">Server side</h5>
+<pre><code>$ iperf3 -s
+</code></pre><h5 id="client-side-1">Client side</h5>
+<pre><code>$ iperf3 -c 192.168.123.1
+</code></pre><h4 id="ip-routing-and-firewall-rules">IP routing and firewall rules</h4>
+<p>If you want the client to access the server network, you need to set the corresponding routing table and firewall rules according to your needs. For example, all the client external network traffic can be forwarded to the server.</p>
+<h5 id="server-side-2">Server side</h5>
+<p>Enable IP forwarding and set up firewall rules</p>
+<pre><code>$ sysctl -w net.ipv4.ip_forward=1
+
+$ iptables -t nat -A POSTROUTING -s 192.168.123.0/24 ! -o tun0 -j MASQUERADE
+$ iptables -A FORWARD -i tun0 ! -o tun0 -j ACCEPT
+$ iptables -A FORWARD -o tun0 -j ACCEPT
+</code></pre><h5 id="client-side-2">Client side</h5>
+<p>Set up firewall rules</p>
+<blockquote class="book-hint danger">
+  The following operations will change the client's network environment, unless you know what you are doing, please be careful!
+</blockquote>
+
+<pre><code>$ ip route add SERVER_IP/32 dev eth0   # replace the SERVER_IP and eth0
+$ ip route del default   # delete the default route
+$ ip route add default via 192.168.123.2  # add new default route
+</code></pre><h2 id="tap">TAP</h2>
+<blockquote class="book-hint warning">
+  TAP devices are not supported by macOS.
+</blockquote>
+
+<h3 id="usage-1">Usage</h3>
+<pre><code>gost -L=&quot;tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&amp;name=tap0&amp;mtu=1350&amp;route=10.100.0.0/16&amp;gw=192.168.123.1&quot;
+</code></pre><h2 id="tuntap-tunnel-over-tcp">TUN/TAP tunnel over TCP</h2>
+<p>The TUN/TAP tunnel in GOST is based on the UDP protocol by default.</p>
+<p>If you want to use TCP, you can choose the following methods:</p>
+<h3 id="fake-tcp">Fake TCP</h3>
+<blockquote class="book-hint warning">
+  <p>Fake TCP is not standard TCP, it just simulates the TCP protocol.</p>
+<p>This feature is only available on Linux.</p>
+
+</blockquote>
+
+<p>GOST uses <a href="https://github.com/xtaci/tcpraw">xtaci/tcpraw</a> with built-in support for TCP. This feature can be enabled via the <code>tcp</code> option.</p>
+<h5 id="server-side-3">Server side</h5>
+<pre><code>gost -L &quot;tun://:8421?net=192.168.123.1/24&amp;tcp=true&quot;
+</code></pre><h5 id="client-side-3">Client side</h5>
+<pre><code>gost -L &quot;tun://:0/SERVER_IP:8421?net=192.168.123.2/24&amp;tcp=true&quot;
+</code></pre><h3 id="proxy-chain-291">Proxy chain (2.9.1+)</h3>
+<p>You can add a proxy chain to forward UDP data, analogous to UDP port forwarding.</p>
+<p>High flexibility and compatibility, recommended.</p>
+<blockquote class="book-hint warning">
+  <p>The last node of the proxy chain (the last -F parameter) must support GOST <code>socks5</code> or <code>ssu</code> protocol type, the transport can be any one.</p>
+<p><code>ssu</code> is supported in 2.10.1+.</p>
+
+</blockquote>
+
+<h5 id="server-side-4">Server side</h5>
+<pre><code>gost -L tun://:8421?net=192.168.123.1/24&quot; -L socks5://:1080
+</code></pre><h5 id="client-side-4">Client side</h5>
+<pre><code>gost -L tun://:0/:8421?net=192.168.123.2/24 -F socks5://SERVER_IP:1080
+</code></pre><h3 id="gost-port-forwarding">GOST port forwarding</h3>
+<p>Based on UDP port forwarding and proxy chain.</p>
+<h5 id="server-side-5">Server side</h5>
+<pre><code>gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
+</code></pre><h5 id="client-side-5">Client side</h5>
+<pre><code>gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
+</code></pre><h3 id="third-party-tools">Third-party tools</h3>
+<p><a href="https://github.com/wangyu-/udp2raw-tunnel">udp2raw-tunnel</a>.</p>
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/tuntap/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

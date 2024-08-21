@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="权限控制"><meta property="og:title" content="权限控制" />
+<meta property="og:description" content="服务端可以通过白名单whitelist参数和黑名单blacklist参数来控制客户端的请求是否允许被处理。 参数格式为: [actions]:[hosts]:[ports]
+[actions]是一个由,分割的动作列表，可选值有: tcp(TCP转发), udp(UDP转发), rtcp(TCP远程转发), rudp(UDP远程转发), 或 *(所有动作)。
+[hosts]是一个由,分割的Host列表，代表可以绑定到(rtcp,rudp)或转发到(tcp,udp)的目的主机，支持通配符(*.google.com)和*(所有主机)。
+[ports]是一个由,分割的端口列表，代表可以绑定到(rtcp,rudp)或转发到(tcp,udp)的目的端口，可以是*(所有端口)。
+多组权限可以通过&#43;进行连接:
+whitelist=rtcp,rudp:localhost,127.0.0.1:2222,8000-9000&#43;udp:8.8.8.8,8.8.4.4:53(允许TCP/UDP远程端口转发绑定到localhost,127.0.0.1的2222端口和8000-9000端口范围，同时允许UDP转发到8.8.8.8:53和8.8.4.4:53)。
+SSH远程端口转发只能绑定到127.0.0.1:8000
+gost -L=forward&#43;ssh://localhost:8389?whitelist=rtcp:127.0.0.1:8000 SOCKS5的TCP/UDP远程端口转发只允许绑定到大于1000的端口
+gost -L=socks://localhost:8389?blacklist=rtcp,rudp:*:0-1000 SOCKS5的UDP转发只能转发到8.8.8.8:53
+gost -L=socks://localhost:8389?whitelist=udp:8.8.8.8:53 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/permission/" />
+<meta property="article:published_time" content="2017-11-16T20:26:24+08:00" />
+<meta property="article:modified_time" content="2017-11-16T20:26:24+08:00" />
+<title>权限控制 | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/"  class="active">
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>权限控制</strong>
+</header>
+
+      
+<article class="markdown"><p>服务端可以通过白名单<code>whitelist</code>参数和黑名单<code>blacklist</code>参数来控制客户端的请求是否允许被处理。
+参数格式为: <code>[actions]:[hosts]:[ports]</code></p>
+<p><code>[actions]</code>是一个由<code>,</code>分割的动作列表，可选值有: <code>tcp</code>(TCP转发), <code>udp</code>(UDP转发), <code>rtcp</code>(TCP远程转发), <code>rudp</code>(UDP远程转发), 或 <code>*</code>(所有动作)。</p>
+<p><code>[hosts]</code>是一个由<code>,</code>分割的Host列表，代表可以绑定到(rtcp,rudp)或转发到(tcp,udp)的目的主机，支持通配符(*.google.com)和<code>*</code>(所有主机)。</p>
+<p><code>[ports]</code>是一个由<code>,</code>分割的端口列表，代表可以绑定到(rtcp,rudp)或转发到(tcp,udp)的目的端口，可以是<code>*</code>(所有端口)。</p>
+<p>多组权限可以通过<code>+</code>进行连接:</p>
+<p><code>whitelist=rtcp,rudp:localhost,127.0.0.1:2222,8000-9000+udp:8.8.8.8,8.8.4.4:53</code>(允许TCP/UDP远程端口转发绑定到localhost,127.0.0.1的2222端口和8000-9000端口范围，同时允许UDP转发到8.8.8.8:53和8.8.4.4:53)。</p>
+<p>SSH远程端口转发只能绑定到127.0.0.1:8000</p>
+<pre><code>gost -L=forward+ssh://localhost:8389?whitelist=rtcp:127.0.0.1:8000
+</code></pre><p>SOCKS5的TCP/UDP远程端口转发只允许绑定到大于1000的端口</p>
+<pre><code>gost -L=socks://localhost:8389?blacklist=rtcp,rudp:*:0-1000
+</code></pre><p>SOCKS5的UDP转发只能转发到8.8.8.8:53</p>
+<pre><code>gost -L=socks://localhost:8389?whitelist=udp:8.8.8.8:53
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/permission/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

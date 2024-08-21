@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TLS"><meta property="og:title" content="TLS" />
+<meta property="og:description" content="TLS是GOST支持的一种传输类型(Transport)。
+使用说明 标准TLS 服务端 gost -L tls://:443 客户端 gost -L :8080 -F tls://server_ip:443 多路复用TLS GOST在TLS基础之上扩展出具有多路复用(Multiplex)特性的TLS传输类型(mtls)。
+服务端 gost -L mtls://:443 客户端 gost -L :8080 -F mtls://server_ip:443 TLS证书 GOST内置了TLS证书，如果需要使用自定义TLS证书，有两种方法：
+  在GOST运行目录放置cert.pem(公钥)和key.pem(私钥)两个文件即可，GOST会自动加载运行目录下的cert.pem和key.pem文件。
+  使用key和cert参数指定证书文件路径：
+  gost -L=&quot;tls://:443?cert=/path/to/my/cert/file&amp;key=/path/to/my/key/file&quot; 证书校验 对于客户端可以通过secure参数开启服务器证书和域名校验，默认不校验证书:
+gost -L=:8080 -F=&quot;tls://server_domain_name:443?secure=true&quot; 当需要校验证书时，节点配置中的server_domain_name部分必须填写服务器的域名。
+证书锁定 对于客户端可以通过ca参数指定CA证书进行证书锁定(Certificate Pinning):
+gost -L=:8080 -F=&quot;tls://:443?ca=ca.pem&quot; 以上参数可以用于所有支持TLS的服务，例如HTTP2, QUIC, WSS, SSH, SOCKS5。  双向证书校验(2.11.1&#43;) 服务端可以通过ca参数指定CA证书来对客户端证书进行强制校验：
+gost -L=&quot;tls://:443?cert=certfile&amp;key=keyfile&amp;ca=cafile&quot; 此时客户端必须提供自己的证书：
+gost -L=:8080 -F=&quot;tls://server_ip:443?cert=certfile&amp;key=keyfile&quot; " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tls/" />
+<meta property="article:published_time" content="2017-11-17T11:45:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T11:45:24+08:00" />
+<title>TLS | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/"  class="active">
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>TLS</strong>
+</header>
+
+      
+<article class="markdown"><p>TLS是GOST支持的一种传输类型(Transport)。</p>
+<h2 id="heading">使用说明</h2>
+<h3 id="tls">标准TLS</h3>
+<h4 id="heading-1">服务端</h4>
+<pre><code>gost -L tls://:443
+</code></pre><h4 id="heading-2">客户端</h4>
+<pre><code>gost -L :8080 -F tls://server_ip:443
+</code></pre><h3 id="tls-1">多路复用TLS</h3>
+<p>GOST在TLS基础之上扩展出具有多路复用(Multiplex)特性的TLS传输类型(mtls)。</p>
+<h4 id="heading-3">服务端</h4>
+<pre><code>gost -L mtls://:443
+</code></pre><h4 id="heading-4">客户端</h4>
+<pre><code>gost -L :8080 -F mtls://server_ip:443
+</code></pre><h2 id="tls-2">TLS证书</h2>
+<p>GOST内置了TLS证书，如果需要使用自定义TLS证书，有两种方法：</p>
+<ul>
+<li>
+<p>在GOST运行目录放置<code>cert.pem</code>(公钥)和<code>key.pem</code>(私钥)两个文件即可，GOST会自动加载运行目录下的cert.pem和key.pem文件。</p>
+</li>
+<li>
+<p>使用<code>key</code>和<code>cert</code>参数指定证书文件路径：</p>
+</li>
+</ul>
+<pre><code>gost -L=&quot;tls://:443?cert=/path/to/my/cert/file&amp;key=/path/to/my/key/file&quot;
+</code></pre><h2 id="heading-5">证书校验</h2>
+<p>对于客户端可以通过<code>secure</code>参数开启服务器证书和域名校验，默认不校验证书:</p>
+<pre><code>gost -L=:8080 -F=&quot;tls://server_domain_name:443?secure=true&quot;
+</code></pre><p>当需要校验证书时，节点配置中的<code>server_domain_name</code>部分必须填写服务器的域名。</p>
+<h2 id="heading-6">证书锁定</h2>
+<p>对于客户端可以通过<code>ca</code>参数指定CA证书进行<a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Certificate_pinning">证书锁定</a>(Certificate Pinning):</p>
+<pre><code>gost -L=:8080 -F=&quot;tls://:443?ca=ca.pem&quot;
+</code></pre><blockquote class="book-hint info">
+  以上参数可以用于所有支持TLS的服务，例如HTTP2, QUIC, WSS, SSH, SOCKS5。
+</blockquote>
+
+<h2 id="2111">双向证书校验(2.11.1+)</h2>
+<p>服务端可以通过<code>ca</code>参数指定CA证书来对客户端证书进行强制校验：</p>
+<pre><code>gost -L=&quot;tls://:443?cert=certfile&amp;key=keyfile&amp;ca=cafile&quot;
+</code></pre><p>此时客户端必须提供自己的证书：</p>
+<pre><code>gost -L=:8080 -F=&quot;tls://server_ip:443?cert=certfile&amp;key=keyfile&quot;
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/tls/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

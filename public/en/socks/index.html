@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SOCKS"><meta property="og:title" content="SOCKS" />
+<meta property="og:description" content="SOCKS is the protocol type supported by GOST. There are three versions of the SOCKS protocol: SOCKS4, SOCKS4A and SOCKS5.
+SOCKS4 gost -L socks4://:1080 Standard SOCKS4 proxy service, compatible with SOCKS4A protocol.
+SOCKS4A gost -L socks4a://:1080 Standard SOCKS4A proxy service,
+SOCKS4(A) currently supports only the CONNECT method and does not support the BIND method.  SOCKS5 gost -L socks5://:1080 SOCKS5 negotiated encryption GOST supports the standard SOCKS5 protocol methods: no-auth (0x00) and user/pass (0x02), and extends two methods for data encryption: tls(0x80) and tls-auth(0x82)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/socks/" />
+<meta property="article:published_time" content="2017-11-17T11:10:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T11:10:24+08:00" />
+<title>SOCKS | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/"  class="active">
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>SOCKS</strong>
+</header>
+
+      
+<article class="markdown"><p>SOCKS is the protocol type supported by GOST. There are three versions of the SOCKS protocol: SOCKS4, SOCKS4A and SOCKS5.</p>
+<h2 id="socks4">SOCKS4</h2>
+<pre><code>gost -L socks4://:1080
+</code></pre><p>Standard SOCKS4 proxy service, compatible with SOCKS4A protocol.</p>
+<h2 id="socks4a">SOCKS4A</h2>
+<pre><code>gost -L socks4a://:1080
+</code></pre><p>Standard SOCKS4A proxy service,</p>
+<blockquote class="book-hint warning">
+  SOCKS4(A) currently supports only the CONNECT method and does not support the BIND method.
+</blockquote>
+
+<h2 id="socks5">SOCKS5</h2>
+<pre><code>gost -L socks5://:1080
+</code></pre><h3 id="socks5-negotiated-encryption">SOCKS5 negotiated encryption</h3>
+<p>GOST supports the standard SOCKS5 protocol methods: no-auth (0x00) and user/pass (0x02), and extends two methods for data encryption: tls(0x80) and tls-auth(0x82).</p>
+<h3 id="server-side">Server side</h3>
+<pre><code>gost -L=socks5://:1080
+</code></pre><h3 id="client-side">Client side</h3>
+<pre><code>gost -L=:8080 -F=socks5://server_ip:1080?notls=true
+</code></pre><p>If both ends are GOST SOCKS5 mode (as example above), the data transfer will be encrypted (using tls or tls-auth). Otherwise, use standard SOCKS5 for communication (no-auth or user/pass).</p>
+<p><code>notls</code> - (2.9.1+) You can disable negotiated encryption feature via this parameter, default value is <code>false</code>.</p>
+<h3 id="socks5-udp-relay">SOCKS5 UDP Relay</h3>
+<p>GOST SOCKS5 also supports UDP Relay, and supports TCP-over-UDP features.</p>
+<h4 id="no-forward-proxy">No forward proxy</h4>
+<p><img src="/img/udp01.png" alt="Figure 01"></p>
+<p>GOST acts as the standard SOCKS5 proxy for UDP relay.</p>
+<h4 id="forward-proxy">Forward proxy</h4>
+<p><img src="/img/udp02.png" alt="Figure 02"></p>
+<h4 id="multi-level-forward-proxy">Multi-level forward proxy</h4>
+<p><img src="/img/udp03.png" alt="Figure 03"></p>
+<p>When forward proxies are set, GOST uses UDP-over-TCP to forward UDP data, proxy1 to proxyN can be any type.</p>
+<blockquote class="book-hint warning">
+  If the BIND and UDP requests for SOCKS5 are to be forwarded, the end of the chain (the last -F parameter) must be the GOST SOCKS5 proxy.
+</blockquote>
+
+<p>The SOCKS protocol can also be used in combination with various transport types</p>
+<h3 id="socks5-over-tls">SOCKS5 Over TLS</h3>
+<pre><code>gost -L socks5+tls://:1080
+</code></pre><p>SOCKS5 proxy service using TLS encryption.</p>
+<h3 id="socks5-over-quic">SOCKS5 Over QUIC</h3>
+<pre><code>gost -L socks5+quic://:1080
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/socks/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

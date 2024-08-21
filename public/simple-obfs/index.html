@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Simple-obfs"><meta property="og:title" content="Simple-obfs" />
+<meta property="og:description" content="Simple-obfs是GOST支持的一种传输类型(Transport)。
+Simple-obfs兼容shadowsocks/simple-obfs和Android上的Simple Obfuscation插件。
+使用说明 obfs-http 服务端 gost -L=ss&#43;ohttp://chacha20:123456@:8338 客户端 gost -L=:8080 -F=ss&#43;ohttp://chacha20:123456@server_ip:8338?host=bing.com 客户端可以通过host参数自定义请求Host。
+obfs-tls (2.11&#43;) 服务端 gost -L=ss&#43;otls://chacha20:123456@:8338 客户端 gost -L=:8080 -F=ss&#43;otls://chacha20:123456@server_ip:8338?host=bing.com 客户端可以通过host参数自定义请求Host。
+obfs-tls目前仅支持shadowsocks/shadowsocks-go库所支持的加密方式，不支持AEAD加密。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/simple-obfs/" />
+<meta property="article:published_time" content="2017-11-17T15:30:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T15:30:24+08:00" />
+<title>Simple-obfs | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/"  class="active">
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Simple-obfs</strong>
+</header>
+
+      
+<article class="markdown"><p>Simple-obfs是GOST支持的一种传输类型(Transport)。</p>
+<p>Simple-obfs兼容<a href="https://github.com/shadowsocks/simple-obfs">shadowsocks/simple-obfs</a>和Android上的<a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks.plugin.obfs_local">Simple Obfuscation</a>插件。</p>
+<h2 id="heading">使用说明</h2>
+<h3 id="obfs-http">obfs-http</h3>
+<h5 id="heading-1">服务端</h5>
+<pre><code>gost -L=ss+ohttp://chacha20:123456@:8338
+</code></pre><h5 id="heading-2">客户端</h5>
+<pre><code>gost -L=:8080 -F=ss+ohttp://chacha20:123456@server_ip:8338?host=bing.com
+</code></pre><p>客户端可以通过<code>host</code>参数自定义请求Host。</p>
+<h3 id="obfs-tls-211">obfs-tls (2.11+)</h3>
+<h5 id="heading-3">服务端</h5>
+<pre><code>gost -L=ss+otls://chacha20:123456@:8338
+</code></pre><h5 id="heading-4">客户端</h5>
+<pre><code>gost -L=:8080 -F=ss+otls://chacha20:123456@server_ip:8338?host=bing.com
+</code></pre><p>客户端可以通过<code>host</code>参数自定义请求Host。</p>
+<blockquote class="book-hint warning">
+  obfs-tls目前仅支持<a href="https://github.com/shadowsocks/shadowsocks-go">shadowsocks/shadowsocks-go</a>库所支持的加密方式，不支持AEAD加密。
+</blockquote>
+
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/simple-obfs/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

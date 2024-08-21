@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Shadowsocks"><meta property="og:title" content="Shadowsocks" />
+<meta property="og:description" content="Shadowsocks是GOST支持的一种协议类型(Protocol)。
+GOST对shadowsocks的支持是基于shadowsocks/shadowsocks-go库。
+使用说明  从2.10.1&#43;开始加密变为可选。  TCP 参数说明 nodelay - true/false (默认值为false)。默认情况下ss协议会等待客户端的请求数据，当收到请求数据后会把协议头部信息与请求数据一起发给服务端。当此参数设为true后，协议头部信息会立即发给服务端，不再等待客户端的请求。
+服务端 gost -L=ss://chacha20:password@:8338 客户端 gost -L=:8080 -F=ss://chacha20:password@server_ip:8338?nodelay=true AEAD加密 2.10.1&#43;后，ss2功能已经合并到ss中，可以直接在ss中使用AEAD加密，ss2已废弃。  在2.8版本中，GOST基于shadowsocks/go-shadowsocks2增加了对AEAD加密的支持。
+服务端 gost -L=ss2://AEAD_CHACHA20_POLY1305:password@:8338 客户端 gost -L=:8080 -F=ss2://AEAD_CHACHA20_POLY1305:password@server_ip:8338 组合传输层 Shadowsocks协议可以与各种传输类型(Transport)组合使用
+Shadowsocks Over TLS gost -L ss&#43;tls://chacha20:123456@:8338 Shadowsocks Over KCP gost -L ss&#43;kcp://chacha20:123456@:8338 UDP 服务端 gost -L=ssu://method:password@:8338?ttl=60s ttl - (2.10&#43;) 传输通道超时时间，默认为60s。
+2.10&#43;后的变化  客户端支持 ssu可以用在转发链中用来转发UDP数据：
+gost -L udp://:5353/8.8.8.8:53 -F=ssu://method:password@:8338 加密方法 加密变为可选。
+基于shadowsocks/go-shadowsocks2增加了对AEAD加密的支持，且兼容老版本中的加密方式。
+当设置了加密，会优先使用(shadowsocks/shadowsocks-go)库，若加密方法不支持，则切换到(shadowsocks/go-shadowsocks2)库。
+组合传输层 ssu在2.10版本中，变成了一种协议类型，可以与各种传输类型组合使用：
+gost -L ssu&#43;kcp://:8338 gost -L ssu&#43;wss://:443 默认情况下ssu等同于ssu&#43;udp，传输层为原始UDP协议。这种情况下，GOST会使用shadowsocks本身的UDP relay协议进行数据转发。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/ss/" />
+<meta property="article:published_time" content="2017-11-17T11:16:24+08:00" />
+<meta property="article:modified_time" content="2017-11-17T11:16:24+08:00" />
+<title>Shadowsocks | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/"  class="active">
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Shadowsocks</strong>
+</header>
+
+      
+<article class="markdown"><p>Shadowsocks是GOST支持的一种协议类型(Protocol)。</p>
+<p>GOST对shadowsocks的支持是基于<a href="https://github.com/shadowsocks/shadowsocks-go">shadowsocks/shadowsocks-go</a>库。</p>
+<h2 id="heading">使用说明</h2>
+<hr>
+<blockquote class="book-hint warning">
+  从2.10.1+开始加密变为可选。
+</blockquote>
+
+<h3 id="tcp">TCP</h3>
+<h4 id="heading-1">参数说明</h4>
+<p><code>nodelay</code> - true/false (默认值为false)。默认情况下ss协议会等待客户端的请求数据，当收到请求数据后会把协议头部信息与请求数据一起发给服务端。当此参数设为<code>true</code>后，协议头部信息会立即发给服务端，不再等待客户端的请求。</p>
+<h5 id="heading-2">服务端</h5>
+<pre><code>gost -L=ss://chacha20:password@:8338
+</code></pre><h5 id="heading-3">客户端</h5>
+<pre><code>gost -L=:8080 -F=ss://chacha20:password@server_ip:8338?nodelay=true
+</code></pre><h4 id="aead">AEAD加密</h4>
+<blockquote class="book-hint warning">
+  2.10.1+后，<code>ss2</code>功能已经合并到<code>ss</code>中，可以直接在<code>ss</code>中使用AEAD加密，<code>ss2</code>已废弃。
+</blockquote>
+
+<p>在2.8版本中，GOST基于<a href="https://github.com/shadowsocks/go-shadowsocks2">shadowsocks/go-shadowsocks2</a>增加了对AEAD加密的支持。</p>
+<h5 id="heading-4">服务端</h5>
+<pre><code>gost -L=ss2://AEAD_CHACHA20_POLY1305:password@:8338
+</code></pre><h5 id="heading-5">客户端</h5>
+<pre><code>gost -L=:8080 -F=ss2://AEAD_CHACHA20_POLY1305:password@server_ip:8338
+</code></pre><h4 id="heading-6">组合传输层</h4>
+<p>Shadowsocks协议可以与各种传输类型(Transport)组合使用</p>
+<h5 id="shadowsocks-over-tls">Shadowsocks Over TLS</h5>
+<pre><code>gost -L ss+tls://chacha20:123456@:8338
+</code></pre><h5 id="shadowsocks-over-kcp">Shadowsocks Over KCP</h5>
+<pre><code>gost -L ss+kcp://chacha20:123456@:8338
+</code></pre><h3 id="udp">UDP</h3>
+<h5 id="heading-7">服务端</h5>
+<pre><code>gost -L=ssu://method:password@:8338?ttl=60s
+</code></pre><p><code>ttl</code> - (2.10+) 传输通道超时时间，默认为60s。</p>
+<h2 id="210">2.10+后的变化</h2>
+<hr>
+<h3 id="heading-8">客户端支持</h3>
+<p><code>ssu</code>可以用在转发链中用来转发UDP数据：</p>
+<pre><code>gost -L udp://:5353/8.8.8.8:53 -F=ssu://method:password@:8338
+</code></pre><h3 id="heading-9">加密方法</h3>
+<p>加密变为可选。</p>
+<p>基于<a href="https://github.com/shadowsocks/go-shadowsocks2">shadowsocks/go-shadowsocks2</a>增加了对AEAD加密的支持，且兼容老版本中的加密方式。</p>
+<p>当设置了加密，会优先使用(shadowsocks/shadowsocks-go)库，若加密方法不支持，则切换到(shadowsocks/go-shadowsocks2)库。</p>
+<h3 id="heading-10">组合传输层</h3>
+<p><code>ssu</code>在2.10版本中，变成了一种协议类型，可以与各种传输类型组合使用：</p>
+<pre><code>gost -L ssu+kcp://:8338
+</code></pre><pre><code>gost -L ssu+wss://:443
+</code></pre><p>默认情况下<code>ssu</code>等同于<code>ssu+udp</code>，传输层为原始UDP协议。这种情况下，GOST会使用shadowsocks本身的UDP relay协议进行数据转发。</p>
+<p>如果指定了其他传输类型，则会使用SOCKS5的UDP relay协议进行数据转发。</p>
+<blockquote class="book-hint warning">
+  <p><code>ssu</code>仅能用于转发UDP数据，转发TCP数据的行为未定义。</p>
+<p>当用在转发链中时，ssu必须为转发链的最后一个节点。</p>
+<p>当<code>ssu+udp</code>用于转发链中时，转发链中不能存在其他节点。</p>
+
+</blockquote>
+
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/ss/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

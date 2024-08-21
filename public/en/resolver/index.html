@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DNS Resolver"><meta property="og:title" content="DNS Resolver" />
+<meta property="og:description" content="GOST added support for custom DNS resolver in version 2.6, and can be applied to service nodes. When the node receives a request, it resolves the target address of this request using the DNS service specified on this node.
+gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-query dns - specifies a list of DNS services (separated by commas). The format of each DNS service is: ip[:port][/protocol], The port defaults to 53 and the protocol optional values are: udp, udp-chain, tcp, tcp-chain, tls, tls-chain, https, https-chain." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/resolver/" />
+
+<title>DNS Resolver | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/"  class="active">
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>DNS Resolver</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST added support for custom DNS resolver in version 2.6, and can be applied to service nodes. When the node receives a request, it resolves the target address of this request using the DNS service specified on this node.</p>
+<pre><code>gost -L=:8080?dns=8.8.8.8,1.1.1.1:53/tcp,1.1.1.1:853/tls,https://1.0.0.1/dns-query
+</code></pre><p><code>dns</code> - specifies a list of DNS services (separated by commas). The format of each DNS service is: <code>ip[:port][/protocol]</code>, The port defaults to 53 and the protocol optional values are: <code>udp</code>, <code>udp-chain</code>, <code>tcp</code>, <code>tcp-chain</code>, <code>tls</code>, <code>tls-chain</code>, <code>https</code>, <code>https-chain</code>. The default is <code>udp</code>.</p>
+<h3 id="proxy-chain-2100">Proxy Chain (2.10.0+)</h3>
+<p>If you need to connect to a DNS server through proxy chain, you can use the following protocols:</p>
+<p><code>udp-chain</code>, <code>tcp-chain</code>, <code>tls-chain</code>, <code>https-chain</code></p>
+<pre><code>gost -L=http://:8080?dns=8.8.8.8/udp-chain,1.1.1.1:853/tls-chain,https-chain://dns.google/dns-query -F=socks://:1080
+</code></pre><blockquote class="book-hint warning">
+  If you want to forward <code>udp-chain</code>, The protocol type of the last node of the proxy chain (the last -F parameter) must be GOST SOCKS5, the transport can be any one.
+</blockquote>
+
+<p>You can also use an external file to specify a list of DNS services:</p>
+<pre><code>gost -L=:8080?dns=dns.txt
+</code></pre><p>The format of the configuration file is:</p>
+<pre><code># options
+timeout     5s
+# ttl       60s
+reload      10s
+
+# prefer    ipv6
+
+# ip        1.2.3.4
+
+# ip[:port] [protocol] [hostname]
+8.8.8.8
+8.8.8.8     tcp
+1.1.1.1     udp
+1.1.1.1:53  tcp-chain
+1.1.1.1:853 tls     cloudflare-dns.com
+https://1.0.0.1/dns-query    https-chain
+</code></pre><p><code>timeout</code> - DNS request timeout, default 5 seconds.</p>
+<p><code>ttl</code> - DNS cache expiration, default to the TTL in DNS server response. When set to a negative value, no cache is used.</p>
+<p><code>reload</code> - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.</p>
+<p><code>prefer</code> - (2.8.2+) AAAA(IPv6) lookups before A(IPv4).</p>
+<p><code>ip</code> - 2.10.1+，client host IP. Will enable the ECS(EDNS Client Subnet) extension if set.</p>
+<p>The DNS service list is divided into three columns:</p>
+<p>The first column is the DNS server address, the format is ip[:port], and the port default is 53.</p>
+<p>The second column is the protocol type. The optional values are: <code>udp</code>, <code>tcp</code>, <code>tls</code>, <code>https</code>, and the default is <code>udp</code>.</p>
+<p>The third column is the DNS server domain name. It is valid when the protocol type is <code>tls</code> and is used for TLS certificate verification.</p>
+<h2 id="custom-domain-name-resolution">Custom domain name resolution</h2>
+<p>In addition to the ability to customize the DNS service to resolve domain names, you can also manually specify the domain-IP mapping relationship, similar to the <code>/etc/hosts</code> file under Linux.</p>
+<pre><code>gost -L=:8080?hosts=hosts.txt
+</code></pre><p>The format of the configuration file:</p>
+<pre><code># options
+reload  10s
+
+# IP_address    canonical_hostname     [aliases...]
+127.0.0.1       localhost
+192.168.1.10    foo.mydomain.org       foo
+192.168.1.13    bar.mydomain.org       bar baz
+</code></pre><p><code>reload</code> - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.</p>
+<p>The mapping entries are divided into three columns:</p>
+<p>The first column is the IP address.</p>
+<p>The second column is the host name or domain name.</p>
+<p>The third column is alias and can have more than one.</p>
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/resolver/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

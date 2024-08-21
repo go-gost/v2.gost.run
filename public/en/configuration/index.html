@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Configuration"><meta property="og:title" content="Configuration" />
+<meta property="og:description" content="Logical Layering
+A proxy service in GOST is logically divided into two layers: Protocol and Transport, There are several optional types on each layer. The two layers are independent of each other and can be used in any combination.
+ When GOST connects to a proxy node, it first interacts with the transport type set by the transport layer. After the transport layer is established, it interacts with the protocol type set by the protocol layer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/configuration/" />
+<meta property="article:published_time" content="2017-11-20T10:18:10+08:00" />
+<meta property="article:modified_time" content="2017-11-20T10:18:10+08:00" />
+<title>Configuration | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/"  class="active">
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/" >
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Configuration</strong>
+</header>
+
+      
+<article class="markdown"><blockquote class="book-hint info">
+  <p><strong>Logical Layering</strong></p>
+<p>A proxy service in GOST is logically divided into two layers: Protocol and Transport, There are several optional types on each layer. The two layers are independent of each other and can be used in any combination.</p>
+
+</blockquote>
+
+<p>When GOST connects to a proxy node, it first interacts with the transport type set by the transport layer. After the transport layer is established, it interacts with the protocol type set by the protocol layer.</p>
+<h2 id="protocols">Protocols</h2>
+<ul>
+<li>
+<p><code>http</code> - HTTP</p>
+</li>
+<li>
+<p><code>http2</code> - HTTP2</p>
+</li>
+<li>
+<p><code>socks4</code> - SOCKS4 (2.4+)</p>
+</li>
+<li>
+<p><code>socks4a</code> - SOCKS4A (2.4+)</p>
+</li>
+<li>
+<p><code>socks5</code> - SOCKS5</p>
+</li>
+<li>
+<p><code>ss</code> - Shadowsocks</p>
+</li>
+<li>
+<p><code>ss2</code> - Shadowsocks with AEAD support (2.8+)</p>
+</li>
+<li>
+<p><code>sni</code> - SNI (2.5+)</p>
+</li>
+<li>
+<p><code>forward</code> - Forward</p>
+</li>
+<li>
+<p><code>relay</code> - TCP/UDP relay (2.11+)</p>
+</li>
+</ul>
+<h2 id="transports">Transports</h2>
+<ul>
+<li>
+<p><code>tcp</code> - Raw TCP</p>
+</li>
+<li>
+<p><code>tls</code> - TLS</p>
+</li>
+<li>
+<p><code>mtls</code> - Multiplex TLS, Add multiplexing on TLS (2.5+)</p>
+</li>
+<li>
+<p><code>ws</code> - Websocket</p>
+</li>
+<li>
+<p><code>mws</code> - Multiplex Websocket, Add multiplexing on Websocket (2.5+)</p>
+</li>
+<li>
+<p><code>wss</code> - Websocket Secure, Websocket based on TLS encryption</p>
+</li>
+<li>
+<p><code>mwss</code> - Multiplex Websocket Secure, Add multiplexing on Websocket Secure (2.5+)</p>
+</li>
+<li>
+<p><code>kcp</code> - KCP (2.3+)</p>
+</li>
+<li>
+<p><code>quic</code> - QUIC (2.4+)</p>
+</li>
+<li>
+<p><code>ssh</code> - SSH (2.4+)</p>
+</li>
+<li>
+<p><code>h2</code> - HTTP2 (2.4+)</p>
+</li>
+<li>
+<p><code>h2c</code> - HTTP2 Cleartext (2.4+)</p>
+</li>
+<li>
+<p><code>obfs4</code> - OBFS4 (2.4+)</p>
+</li>
+<li>
+<p><code>ohttp</code> - HTTP Obfuscation (2.7+)</p>
+</li>
+<li>
+<p><code>otls</code> - TLS Obfuscation (2.11+)</p>
+</li>
+</ul>
+<h2 id="configuration-format">Configuration format</h2>
+<p>Refer to <a href="/port-forwarding/">Port Forwarding</a> for the node configuration format related to port forwarding。</p>
+<p>The configuration of nodes in GOST is similar to the URL format (For <code>-L</code> and <code>-F</code> parameters):</p>
+<pre><code>[scheme://][user:pass@host]:port[?param1=value1&amp;param2=value2]
+</code></pre><h3 id="scheme"><strong>scheme</strong></h3>
+<p><code>scheme</code> can be a separate protocol type or transport type, or a combination of the two, it also can be empty.</p>
+<h4 id="no-type-specified">No type specified</h4>
+<p>The default transport layer is Raw TCP.</p>
+<p>The default protocol layer is HTTP &amp; SOCKS5 for <code>-L</code> parameter and HTTP for <code>-F</code> parameter.</p>
+<pre><code>gost -L :8080 -F :8888
+</code></pre><h4 id="only-protocol-type-is-specified">Only protocol type is specified</h4>
+<p>The default transport layer is Raw TCP.</p>
+<pre><code>gost -L http://:8080 -F socks5://:1080
+</code></pre><h4 id="only-transport-type-is-specified">Only transport type is specified</h4>
+<p>The default protocol layer is HTTP &amp; SOCKS5 for <code>-L</code> parameter and HTTP for <code>-F</code> parameter.</p>
+<pre><code>gost -L tls://:443 -F ws://:1443
+</code></pre><h4 id="used-in-combination">Used in combination</h4>
+<pre><code>gost -L http+tls://:443 -F socks5+wss://:1443
+</code></pre><h4 id="special-schemes">Special schemes</h4>
+<p>In addition to the above types, there are several special shemes:</p>
+<ul>
+<li>
+<p><code>https</code> - Short form, equivalent to <code>http+tls</code></p>
+</li>
+<li>
+<p><code>redirect</code> - TCP transparent proxy (2.3+)</p>
+</li>
+</ul>
+<pre><code>gost -L redirect://:12345
+</code></pre><ul>
+<li><code>ssu</code> - Shadowsocks UDP relay (2.4+)</li>
+</ul>
+<pre><code>gost -L ssu://chacha20:123456@:8338
+</code></pre><h3 id="node-authentication"><strong>Node Authentication</strong></h3>
+<h4 id="userpass">user:pass</h4>
+<p><code>user:pass</code> is used to configure the service's authentication information. For shadowsocks，<code>user</code> is the encryption type.</p>
+<pre><code>gost -L admin:123456@:8080 -F ss://chacha20:123456@:8338
+</code></pre><h4 id="auth-parameter-292">auth parameter (2.9.2+)</h4>
+<p>If the auth info contains special characters, you can use <code>auth</code> parameter to encode the info:</p>
+<pre><code>gost -L :8080?auth=YWRtaW46MTIzNDU2 -F ss://:8338?auth=Y2hhY2hhMjA6QWEjJiEkMTIzNEA1Njc4
+</code></pre><p>the value of <code>auth</code> is the base64 encoded of <code>user:pass</code>.</p>
+<h4 id="secrets-parameter">secrets parameter</h4>
+<p>You can also set multiple groups of authentication information through the <code>secrets</code> parameter:</p>
+<pre><code>gost -L=:8080?secrets=secrets.txt
+</code></pre><p>The file format of the secrets.txt file is line-by-line authentication information. Each line of authentication information is a user-pass pair separated by space. A line starting with <code>#</code> is a comment line.</p>
+<pre><code># period for live reloading
+reload      10s
+
+# username password
+
+admin           #123456
+test\user001    123456
+test.user@002   12345678
+</code></pre><p><code>reload</code> - This configuration file supports live reloading. This option specifies how often the file is checked for changes, and the live reloading is disabled by default.</p>
+<p><strong>NOTE:</strong> When the <code>secrets</code> parameter is used in the shadowsocks protocol, only the first entry is used as the authentication information.</p>
+<blockquote class="book-hint warning">
+  All authentication information is for the protocol layer.
+</blockquote>
+
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/configuration/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

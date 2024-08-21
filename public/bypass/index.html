@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="路由控制"><meta property="og:title" content="路由控制" />
+<meta property="og:description" content="GOST在2.6版本中增加了路由控制功能，可以通过黑白名单来控制客户端的请求。路由控制可以应用于服务节点(-L参数)和代理链的所有层级节点(-F参数)。
+gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.10.0.0/16,localhost,*.example.com 通过bypass参数来指定请求的目标地址列表(以逗号分割的IP,CIDR,域名或域名通配符地址)。
+当执行代理链的节点选择时，每当确定一个代理链层级节点后，会应用此节点上的路由配置(bypass参数)，若此次请求的目标地址包含在此配置中，则代理链终止于此节点(且不包含此节点)。
+若地址比较多，可以使用外部配置文件：
+gost -L :8080?bypass=bypass.txt -F :1080?bypass=bypass2.txt 配置文件的格式为(地址列表和可选的配置项)：
+# options reload 10s reverse true # bypass addresses 127.0.0.1 172.10.0.0/16 localhost *.example.com .example.org reload - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。
+reverse - 指定是否切换为白名单。
+若要转换为白名单，则通过在bypass参数值前添加~前缀：
+gost -L=:8080?bypass=~127.0.0.1,172.10.0.0/16,localhost,*.example.com,.example.org 对于文件方式也是一样：
+gost -L=:8080?bypass=~bypass.txt " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/bypass/" />
+
+<title>路由控制 | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/"  class="active">
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>路由控制</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST在2.6版本中增加了路由控制功能，可以通过黑白名单来控制客户端的请求。路由控制可以应用于服务节点(<code>-L</code>参数)和代理链的所有层级节点(<code>-F</code>参数)。</p>
+<pre><code>gost -L=:8080?bypass=127.0.0.1,192.168.1.0/24,.example.net -F=:1080?bypass=172.10.0.0/16,localhost,*.example.com
+</code></pre><p>通过<code>bypass</code>参数来指定请求的目标地址列表(以逗号分割的IP,CIDR,域名或域名通配符地址)。</p>
+<p>当执行代理链的节点选择时，每当确定一个代理链层级节点后，会应用此节点上的路由配置(<code>bypass</code>参数)，若此次请求的目标地址包含在此配置中，则代理链终止于此节点(且不包含此节点)。</p>
+<p>若地址比较多，可以使用外部配置文件：</p>
+<pre><code>gost -L :8080?bypass=bypass.txt -F :1080?bypass=bypass2.txt
+</code></pre><p>配置文件的格式为(地址列表和可选的配置项)：</p>
+<pre><code># options
+reload   10s
+reverse  true
+
+# bypass addresses
+127.0.0.1
+172.10.0.0/16
+localhost
+*.example.com
+.example.org
+</code></pre><p><code>reload</code> - 此配置文件支持热更新。此选项用来指定文件检查周期，默认关闭热更新。</p>
+<p><code>reverse</code> - 指定是否切换为白名单。</p>
+<p>若要转换为白名单，则通过在<code>bypass</code>参数值前添加<code>~</code>前缀：</p>
+<pre><code>gost -L=:8080?bypass=~127.0.0.1,172.10.0.0/16,localhost,*.example.com,.example.org
+</code></pre><p>对于文件方式也是一样：</p>
+<pre><code>gost -L=:8080?bypass=~bypass.txt
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/bypass/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

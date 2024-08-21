@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Probing Resistance"><meta property="og:title" content="Probing Resistance" />
+<meta property="og:description" content="GOST added probing resistance to the HTTP/HTTPS/HTTP2 proxy in version 2.7. When the proxy server receives an invalid request, it will return the corresponding response according to the probing resistance policy.
+The probing resistance feature is only valid when the proxy server has user authentication enabled.  gost -L=&quot;http2://admin:123456@:443?probe_resist=code:400&amp;knock=www.example.com&quot; probe_resist The proxy server specifies the policy through the probe_resist parameter. The format of the parameter is：type:value.
+The optional values for type are:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/en/probe_resist/" />
+<meta property="article:published_time" content="2019-01-05T14:36:00+08:00" />
+<meta property="article:modified_time" content="2019-01-05T14:36:00+08:00" />
+<title>Probing Resistance | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/en/getting-started/" >
+      Getting Started
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/configuration/" >
+      Configuration
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/probe_resist/"  class="active">
+      Probing Resistance
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/redirect/" >
+      Transparent Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/port-forwarding/" >
+      Port Forwarding
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/permission/" >
+      Permission Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/load-balancing/" >
+      Load Balancing
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/bypass/" >
+      Routing Control
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/resolver/" >
+      DNS Resolver
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/dns/" >
+      DNS Proxy
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/en/tuntap/" >
+      TUN/TAP Device
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>Probing Resistance</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST added probing resistance to the HTTP/HTTPS/HTTP2 proxy in version 2.7. When the proxy server receives an invalid request, it will return the corresponding response according to the probing resistance policy.</p>
+<blockquote class="book-hint warning">
+  The probing resistance feature is only valid when the proxy server has user authentication enabled.
+</blockquote>
+
+<pre><code>gost -L=&quot;http2://admin:123456@:443?probe_resist=code:400&amp;knock=www.example.com&quot;
+</code></pre><h2 id="probe-resist">probe_resist</h2>
+<p>The proxy server specifies the policy through the <code>probe_resist</code> parameter. The format of the parameter is：<code>type:value</code>.</p>
+<p>The optional values for type are:</p>
+<ul>
+<li>
+<p><code>code</code> - Corresponding value is HTTP response code. The proxy server will reply to client the specified status code. For example: <code>probe_resist=code:404</code></p>
+</li>
+<li>
+<p><code>web</code> - Corresponding value is HTTP URL. The proxy server will request this URL using HTTP GET method and return the response to the client. For example: <code>probe_resist=web:example.com/page.html</code></p>
+</li>
+<li>
+<p><code>host</code> - Corresponding value is host[:port]. The proxy server forwards the client request to the specified host and returns the host's response to the client. The proxy server is equivalent to the port forwarding service here. For example: <code>probe_resist=host:example.com:8080</code></p>
+</li>
+<li>
+<p><code>file</code> - The corresponding value is the local file path. The proxy server will reply to the client 200 response code, and the content of the specified file is sent to the client as response Body. For example: <code>probe_resist=file:/path/to/file.txt</code></p>
+</li>
+</ul>
+<pre><code>gost -L=http://admin:123456@:8080?probe_resist=code:403
+</code></pre><pre><code>gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080
+</code></pre><pre><code>gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt
+</code></pre><h2 id="knock-28">knock (2.8+)</h2>
+<p>After the probe resistance is enabled, the server will not respond the <code>407 Proxy Authentication Required</code> to the client by default when authentication fails. But in some cases the client needs the server to tell if it needs authentication (for example, the SwitchyOmega plugin in Chrome). Set a private host with the <code>knock</code> parameter, the server will only send a <code>407</code> response when accessing this host.</p>
+<p>This feature can be applied to HTTP, HTTPS and HTTP/2 proxies:</p>
+<pre><code>gost -L=http://admin:123456@:8080?probe_resist=code:403&amp;knock=www.example.com
+</code></pre><pre><code>gost -L=https://admin:123456@:443?probe_resist=host:www.example.com:8080&amp;knock=www.example.com
+</code></pre><pre><code>gost -L=http2://admin:123456@:443?probe_resist=file:/send/to/client/file.txt&amp;knock=www.example.com
+</code></pre></article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      English
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="">
+      <a href="/probe_resist/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="active">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TUN/TAP设备"><meta property="og:title" content="TUN/TAP设备" />
+<meta property="og:description" content="GOST在2.9版本中增加了对TUN/TAP设备的支持。基于TUN/TAP设备可以简单的构建VPN。
+Windows Windows下需要安装tap驱动后才能使用，可以选择安装OpenVPN/tap-windows6或OpenVPN client。
+TUN 使用说明 gost -L=&quot;tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&amp;name=tun0&amp;mtu=1350&amp;route=10.100.0.0/16&amp;gw=192.168.123.1&quot; method:password - 可选，指定UDP隧道数据加密方法和密码。所支持的加密方法与shadowsocks/go-shadowsocks2一致。
+local_ip:port - 必须，本地监听的UDP隧道地址。
+remote_ip:port - 可选，目标UDP地址。本地TUN设备收到的IP包会通过UDP转发到此地址。
+net - 必须，指定TUN设备的地址。
+name - 可选，指定TUN设备的名字，默认值为系统预设。
+mtu - 可选，设置TUN设备的MTU值，默认值为1350。
+route - 可选，逗号分割的路由列表:，例如：10.100.0.0/16,172.20.1.0/24,1.2.3.4/32
+gw - 可选，设置TUN设备路由默认网关IP。
+tcp - 可选，是否使用fake TCP隧道，默认false。
+服务端路由(2.9.2&#43;) 服务端可以通过设置路由表和网关，来访问客户端所在的网络。
+默认网关 服务端可以通过gw参数设置默认网关，来指定route参数的路由路径。
+gost -L=&quot;tun://:8421?net=192.168.123.1/24&amp;gw=192.168.123.2&amp;route=172.10.0.0/16,10.138.0.0/16&quot; 发往172.10.0.0/16和10.138.0.0/16网络的数据会通过TUN隧道转发给IP为192.168.123.2的客户端。
+特定网关路由 如果要针对每个路由设置特定的网关，可以通过路由配置文件来指定：
+gost -L=&quot;tun://:8421?net=192.168.123.1/24&amp;route=route.txt&quot; 配置文件route.txt的格式为：
+# Destination Gateway 172.10.0.0/16 192.168.123.2 10.138.0.0/16 192.168.123.3 第一列为目标网络。
+第二列为网关IP，若为空则使用gw参数设置的默认网关IP。
+发往172.10.0.0/16网络的数据会通过TUN隧道转发给IP为192.168.123.2的客户端。 发往10.138.0.0/16网络的数据会通过TUN隧道转发给IP为192.168.123.3的客户端。
+构建基于TUN设备的VPN (Linux) net所指定的地址可能需要根据实际情况进行调整。  创建TUN设备并建立UDP隧道 服务端 gost -L tun://:8421?net=192.168.123.1/24 客户端 gost -L tun://:8421/SERVER_IP:8421?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tuntap/" />
+<meta property="article:published_time" content="2019-12-26T15:33:00+08:00" />
+<meta property="article:modified_time" content="2019-12-26T15:33:00+08:00" />
+<title>TUN/TAP设备 | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/"  class="active">
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>TUN/TAP设备</strong>
+</header>
+
+      
+<article class="markdown"><p>GOST在2.9版本中增加了对TUN/TAP设备的支持。基于TUN/TAP设备可以简单的构建VPN。</p>
+<h2 id="windows">Windows</h2>
+<p>Windows下需要安装tap驱动后才能使用，可以选择安装<a href="https://github.com/OpenVPN/tap-windows6">OpenVPN/tap-windows6</a>或<a href="https://github.com/OpenVPN/openvpn">OpenVPN client</a>。</p>
+<h2 id="tun">TUN</h2>
+<h3 id="heading">使用说明</h3>
+<pre><code>gost -L=&quot;tun://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&amp;name=tun0&amp;mtu=1350&amp;route=10.100.0.0/16&amp;gw=192.168.123.1&quot;
+</code></pre><p><code>method:password</code> - 可选，指定UDP隧道数据加密方法和密码。所支持的加密方法与<a href="https://github.com/shadowsocks/go-shadowsocks2">shadowsocks/go-shadowsocks2</a>一致。</p>
+<p><code>local_ip:port</code> - 必须，本地监听的UDP隧道地址。</p>
+<p><code>remote_ip:port</code> - 可选，目标UDP地址。本地TUN设备收到的IP包会通过UDP转发到此地址。</p>
+<p><code>net</code> - 必须，指定TUN设备的地址。</p>
+<p><code>name</code> - 可选，指定TUN设备的名字，默认值为系统预设。</p>
+<p><code>mtu</code> - 可选，设置TUN设备的MTU值，默认值为1350。</p>
+<p><code>route</code> - 可选，逗号分割的路由列表:，例如：10.100.0.0/16,172.20.1.0/24,1.2.3.4/32</p>
+<p><code>gw</code> - 可选，设置TUN设备路由默认网关IP。</p>
+<p><code>tcp</code> - 可选，是否使用fake TCP隧道，默认<code>false</code>。</p>
+<h3 id="292">服务端路由(2.9.2+)</h3>
+<p>服务端可以通过设置路由表和网关，来访问客户端所在的网络。</p>
+<h4 id="heading-1">默认网关</h4>
+<p>服务端可以通过<code>gw</code>参数设置默认网关，来指定<code>route</code>参数的路由路径。</p>
+<pre><code>gost -L=&quot;tun://:8421?net=192.168.123.1/24&amp;gw=192.168.123.2&amp;route=172.10.0.0/16,10.138.0.0/16&quot;
+</code></pre><p>发往172.10.0.0/16和10.138.0.0/16网络的数据会通过TUN隧道转发给IP为192.168.123.2的客户端。</p>
+<h4 id="heading-2">特定网关路由</h4>
+<p>如果要针对每个路由设置特定的网关，可以通过路由配置文件来指定：</p>
+<pre><code>gost -L=&quot;tun://:8421?net=192.168.123.1/24&amp;route=route.txt&quot;
+</code></pre><p>配置文件<code>route.txt</code>的格式为：</p>
+<pre><code># Destination   Gateway
+
+172.10.0.0/16   192.168.123.2
+10.138.0.0/16   192.168.123.3
+</code></pre><p>第一列为目标网络。</p>
+<p>第二列为网关IP，若为空则使用<code>gw</code>参数设置的默认网关IP。</p>
+<p>发往172.10.0.0/16网络的数据会通过TUN隧道转发给IP为192.168.123.2的客户端。
+发往10.138.0.0/16网络的数据会通过TUN隧道转发给IP为192.168.123.3的客户端。</p>
+<h3 id="tunvpn-linux">构建基于TUN设备的VPN (Linux)</h3>
+<blockquote class="book-hint warning">
+  <code>net</code>所指定的地址可能需要根据实际情况进行调整。
+</blockquote>
+
+<h4 id="tunudp">创建TUN设备并建立UDP隧道</h4>
+<h5 id="heading-3">服务端</h5>
+<pre><code>gost -L tun://:8421?net=192.168.123.1/24
+</code></pre><h5 id="heading-4">客户端</h5>
+<pre><code>gost -L tun://:8421/SERVER_IP:8421?net=192.168.123.2/24
+</code></pre><p>当以上命令运行无误后，可以通过<code>ip addr</code>命令来查看创建的TUN设备：</p>
+<pre><code>$ ip addr show tun0
+2: tun0: &lt;POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP&gt; mtu 1350 qdisc pfifo_fast state UNKNOWN group default qlen 500
+    link/none 
+    inet 192.168.123.2/24 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d521:ad59:87d0:53e4/64 scope link flags 800 
+       valid_lft forever preferred_lft forever
+</code></pre><p>可以通过在客户端执行<code>ping</code>命令来测试一下隧道是否连通：</p>
+<pre><code>$ ping 192.168.123.1
+64 bytes from 192.168.123.1: icmp_seq=1 ttl=64 time=9.12 ms
+64 bytes from 192.168.123.1: icmp_seq=2 ttl=64 time=10.3 ms
+64 bytes from 192.168.123.1: icmp_seq=3 ttl=64 time=7.18 ms
+</code></pre><p>如果能ping通，说明隧道已经成功建立。</p>
+<h4 id="iperf3">iperf3测试</h4>
+<h5 id="heading-5">服务端</h5>
+<pre><code>$ iperf3 -s
+</code></pre><h5 id="heading-6">客户端</h5>
+<pre><code>$ iperf3 -c 192.168.123.1
+</code></pre><h4 id="heading-7">路由规则和防火墙设置</h4>
+<p>如果想让客户端访问到服务端的网络，还需要根据需求设置相应的路由和防火墙规则。例如可以将客户端的所有外网流量转发给服务端处理</p>
+<h5 id="heading-8">服务端</h5>
+<p>开启IP转发并设置防火墙规则</p>
+<pre><code>$ sysctl -w net.ipv4.ip_forward=1
+
+$ iptables -t nat -A POSTROUTING -s 192.168.123.0/24 ! -o tun0 -j MASQUERADE
+$ iptables -A FORWARD -i tun0 ! -o tun0 -j ACCEPT
+$ iptables -A FORWARD -o tun0 -j ACCEPT
+</code></pre><h5 id="heading-9">客户端</h5>
+<p>设置路由规则</p>
+<blockquote class="book-hint danger">
+  以下操作会更改客户端的网络环境，除非你知道自己在做什么，请谨慎操作！
+</blockquote>
+
+<pre><code>$ ip route add SERVER_IP/32 dev eth0   # 请根据实际情况替换SERVER_IP和eth0
+$ ip route del default   # 删除默认的路由
+$ ip route add default via 192.168.123.2  # 使用新的默认路由
+</code></pre><h2 id="tap">TAP</h2>
+<blockquote class="book-hint warning">
+  目前不支持MacOS。
+</blockquote>
+
+<h3 id="heading-10">使用说明</h3>
+<pre><code>gost -L=&quot;tap://[method:password@][local_ip]:port[/remote_ip:port]?net=192.168.123.2/24&amp;name=tap0&amp;mtu=1350&amp;route=10.100.0.0/16&amp;gw=192.168.123.1&quot;
+</code></pre><h2 id="tcptuntap">基于TCP的TUN/TAP隧道</h2>
+<p>GOST中的TUN/TAP隧道默认是基于UDP协议进行数据传输。</p>
+<p>如果想使用TCP传输，可以选择采用以下几种方式：</p>
+<h3 id="fake-tcp">Fake TCP</h3>
+<blockquote class="book-hint warning">
+  <p>Fake TCP不是标准的TCP，只是模拟了TCP协议。</p>
+<p>此功能仅适用于Linux。</p>
+
+</blockquote>
+
+<p>GOST中采用<a href="https://github.com/xtaci/tcpraw">xtaci/tcpraw</a>内置了对TCP的支持。通过<code>tcp</code>参数开启此功能。</p>
+<h5 id="heading-11">服务端</h5>
+<pre><code>gost -L &quot;tun://:8421?net=192.168.123.1/24&amp;tcp=true&quot;
+</code></pre><h5 id="heading-12">客户端</h5>
+<pre><code>gost -L &quot;tun://:0/SERVER_IP:8421?net=192.168.123.2/24&amp;tcp=true&quot;
+</code></pre><h3 id="-291">代理链 (2.9.1+)</h3>
+<p>可以通过使用代理链进行转发，用法与UDP本地端口转发类似。</p>
+<p>此方式比较灵活通用，推荐使用。</p>
+<blockquote class="book-hint warning">
+  <p>代理链的末端(最后一个-F参数)节点必须支持GOST <code>socks5</code>或<code>ssu</code>协议类型，传输层可以任意选择。</p>
+<p>使用<code>ssu</code>需要2.10.1+版本。</p>
+
+</blockquote>
+
+<h5 id="heading-13">服务端</h5>
+<pre><code>gost -L tun://:8421?net=192.168.123.1/24&quot; -L socks5://:1080
+</code></pre><h5 id="heading-14">客户端</h5>
+<pre><code>gost -L tun://:0/:8421?net=192.168.123.2/24 -F socks5://SERVER_IP:1080
+</code></pre><h3 id="heading-15">端口转发</h3>
+<p>利用UDP端口转发配合代理链。</p>
+<h5 id="heading-16">服务端</h5>
+<pre><code>gost -L tun://:8421?net=192.168.123.1/24 -L socks5://:1080
+</code></pre><h5 id="heading-17">客户端</h5>
+<pre><code>gost -L tun://:8421/:8420?net=192.168.123.2/24 -L udp://:8420/:8421 -F socks5://server_ip:1080
+</code></pre><h3 id="heading-18">第三方转发工具</h3>
+<p><a href="https://github.com/wangyu-/udp2raw-tunnel">udp2raw-tunnel</a>。</p>
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/tuntap/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>

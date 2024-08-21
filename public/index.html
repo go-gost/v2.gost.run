@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+	<meta name="generator" content="Hugo 0.62.1" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GOST"><meta property="og:title" content="GOST" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/" />
+<meta property="og:updated_time" content="2017-11-15T16:50:24+08:00" />
+<title>GOST | GOST v2</title>
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/book.min.68d45956421753cdf6bcfc865ede445c56afc5bcaaebfe02961f44fe77d8f45a.css" integrity="sha256-aNRZVkIXU832vPyGXt5EXFavxbyq6/4Clh9E/nfY9Fo=">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98791308-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<link rel="alternate" type="application/rss+xml" href="/index.xml" title="GOST v2" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="/"><span>GOST v2</span>
+  </a>
+</h2>
+
+
+
+
+
+
+    
+
+  
+  
+
+
+
+
+
+ 
+  
+    
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+
+  <a href="/getting-started/" >
+      快速开始
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/configuration/" >
+      节点配置
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http/" >
+      HTTP(S)
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/http2/" >
+      HTTP2
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/probe_resist/" >
+      探测防御
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/socks/" >
+      SOCKS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ss/" >
+      Shadowsocks
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/sni/" >
+      SNI
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tls/" >
+      TLS
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ws/" >
+      Websocket
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/kcp/" >
+      KCP
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/quic/" >
+      QUIC
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/ssh/" >
+      SSH
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/simple-obfs/" >
+      Simple-obfs
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/obfs4/" >
+      Obfs4
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/redirect/" >
+      透明代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/port-forwarding/" >
+      端口转发
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/relay/" >
+      Relay
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/permission/" >
+      权限控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/load-balancing/" >
+      负载均衡
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/bypass/" >
+      路由控制
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/resolver/" >
+      DNS解析
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/dns/" >
+      DNS代理
+  </a>
+
+</li>
+      
+    
+      
+        <li>
+
+  <a href="/tuntap/" >
+      TUN/TAP设备
+  </a>
+
+</li>
+      
+    
+  </ul>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+  <strong>GOST</strong>
+</header>
+
+      
+<article class="markdown"><h1 id="go-simple-tunnel">GO Simple Tunnel</h1>
+<h2 id="go">GO语言实现的安全隧道</h2>
+<p><a href="https://godoc.org/github.com/ginuerzh/gost"><img src="https://godoc.org/github.com/ginuerzh/gost?status.svg" alt="GoDoc"></a>
+<a href="https://goreportcard.com/report/github.com/ginuerzh/gost"><img src="https://goreportcard.com/badge/github.com/ginuerzh/gost" alt="Go Report Card"></a>
+<a href="https://codecov.io/gh/ginuerzh/gost/branch/master"><img src="https://codecov.io/gh/ginuerzh/gost/branch/master/graphs/badge.svg" alt="codecov"></a>
+<a href="https://github.com/ginuerzh/gost/releases/latest"><img src="https://img.shields.io/github/release/ginuerzh/gost.svg" alt="GitHub release"></a>
+<a href="https://hub.docker.com/r/ginuerzh/gost/"><img src="https://img.shields.io/docker/pulls/ginuerzh/gost.svg" alt="Docker"></a></p>
+<p><a href="en/">English Version</a></p>
+<h3 id="v3httpsgostrun">！！！<a href="https://gost.run">V3版本已经可用，欢迎抢先体验</a>！！！</h3>
+<h2 id="heading">功能特性</h2>
+<ul>
+<li>多端口监听</li>
+<li>可设置转发代理，支持多级转发(代理链)</li>
+<li>支持标准HTTP/HTTPS/HTTP2/SOCKS4(A)/SOCKS5代理协议</li>
+<li>Web代理支持探测防御</li>
+<li>SOCKS5代理支持TLS协商加密</li>
+<li>支持多种隧道类型</li>
+<li>Tunnel UDP over TCP</li>
+<li>本地/远程TCP/UDP端口转发</li>
+<li>TCP/UDP透明代理</li>
+<li>支持Shadowsocks(TCP/UDP)协议</li>
+<li>支持SNI代理</li>
+<li>权限控制</li>
+<li>负载均衡</li>
+<li>路由控制</li>
+<li>DNS解析和代理</li>
+<li>TUN/TAP设备</li>
+</ul>
+<h2 id="heading-1">下载安装</h2>
+<h3 id="heading-2">二进制文件</h3>
+<p><a href="https://github.com/ginuerzh/gost/releases">https://github.com/ginuerzh/gost/releases</a></p>
+<h3 id="heading-3">源码编译</h3>
+<pre><code>git clone https://github.com/ginuerzh/gost.git
+cd gost/cmd/gost
+go build
+</code></pre><h3 id="docker">Docker</h3>
+<pre><code>docker run --rm ginuerzh/gost -V
+</code></pre><h3 id="ubuntu-store">Ubuntu Store</h3>
+<pre><code>sudo snap install core
+sudo snap install gost
+</code></pre><h3 id="shadowsocks-android">Shadowsocks Android插件</h3>
+<p><a href="https://github.com/xausky/ShadowsocksGostPlugin">xausky/ShadowsocksGostPlugin</a></p>
+<h2 id="heading-4">问题建议</h2>
+<p>提交Issue: <a href="https://github.com/ginuerzh/gost/issues">https://github.com/ginuerzh/gost/issues</a></p>
+<p>Telegram讨论群: <a href="https://t.me/gogost">https://t.me/gogost</a></p>
+<p>Google讨论组: <a href="https://groups.google.com/d/forum/go-gost">https://groups.google.com/d/forum/go-gost</a></p>
+<h2 id="heading-5">捐助</h2>
+<p>您的使用和意见反馈就是对项目最大的支持！</p>
+<p>如果您还想请开发者喝杯咖啡可以通过以下方式:</p>
+<p><img src="/img/btc.png" alt="BTC">
+<img src="/img/eth.png" alt="ETH">
+<img src="/img/usdt.png" alt="USDT"></p>
+</article>
+
+      <div class="book-footer justify-between">
+  
+  
+
+
+  
+
+  
+
+
+  
+
+
+<div class="book-languages">
+
+  <ul>
+    <li class="flex">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="/en/" class="flex">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+
+</div>
+
+  
+
+  
+
+  
+
+</div>
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+
+  
+</body>
+
+</html>
